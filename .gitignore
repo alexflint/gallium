@@ -1,0 +1,19 @@
+/*.vcxproj*
+/*.xcodeproj/
+/lib/build/
+
+# Visual Studio
+/*.opensdf
+/*.sdf
+/*.sln
+/*.suo
+/ipch/
+
+# Linux
+Makefile
+*.Makefile
+*.mk
+out/
+
+# Vim
+/*.swp
