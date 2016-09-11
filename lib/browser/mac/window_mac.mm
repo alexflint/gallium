@@ -12,10 +12,7 @@ Window* Window::Create(gallium::BrowserContext* browser_context) {
   // that.
   uint64_t tid;
   pthread_threadid_np(NULL, &tid);
-  printf("in Window::Create, thread=%llu\n", tid);
-  fflush(stdout);
-
-  NSLog(@"Window::Create, main thread? %d", [NSThread isMainThread]);
+  NSLog(@"in Window::Create, thread=%llu, main thread? %d\n", tid, [NSThread isMainThread]);
 
 #ifndef __clang_analyzer__
   auto controller = [[WindowController alloc] initWithBrowserContext:browser_context];

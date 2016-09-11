@@ -55,10 +55,10 @@ func Loop(args []string) {
 	C.GalliumLoop(C.CString(args[0]), &cerr)
 }
 
-func CreateWindow(title string) error {
+func CreateWindow(url, title string) error {
 	log.Println("=== gallium.CreateWindow ===")
 	cerr := (*C.struct_gallium_error)(C.malloc(C.sizeof_struct_gallium_error))
 	defer C.free(unsafe.Pointer(cerr))
-	C.GalliumCreateWindow(C.CString(title), &cerr)
+	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr)
 	return nil
 }

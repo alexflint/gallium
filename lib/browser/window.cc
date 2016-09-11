@@ -1,3 +1,4 @@
+#include <string>
 #include "browser/window.h"
 
 #include "browser/browser_context.h"
@@ -17,9 +18,17 @@ Window::Window(gallium::BrowserContext* browser_context)
 Window::~Window() {
 }
 
+void Window::SetInitURL(const std::string& url) {
+	init_url_ = url;  
+}
+
 void Window::WindowReady() {
   auto web_contents = inspectable_web_contents_->GetWebContents();
-  web_contents->GetController().LoadURL(GURL("http://adam.roben.org/brightray_example/start.html"), content::Referrer(), ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
+  web_contents->GetController().LoadURL(
+  	GURL(init_url_),
+  	content::Referrer(),
+  	ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
+  	std::string());
   web_contents->SetInitialFocus();
 }
 

@@ -16,7 +16,7 @@ func main() {
 
 func Main() {
 	time.Sleep(time.Second)
-	gallium.CreateWindow("Here is a window")
+	gallium.CreateWindow("http://example.com/", "Here is a window")
 	time.Sleep(time.Second)
-	gallium.CreateWindow("Here is another window")
+	gallium.CreateWindow("http://httpbin.org/", "Here is another window")
 }

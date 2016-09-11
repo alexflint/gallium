@@ -21,7 +21,10 @@ struct GALLIUM_EXPORT gallium_window {
 GALLIUM_EXPORT int GalliumLoop(const char* argv0, struct gallium_error**);
 
 // GalliumCreateWindow creates a window pointed at the given url
-GALLIUM_EXPORT struct gallium_window* GalliumCreateWindow(const char* url, struct gallium_error**);
+GALLIUM_EXPORT struct gallium_window* GalliumCreateWindow(
+	const char* url,
+	const char* title,
+	struct gallium_error** err);
 
 #ifdef __cplusplus
 }
