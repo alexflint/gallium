@@ -2,7 +2,7 @@
   'variables': {
     'project_name': 'gallium',
     'product_name': 'Gallium',
-    'brightray_source_root': '<!(["python", "tools/brightray_source_root.py"])',
+    'source_root': '<!(["python", "tools/source_root.py"])',
     'app_sources': [
       'app/win/brightray_example.rc',
       'app/win/resource.h',
@@ -46,7 +46,7 @@
     ],
   },
   'includes': [
-    'brightray.gypi',
+    'gallium.gypi',
   ],
   'targets': [
     {
@@ -262,8 +262,8 @@
               '<!@(pkg-config --libs-only-L --libs-only-other gtk+-2.0 libnotify dbus-1 x11 xrandr xext gconf-2.0)',
             ],
             'libraries': [
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/libchromiumcontent.so',
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/libchromiumviews.a',
+              '<(source_root)/<(libchromiumcontent_library_dir)/libchromiumcontent.so',
+              '<(source_root)/<(libchromiumcontent_library_dir)/libchromiumviews.a',
               '-lpthread',
               '<!@(pkg-config --libs-only-l gtk+-2.0 libnotify dbus-1 x11 xrandr xext gconf-2.0)',
             ],
@@ -272,7 +272,7 @@
         ['OS=="mac"', {
           'link_settings': {
             'libraries': [
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/libchromiumcontent.dylib',
+              '<(source_root)/<(libchromiumcontent_library_dir)/libchromiumcontent.dylib',
               '$(SDKROOT)/System/Library/Frameworks/AppKit.framework',
             ],
           },
@@ -280,10 +280,10 @@
         ['OS=="win"', {
           'link_settings': {
             'libraries': [
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/base_static.lib',
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/chromiumcontent.dll.lib',
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/chromiumviews.lib',
-              '<(brightray_source_root)/<(libchromiumcontent_library_dir)/sandbox_static.lib',
+              '<(source_root)/<(libchromiumcontent_library_dir)/base_static.lib',
+              '<(source_root)/<(libchromiumcontent_library_dir)/chromiumcontent.dll.lib',
+              '<(source_root)/<(libchromiumcontent_library_dir)/chromiumviews.lib',
+              '<(source_root)/<(libchromiumcontent_library_dir)/sandbox_static.lib',
             ],
           },
         }],
