@@ -6,9 +6,12 @@
     'app_sources': [
       'app/win/brightray_example.rc',
       'app/win/resource.h',
-      'common/main.cc',
+      'app/main.cc',
     ],
     'lib_sources': [
+      'api/gallium.cc',
+      'api/gallium.h',
+
       'browser/mac/window_controller.mm',
       'browser/mac/window_controller.h',
       'browser/mac/window_mac.h',
@@ -18,8 +21,6 @@
       'browser/linux/application_info_linux.cc',
       'browser/window.cc',
       'browser/window.h',
-      'common/gallium.cc',
-      'common/gallium.h',
       'renderer/render_view_observer.cc',
       'renderer/render_view_observer.h',
       'renderer/renderer_client.cc',
@@ -91,10 +92,10 @@
       'common/main_delegate_mac.mm',
     ],
     'framework_sources': [
-      'common/library_main.cc',
-      'common/library_main.h',
-      'common/gallium.cc',
-      'common/gallium.h',
+      'app/library_main.cc',
+      'app/library_main.h',
+      'api/gallium.cc',
+      'api/gallium.h',
     ],
     'conditions': [
       ['OS=="win"', {

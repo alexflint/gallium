@@ -4,7 +4,7 @@
 
 #include "base/bind.h"
 
-#include "common/gallium.h"
+#include "api/gallium.h"
 #include "common/main_delegate.h"
 #include "browser/window.h"
 #include "browser/browser_client.h"

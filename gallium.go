@@ -8,8 +8,9 @@ package gallium
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath -Wl,@executable_path/../Frameworks
 #cgo LDFLAGS: -mmacosx-version-min=10.8
+
 #include <stdlib.h>
-#include "lib/common/gallium.h"
+#include "lib/api/gallium.h"
 */
 import "C"
 import (

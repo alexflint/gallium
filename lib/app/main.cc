@@ -1,5 +1,4 @@
-#include "common/library_main.h"
-#include "common/gallium.h"
+#include "app/library_main.h"
 #include "common/main_delegate.h"
 
 #include "content/public/app/content_main.h"
