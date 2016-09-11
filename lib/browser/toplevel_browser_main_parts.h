@@ -1,7 +1,7 @@
 #ifndef BRIGHTRAY_EXAMPLE_BROWSER_BROWSER_MAIN_PARTS_H_
 #define BRIGHTRAY_EXAMPLE_BROWSER_BROWSER_MAIN_PARTS_H_
 
-#include "brightray/browser/browser_main_parts.h"
+#include "browser/browser_main_parts.h"
 
 namespace brightray_example {
 

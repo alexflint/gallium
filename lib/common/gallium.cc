@@ -3,10 +3,11 @@
 #include <pthread.h>
 
 #include "base/bind.h"
+
 #include "common/gallium.h"
-#include "common/main_delegate.h"
+#include "common/toplevel_main_delegate.h"
 #include "browser/window.h"
-#include "browser/browser_client.h"
+#include "browser/toplevel_browser_client.h"
 
 #include "content/public/app/content_main.h"
 #include "content/public/browser/browser_thread.h"

@@ -1,8 +1,8 @@
 #include "browser/window.h"
 
-#include "brightray/browser/browser_context.h"
-#include "brightray/browser/default_web_contents_delegate.h"
-#include "brightray/browser/inspectable_web_contents.h"
+#include "browser/browser_context.h"
+#include "browser/default_web_contents_delegate.h"
+#include "browser/inspectable_web_contents.h"
 
 namespace brightray_example {
 

@@ -1,6 +1,6 @@
 #include "common/library_main.h"
 #include "common/gallium.h"
-#include "common/main_delegate.h"
+#include "common/toplevel_main_delegate.h"
 
 #include "content/public/app/content_main.h"
 #include "sandbox/win/src/sandbox_types.h"

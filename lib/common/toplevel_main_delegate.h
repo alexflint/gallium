@@ -4,7 +4,7 @@
 #include "browser/toplevel_browser_client.h"
 #include "renderer/renderer_client.h"
 
-#include "brightray/common/main_delegate.h"
+#include "common/main_delegate.h"
 
 namespace brightray_example {
 

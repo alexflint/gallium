@@ -1,7 +1,7 @@
 #include "browser/views/window_views.h"
 
-#include "brightray/browser/inspectable_web_contents.h"
-#include "brightray/browser/inspectable_web_contents_view.h"
+#include "browser/inspectable_web_contents.h"
+#include "browser/inspectable_web_contents_view.h"
 
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"

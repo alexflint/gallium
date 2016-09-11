@@ -2,8 +2,8 @@
 
 #import "browser/mac/window_mac.h"
 
-#import "brightray/browser/inspectable_web_contents.h"
-#import "brightray/browser/inspectable_web_contents_view.h"
+#import "browser/inspectable_web_contents.h"
+#import "browser/inspectable_web_contents_view.h"
 
 @implementation WindowController
 
