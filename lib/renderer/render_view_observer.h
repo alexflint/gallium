@@ -3,7 +3,7 @@
 
 #include "content/public/renderer/render_view_observer.h"
 
-namespace brightray_example {
+namespace brightray {
 
 class RenderViewObserver : content::RenderViewObserver {
 public:

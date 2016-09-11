@@ -18,8 +18,6 @@
       'browser/linux/application_info_linux.cc',
       'browser/window.cc',
       'browser/window.h',
-      'common/toplevel_main_delegate.cc',
-      'common/toplevel_main_delegate.h',
       'common/gallium.cc',
       'common/gallium.h',
       'renderer/render_view_observer.cc',

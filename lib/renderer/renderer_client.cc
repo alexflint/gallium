@@ -2,7 +2,7 @@
 
 #include "renderer/render_view_observer.h"
 
-namespace brightray_example {
+namespace brightray {
 
 RendererClient::RendererClient() {
 }

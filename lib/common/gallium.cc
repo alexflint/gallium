@@ -5,7 +5,7 @@
 #include "base/bind.h"
 
 #include "common/gallium.h"
-#include "common/toplevel_main_delegate.h"
+#include "common/main_delegate.h"
 #include "browser/window.h"
 #include "browser/browser_client.h"
 
@@ -23,14 +23,14 @@ int RunGallium() {
   for (size_t i = 0; i < args.size(); i++) {
     argv[i] = args[i].c_str();
   }
-  brightray_example::MainDelegate delegate;
+  brightray::MainDelegate delegate;
   content::ContentMainParams params(&delegate);
   params.argc = args.size();
   params.argv = argv;
   return content::ContentMain(params);
 }
 
-std::unique_ptr<brightray_example::MainDelegate> delegate;
+std::unique_ptr<brightray::MainDelegate> delegate;
 
 int GalliumLoop(const char* argv0, struct gallium_error** err) {
   uint64_t tid;
@@ -38,7 +38,7 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
   printf("in GalliumLoop, thread=%llu\n", tid);
   fflush(stdout);
 
-  delegate.reset(new brightray_example::MainDelegate);
+  delegate.reset(new brightray::MainDelegate);
   content::ContentMainParams params(delegate.get());
 
   const char* argv[] = {argv0};
@@ -50,7 +50,7 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
 
 void DoCreateWindow(const char* title) {
   printf("At DoCreateWindow\n");
-  auto window = brightray_example::Window::Create(delegate->get_browser_client()->browser_context());
+  auto window = brightray_example::Window::Create(delegate->browser_client()->browser_context());
   window->Show();
 }
 

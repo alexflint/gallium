@@ -1,6 +1,6 @@
 #include "common/library_main.h"
 #include "common/gallium.h"
-#include "common/toplevel_main_delegate.h"
+#include "common/main_delegate.h"
 
 #include "content/public/app/content_main.h"
 #include "sandbox/win/src/sandbox_types.h"
@@ -13,7 +13,7 @@
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
   sandbox::SandboxInterfaceInfo sandbox_info = {0};
   content::InitializeSandboxInfo(&sandbox_info);
-  brightray_example::MainDelegate delegate;
+  brightray::MainDelegate delegate;
 
   content::ContentMainParams params(&delegate);
   params.instance = instance;
@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
 #else // OS_LINUX
 
 int main(int argc, const char* argv[]) {
-  brightray_example::MainDelegate delegate;
+  brightray::MainDelegate delegate;
   content::ContentMainParams params(&delegate);
   params.argc = argc;
   params.argv = argv;

@@ -5,6 +5,7 @@
 #include "common/main_delegate.h"
 
 #include "browser/browser_client.h"
+#include "renderer/renderer_client.h"
 #include "common/content_client.h"
 
 #include "base/command_line.h"
@@ -24,12 +25,8 @@ BrowserClient* MainDelegate::browser_client() {
   return browser_client_.get();
 }
 
-scoped_ptr<ContentClient> MainDelegate::CreateContentClient() {
-  return make_scoped_ptr(new ContentClient).Pass();
-}
-
 bool MainDelegate::BasicStartupComplete(int* exit_code) {
-  content_client_ = CreateContentClient().Pass();
+  content_client_.reset(new ContentClient);
   SetContentClient(content_client_.get());
 #if defined(OS_MACOSX)
   OverrideChildProcessPath();
@@ -57,12 +54,17 @@ void MainDelegate::InitializeResourceBundle() {
 }
 
 content::ContentBrowserClient* MainDelegate::CreateContentBrowserClient() {
-  browser_client_ = CreateBrowserClient().Pass();
+  browser_client_.reset(new BrowserClient);
   return browser_client_.get();
 }
 
-scoped_ptr<BrowserClient> MainDelegate::CreateBrowserClient() {
-  return make_scoped_ptr(new BrowserClient).Pass();
+// scoped_ptr<BrowserClient> MainDelegate::CreateBrowserClient() {
+//   return make_scoped_ptr(new BrowserClient).Pass();
+// }
+
+content::ContentRendererClient* MainDelegate::CreateContentRendererClient() {
+  renderer_client_.reset(new RendererClient);
+  return renderer_client_.get();
 }
 
 }  // namespace brightray

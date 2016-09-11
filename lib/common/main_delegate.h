@@ -21,6 +21,7 @@ namespace brightray {
 
 class BrowserClient;
 class ContentClient;
+class RendererClient;
 
 class MainDelegate : public content::ContentMainDelegate {
  public:
@@ -30,14 +31,6 @@ class MainDelegate : public content::ContentMainDelegate {
   BrowserClient* browser_client();
 
  protected:
-  // Subclasses can override this to provide their own ContentClient
-  // implementation.
-  virtual scoped_ptr<ContentClient> CreateContentClient();
-
-  // Subclasses can override this to provide their own BrowserClient
-  // implementation.
-  virtual scoped_ptr<BrowserClient> CreateBrowserClient();
-
   // Subclasses can override this to provide additional .pak files to be
   // included in the ui::ResourceBundle.
   virtual void AddDataPackFromPath(
@@ -56,11 +49,13 @@ class MainDelegate : public content::ContentMainDelegate {
 
  private:
   virtual content::ContentBrowserClient* CreateContentBrowserClient() override;
+  virtual content::ContentRendererClient* CreateContentRendererClient() override;
 
   void InitializeResourceBundle();
 
   scoped_ptr<ContentClient> content_client_;
   scoped_ptr<BrowserClient> browser_client_;
+  scoped_ptr<RendererClient> renderer_client_;
 
   DISALLOW_COPY_AND_ASSIGN(MainDelegate);
 };

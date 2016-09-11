@@ -6,7 +6,7 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "v8/include/v8.h"
 
-namespace brightray_example {
+namespace brightray {
 
 namespace {
 
