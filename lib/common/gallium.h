@@ -7,9 +7,6 @@ extern "C" {
 
 #define GALLIUM_EXPORT __attribute__ ((visibility ("default")))
 
-GALLIUM_EXPORT void AddArg(const char* arg);
-GALLIUM_EXPORT int RunGallium();
-
 // gallium_error represents an error
 typedef struct GALLIUM_EXPORT gallium_error {
 	const char* msg;

@@ -12,24 +12,6 @@
 #include "content/public/app/content_main.h"
 #include "content/public/browser/browser_thread.h"
 
-std::vector<std::string> args;
-
-void AddArg(const char* arg) {
-  args.push_back(strdup(arg));
-}
-
-int RunGallium() {
-  const char** argv = new const char*[args.size()];
-  for (size_t i = 0; i < args.size(); i++) {
-    argv[i] = args[i].c_str();
-  }
-  brightray::MainDelegate delegate;
-  content::ContentMainParams params(&delegate);
-  params.argc = args.size();
-  params.argv = argv;
-  return content::ContentMain(params);
-}
-
 std::unique_ptr<brightray::MainDelegate> delegate;
 
 int GalliumLoop(const char* argv0, struct gallium_error** err) {

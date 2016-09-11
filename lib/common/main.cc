@@ -24,11 +24,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
 #elif defined(OS_MACOSX)
 
 int main(int argc, const char* argv[]) {
-  //BrightrayExampleMain(argc, argv);
-  for (int i = 0; i < argc; i++) {
-    AddArg(argv[i]);
-  }
-  return RunGallium();
+  BrightrayExampleMain(argc, argv);
 }
 
 #else // OS_LINUX
