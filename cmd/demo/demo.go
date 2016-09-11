@@ -10,13 +10,11 @@ import (
 
 func main() {
 	runtime.LockOSThread()
-	go Main()
-	gallium.Loop(os.Args)
+	gallium.Loop(os.Args, OnReady)
 }
 
-func Main() {
+func OnReady(browser *gallium.Browser) {
+	browser.CreateWindow("http://example.com/", "Here is a window")
 	time.Sleep(time.Second)
-	gallium.CreateWindow("http://example.com/", "Here is a window")
-	time.Sleep(time.Second)
-	gallium.CreateWindow("http://httpbin.org/", "Here is another window")
+	browser.CreateWindow("http://httpbin.org/", "Here is another window")
 }

@@ -19,6 +19,7 @@ import (
 	logging "log"
 	"os"
 	"syscall"
+	"time"
 	"unsafe"
 )
 
@@ -48,17 +49,47 @@ func init() {
 	}
 }
 
-func Loop(args []string) {
-	log.Println("=== gallium.Run ===")
-	cerr := (*C.struct_gallium_error)(C.malloc(C.sizeof_struct_gallium_error))
-	defer C.free(unsafe.Pointer(cerr))
-	C.GalliumLoop(C.CString(args[0]), &cerr)
+// Browser is the handle that allows you to create windows
+type Browser struct{}
+
+// cerr holds a C-allocated error, which must be freed explicitly.
+type cerr struct {
+	st *C.struct_gallium_error
 }
 
-func CreateWindow(url, title string) error {
+// newCerr allocates a new error struct. It must be freed explicitly.
+func newCerr() cerr {
+	return cerr{
+		st: (*C.struct_gallium_error)(C.malloc(C.sizeof_struct_gallium_error)),
+	}
+}
+
+func (e cerr) free() {
+	C.free(unsafe.Pointer(e.st))
+}
+
+func (e *cerr) err() error {
+	// TODO
+	return fmt.Errorf("C error")
+}
+
+// Loop starts the browser loop and does not return unless there is an initialization error
+func Loop(args []string, onready func(*Browser)) error {
+	log.Println("=== gallium.Run ===")
+	cerr := newCerr()
+	defer cerr.free()
+	go func() {
+		time.Sleep(time.Second) // TODO: find out when the browser is actually ready
+		onready(&Browser{})
+	}()
+	C.GalliumLoop(C.CString(args[0]), &cerr.st)
+	return cerr.err()
+}
+
+func (b *Browser) CreateWindow(url, title string) error {
 	log.Println("=== gallium.CreateWindow ===")
-	cerr := (*C.struct_gallium_error)(C.malloc(C.sizeof_struct_gallium_error))
-	defer C.free(unsafe.Pointer(cerr))
-	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr)
+	cerr := newCerr()
+	defer cerr.free()
+	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr.st)
 	return nil
 }
