@@ -26,7 +26,7 @@
       'renderer/renderer_client.cc',
       'renderer/renderer_client.h',
 
-      'browser/brightray_paths.h',
+      'browser/paths.h',
       'browser/browser_client.cc',
       'browser/browser_client.h',
       'browser/browser_context.cc',

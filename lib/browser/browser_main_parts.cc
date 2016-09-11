@@ -32,7 +32,7 @@
 #include "base/environment.h"
 #include "base/path_service.h"
 #include "base/nix/xdg_util.h"
-#include "browser/brightray_paths.h"
+#include "browser/paths.h"
 #endif
 
 #if defined(OS_WIN)

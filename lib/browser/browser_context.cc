@@ -4,7 +4,7 @@
 
 #include "browser/browser_context.h"
 
-#include "browser/brightray_paths.h"
+#include "browser/paths.h"
 #include "browser/inspectable_web_contents_impl.h"
 #include "browser/network_delegate.h"
 #include "common/application_info.h"
