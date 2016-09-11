@@ -7,7 +7,7 @@
 
 @class BRYInspectableWebContentsView;
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsImpl;
 
@@ -38,6 +38,6 @@ class InspectableWebContentsViewMac : public InspectableWebContentsView {
   DISALLOW_COPY_AND_ASSIGN(InspectableWebContentsViewMac);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

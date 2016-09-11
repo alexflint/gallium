@@ -2,7 +2,7 @@
 
 #include "browser/inspectable_web_contents_impl.h"
 
-namespace brightray {
+namespace gallium {
 
 InspectableWebContents* InspectableWebContents::Create(
     const content::WebContents::CreateParams& create_params) {
@@ -15,4 +15,4 @@ InspectableWebContents* InspectableWebContents::Create(
   return new InspectableWebContentsImpl(web_contents);
 }
 
-}  // namespace brightray
+}  // namespace gallium

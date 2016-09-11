@@ -13,7 +13,7 @@ namespace content {
 class DevToolsHttpHandler;
 }
 
-namespace brightray {
+namespace gallium {
 
 class RemoteDebuggingServer {
  public:
@@ -26,6 +26,6 @@ class RemoteDebuggingServer {
   DISALLOW_COPY_AND_ASSIGN(RemoteDebuggingServer);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BROWSER_REMOTE_DEBUGGING_SERVER_H_

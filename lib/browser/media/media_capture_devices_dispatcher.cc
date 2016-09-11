@@ -9,7 +9,7 @@
 #include "content/public/browser/media_capture_devices.h"
 #include "content/public/common/media_stream_request.h"
 
-namespace brightray {
+namespace gallium {
 
 using content::BrowserThread;
 using content::MediaStreamDevices;
@@ -147,4 +147,4 @@ void MediaCaptureDevicesDispatcher::OnCreatingAudioStream(
     int render_view_id) {
 }
 
-}  // namespace brightray
+}  // namespace gallium

@@ -12,7 +12,7 @@
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/media_stream_request.h"
 
-namespace brightray {
+namespace gallium {
 
 // This singleton is used to receive updates about media events from the content
 // layer.
@@ -75,6 +75,6 @@ class MediaCaptureDevicesDispatcher : public content::MediaObserver {
   DISALLOW_COPY_AND_ASSIGN(MediaCaptureDevicesDispatcher);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BRIGHTRAY_BROWSER_MEDIA_MEDIA_CAPTURE_DEVICES_DISPATCHER_H_

@@ -14,7 +14,7 @@ namespace content {
 class DevToolsHttpHandler;
 }
 
-namespace brightray {
+namespace gallium {
 
 class DevToolsManagerDelegate : public content::DevToolsManagerDelegate {
  public:
@@ -38,6 +38,6 @@ class DevToolsManagerDelegate : public content::DevToolsManagerDelegate {
   DISALLOW_COPY_AND_ASSIGN(DevToolsManagerDelegate);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BROWSER_DEVTOOLS_MANAGER_DELEGATE_H_

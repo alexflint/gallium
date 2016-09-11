@@ -3,7 +3,7 @@
 
 #include "content/public/renderer/content_renderer_client.h"
 
-namespace brightray {
+namespace gallium {
 
 class RendererClient : public content::ContentRendererClient {
 public:

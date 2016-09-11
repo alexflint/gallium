@@ -9,7 +9,7 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller_factory.h"
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext;
 
@@ -37,6 +37,6 @@ class WebUIControllerFactory : public content::WebUIControllerFactory {
   DISALLOW_COPY_AND_ASSIGN(WebUIControllerFactory);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

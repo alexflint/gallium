@@ -14,7 +14,7 @@
 #include "browser/notification_presenter.h"
 #include "ui/base/glib/glib_signal.h"
 
-namespace brightray {
+namespace gallium {
 
 class NotificationPresenterLinux : public NotificationPresenter {
  public:
@@ -47,6 +47,6 @@ class NotificationPresenterLinux : public NotificationPresenter {
   GList* notifications_;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

@@ -21,7 +21,7 @@
 
 using content::BrowserThread;
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext::ResourceContext : public content::ResourceContext {
  public:
@@ -153,4 +153,4 @@ content::SSLHostStateDelegate* BrowserContext::GetSSLHostStateDelegate() {
   return nullptr;
 }
 
-}  // namespace brightray
+}  // namespace gallium

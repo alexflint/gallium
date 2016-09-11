@@ -15,12 +15,12 @@
 
 @interface BRYUserNotificationCenterDelegate : NSObject<NSUserNotificationCenterDelegate> {
  @private
-  brightray::NotificationPresenterMac* presenter_;
+  gallium::NotificationPresenterMac* presenter_;
 }
-- (instancetype)initWithNotificationPresenter:(brightray::NotificationPresenterMac*)presenter;
+- (instancetype)initWithNotificationPresenter:(gallium::NotificationPresenterMac*)presenter;
 @end
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -91,11 +91,11 @@ void NotificationPresenterMac::CancelNotification(content::DesktopNotificationDe
   RemoveNotification(delegate);
 }
 
-}  // namespace brightray
+}  // namespace gallium
 
 @implementation BRYUserNotificationCenterDelegate
 
-- (instancetype)initWithNotificationPresenter:(brightray::NotificationPresenterMac*)presenter {
+- (instancetype)initWithNotificationPresenter:(gallium::NotificationPresenterMac*)presenter {
   self = [super init];
   if (!self)
     return nil;

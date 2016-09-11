@@ -12,10 +12,10 @@
 class PrefRegistrySimple;
 class PrefService;
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext : public content::BrowserContext,
-                       public brightray::URLRequestContextGetter::Delegate {
+                       public gallium::URLRequestContextGetter::Delegate {
  public:
   BrowserContext();
   ~BrowserContext();
@@ -70,6 +70,6 @@ class BrowserContext : public content::BrowserContext,
   DISALLOW_COPY_AND_ASSIGN(BrowserContext);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

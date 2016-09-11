@@ -12,7 +12,7 @@
 #include "content/public/common/show_desktop_notification_params.h"
 #include "common/application_info.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -109,4 +109,4 @@ void NotificationPresenterLinux::OnNotificationView(
   DeleteNotification(notification);
 }
 
-}  // namespace brightray
+}  // namespace gallium

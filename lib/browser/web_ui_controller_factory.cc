@@ -11,7 +11,7 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/url_constants.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -56,4 +56,4 @@ content::WebUIController* WebUIControllerFactory::CreateWebUIControllerForURL(
   return NULL;
 }
 
-}  // namespace brightray
+}  // namespace gallium

@@ -8,7 +8,7 @@
 #include "base/compiler_specific.h"
 #include "content/public/common/content_client.h"
 
-namespace brightray {
+namespace gallium {
 
 class ContentClient : public content::ContentClient {
  public:
@@ -26,6 +26,6 @@ class ContentClient : public content::ContentClient {
   DISALLOW_COPY_AND_ASSIGN(ContentClient);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

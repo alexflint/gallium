@@ -11,7 +11,7 @@ class View;
 }
 #endif
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsView {
  public:
@@ -37,6 +37,6 @@ class InspectableWebContentsView {
       const DevToolsContentsResizingStrategy& strategy) = 0;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

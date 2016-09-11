@@ -2,7 +2,7 @@
 
 #include "browser/media/media_stream_devices_controller.h"
 
-namespace brightray {
+namespace gallium {
 
 DefaultWebContentsDelegate::DefaultWebContentsDelegate() {
 }
@@ -25,4 +25,4 @@ void DefaultWebContentsDelegate::RequestMediaAccessPermission(
   controller.TakeAction();
 }
 
-}  // namespace brightray
+}  // namespace gallium

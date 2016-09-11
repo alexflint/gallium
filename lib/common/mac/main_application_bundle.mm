@@ -10,7 +10,7 @@
 #import "base/files/file_path.h"
 #import "base/path_service.h"
 
-namespace brightray {
+namespace gallium {
 
 base::FilePath MainApplicationBundlePath() {
   // Start out with the path to the running executable.

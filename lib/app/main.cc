@@ -12,7 +12,7 @@
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
   sandbox::SandboxInterfaceInfo sandbox_info = {0};
   content::InitializeSandboxInfo(&sandbox_info);
-  brightray::MainDelegate delegate;
+  gallium::MainDelegate delegate;
 
   content::ContentMainParams params(&delegate);
   params.instance = instance;
@@ -29,7 +29,7 @@ int main(int argc, const char* argv[]) {
 #else // OS_LINUX
 
 int main(int argc, const char* argv[]) {
-  brightray::MainDelegate delegate;
+  gallium::MainDelegate delegate;
   content::ContentMainParams params(&delegate);
   params.argc = argc;
   params.argv = argv;

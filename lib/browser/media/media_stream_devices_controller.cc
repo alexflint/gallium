@@ -9,7 +9,7 @@
 #include "content/public/browser/desktop_media_id.h"
 #include "content/public/common/media_stream_request.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -197,4 +197,4 @@ void MediaStreamDevicesController::HandleUserMediaRequest() {
          scoped_ptr<content::MediaStreamUI>());
 }
 
-}  // namespace brightray
+}  // namespace gallium

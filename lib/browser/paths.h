@@ -17,7 +17,7 @@
 #include "base/base_paths_posix.h"
 #endif
 
-namespace brightray {
+namespace gallium {
 
 enum {
   PATH_START = 1000,
@@ -40,6 +40,6 @@ enum {
   PATH_END
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BROWSER_PATHS_H_

@@ -19,7 +19,7 @@
 
 using content::WebContents;
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -99,4 +99,4 @@ DevToolsUI::DevToolsUI(BrowserContext* browser_context, content::WebUI* web_ui)
   content::URLDataSource::Add(browser_context, new BundledDataSource());
 }
 
-}  // namespace brightray
+}  // namespace gallium

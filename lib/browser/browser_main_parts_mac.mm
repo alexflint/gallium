@@ -4,7 +4,7 @@
 #import "base/mac/bundle_locations.h"
 #import <AppKit/AppKit.h>
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 

@@ -17,7 +17,7 @@ namespace ui {
 class ResourceBundle;
 }
 
-namespace brightray {
+namespace gallium {
 
 class BrowserClient;
 class ContentClient;
@@ -60,5 +60,5 @@ class MainDelegate : public content::ContentMainDelegate {
   DISALLOW_COPY_AND_ASSIGN(MainDelegate);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 #endif

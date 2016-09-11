@@ -7,11 +7,11 @@ namespace views {
 class Widget;
 }
 
-namespace brightray_example {
+namespace gallium {
 
 class WindowViews : public Window {
  public:
-  WindowViews(brightray::BrowserContext*);
+  WindowViews(gallium::BrowserContext*);
   ~WindowViews();
 
   void Show() override;

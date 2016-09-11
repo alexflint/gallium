@@ -3,7 +3,7 @@
 
 #include "content/public/renderer/render_view_observer.h"
 
-namespace brightray {
+namespace gallium {
 
 class RenderViewObserver : content::RenderViewObserver {
 public:

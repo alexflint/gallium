@@ -17,7 +17,7 @@
 #include "content/public/common/content_paths.h"
 #include "content/public/common/content_switches.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 

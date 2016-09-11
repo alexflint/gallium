@@ -24,7 +24,7 @@ class URLRequestContextStorage;
 class URLRequestJobFactory;
 }
 
-namespace brightray {
+namespace gallium {
 
 class URLRequestContextGetter : public net::URLRequestContextGetter {
  public:
@@ -74,6 +74,6 @@ class URLRequestContextGetter : public net::URLRequestContextGetter {
   DISALLOW_COPY_AND_ASSIGN(URLRequestContextGetter);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

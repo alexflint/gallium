@@ -12,7 +12,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
-namespace brightray {
+namespace gallium {
 
 ContentClient::ContentClient() {
 }
@@ -46,4 +46,4 @@ gfx::Image& ContentClient::GetNativeImageNamed(int resource_id) const {
       resource_id);
 }
 
-}  // namespace brightray
+}  // namespace gallium

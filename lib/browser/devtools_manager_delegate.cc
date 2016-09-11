@@ -33,7 +33,7 @@ using content::BrowserContext;
 using content::DevToolsTarget;
 using content::DevToolsHttpHandler;
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -228,4 +228,4 @@ void DevToolsManagerDelegate::EnumerateTargets(TargetCallback callback) {
   callback.Run(targets);
 }
 
-}  // namespace brightray
+}  // namespace gallium

@@ -9,7 +9,7 @@
 
 #include "content/public/browser/web_contents_delegate.h"
 
-namespace brightray {
+namespace gallium {
 
 class MediaStreamDevicesController {
  public:
@@ -42,6 +42,6 @@ class MediaStreamDevicesController {
   DISALLOW_COPY_AND_ASSIGN(MediaStreamDevicesController);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BRIGHTRAY_BROWSER_MEDIA_MEDIA_STREAM_DEVICES_CONTROLLER_H_

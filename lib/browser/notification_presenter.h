@@ -9,7 +9,7 @@ class DesktopNotificationDelegate;
 struct ShowDesktopNotificationHostMsgParams;
 }
 
-namespace brightray {
+namespace gallium {
 
 class NotificationPresenter {
  public:
@@ -23,6 +23,6 @@ class NotificationPresenter {
       base::Closure* cancel_callback) = 0;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

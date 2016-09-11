@@ -10,7 +10,7 @@
 #include "content/public/browser/devtools_http_handler.h"
 #include "net/socket/tcp_server_socket.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -41,4 +41,4 @@ RemoteDebuggingServer::~RemoteDebuggingServer() {
   devtools_http_handler_->Stop();
 }
 
-}  // namespace brightray
+}  // namespace gallium

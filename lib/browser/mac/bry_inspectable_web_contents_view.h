@@ -5,15 +5,15 @@
 #include "base/mac/scoped_nsobject.h"
 #include "ui/base/cocoa/base_view.h"
 
-namespace brightray {
+namespace gallium {
 class InspectableWebContentsViewMac;
 }
 
-using brightray::InspectableWebContentsViewMac;
+using gallium::InspectableWebContentsViewMac;
 
 @interface BRYInspectableWebContentsView : BaseView<NSWindowDelegate> {
 @private
-  brightray::InspectableWebContentsViewMac* inspectableWebContentsView_;
+  gallium::InspectableWebContentsViewMac* inspectableWebContentsView_;
 
   base::scoped_nsobject<NSWindow> devtools_window_;
   BOOL devtools_visible_;

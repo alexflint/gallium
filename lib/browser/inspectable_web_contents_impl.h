@@ -23,7 +23,7 @@ namespace content {
 class DevToolsAgentHost;
 }
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsDelegate;
 class InspectableWebContentsView;
@@ -144,6 +144,6 @@ class InspectableWebContentsImpl :
   DISALLOW_COPY_AND_ASSIGN(InspectableWebContentsImpl);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

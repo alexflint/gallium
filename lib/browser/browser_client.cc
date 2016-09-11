@@ -14,7 +14,7 @@
 #include "base/path_service.h"
 #include "content/public/common/url_constants.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -101,4 +101,4 @@ content::DevToolsManagerDelegate* BrowserClient::GetDevToolsManagerDelegate() {
   return new DevToolsManagerDelegate;
 }
 
-}  // namespace brightray
+}  // namespace gallium

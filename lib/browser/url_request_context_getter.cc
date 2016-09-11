@@ -41,7 +41,7 @@
 
 using content::BrowserThread;
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -240,4 +240,4 @@ scoped_refptr<base::SingleThreadTaskRunner> URLRequestContextGetter::GetNetworkT
   return BrowserThread::GetMessageLoopProxyForThread(BrowserThread::IO);
 }
 
-}  // namespace brightray
+}  // namespace gallium

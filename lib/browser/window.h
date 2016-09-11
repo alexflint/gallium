@@ -4,32 +4,29 @@
 #include "base/basictypes.h"
 #include "base/memory/scoped_ptr.h"
 
-namespace brightray {
+namespace gallium {
 class BrowserContext;
 class DefaultWebContentsDelegate;
 class InspectableWebContents;
-}
-
-namespace brightray_example {
 
 class Window {
  public:
-  static Window* Create(brightray::BrowserContext*);
+  static Window* Create(gallium::BrowserContext*);
 
-  brightray::BrowserContext* browser_context() { return browser_context_; }
-  brightray::InspectableWebContents* inspectable_web_contents() { return inspectable_web_contents_.get(); }
+  gallium::BrowserContext* browser_context() { return browser_context_; }
+  gallium::InspectableWebContents* inspectable_web_contents() { return inspectable_web_contents_.get(); }
   
   void WindowReady();
   virtual void Show() = 0;
 
  protected:
-  Window(brightray::BrowserContext*);
+  Window(gallium::BrowserContext*);
   virtual ~Window();
 
  private:
-  brightray::BrowserContext* browser_context_;
-  scoped_ptr<brightray::InspectableWebContents> inspectable_web_contents_;
-  scoped_ptr<brightray::DefaultWebContentsDelegate> web_contents_delegate_;
+  gallium::BrowserContext* browser_context_;
+  scoped_ptr<gallium::InspectableWebContents> inspectable_web_contents_;
+  scoped_ptr<gallium::DefaultWebContentsDelegate> web_contents_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(Window);
 };

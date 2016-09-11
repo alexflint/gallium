@@ -10,7 +10,7 @@
 #include "content/public/browser/browser_main_parts.h"
 
 #if defined(TOOLKIT_VIEWS)
-namespace brightray {
+namespace gallium {
 class ViewsDelegate;
 }
 #endif
@@ -21,7 +21,7 @@ class WMState;
 }
 #endif
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext;
 class WebUIControllerFactory;
@@ -71,6 +71,6 @@ class BrowserMainParts : public content::BrowserMainParts {
   DISALLOW_COPY_AND_ASSIGN(BrowserMainParts);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

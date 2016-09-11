@@ -5,7 +5,7 @@
 
 #import "base/strings/sys_string_conversions.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 

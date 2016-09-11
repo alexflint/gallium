@@ -6,7 +6,7 @@
 
 #include "net/base/net_errors.h"
 
-namespace brightray {
+namespace gallium {
 
 NetworkDelegate::NetworkDelegate() {
 }
@@ -98,4 +98,4 @@ int NetworkDelegate::OnBeforeSocketStreamConnect(
   return net::OK;
 }
 
-}  // namespace brightray
+}  // namespace gallium

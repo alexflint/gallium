@@ -7,7 +7,7 @@
 
 #include "content/public/browser/content_browser_client.h"
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext;
 class BrowserMainParts;
@@ -59,6 +59,6 @@ class BrowserClient : public content::ContentBrowserClient {
   DISALLOW_COPY_AND_ASSIGN(BrowserClient);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

@@ -22,7 +22,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -375,4 +375,4 @@ void InspectableWebContentsImpl::CloseContents(content::WebContents* source) {
   CloseDevTools();
 }
 
-}  // namespace brightray
+}  // namespace gallium

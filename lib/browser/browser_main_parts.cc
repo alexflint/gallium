@@ -41,7 +41,7 @@
 #include "ui/gfx/platform_font_win.h"
 #endif
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -158,4 +158,4 @@ void BrowserMainParts::InitProxyResolverV8() {
   net::ProxyResolverV8::EnsureIsolateCreated();
 }
 
-}  // namespace brightray
+}  // namespace gallium

@@ -8,7 +8,7 @@
 #include "base/compiler_specific.h"
 #include "content/public/browser/web_ui_controller.h"
 
-namespace brightray {
+namespace gallium {
 
 class BrowserContext;
 
@@ -20,6 +20,6 @@ class DevToolsUI : public content::WebUIController {
   DISALLOW_COPY_AND_ASSIGN(DevToolsUI);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

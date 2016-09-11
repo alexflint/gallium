@@ -13,7 +13,7 @@
 
 @class BRYUserNotificationCenterDelegate;
 
-namespace brightray {
+namespace gallium {
 
 class NotificationPresenterMac : public NotificationPresenter {
  public:
@@ -46,6 +46,6 @@ class NotificationPresenterMac : public NotificationPresenter {
   base::scoped_nsobject<BRYUserNotificationCenterDelegate> delegate_;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

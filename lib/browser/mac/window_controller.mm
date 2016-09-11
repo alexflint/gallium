@@ -7,12 +7,12 @@
 
 @implementation WindowController
 
-- (instancetype)initWithBrowserContext:(brightray::BrowserContext *)browserContext {
+- (instancetype)initWithBrowserContext:(gallium::BrowserContext *)browserContext {
   self = [super initWithWindowNibName:@"WindowController"];
   if (!self)
     return nil;
 
-  wrapper_window_.reset(new brightray_example::WindowMac(browserContext, self));
+  wrapper_window_.reset(new gallium::WindowMac(browserContext, self));
 
   return self;
 }
@@ -31,7 +31,7 @@
   self.wrapperWindow->WindowReady();
 }
 
-- (brightray_example::WindowMac*)wrapperWindow {
+- (gallium::WindowMac*)wrapperWindow {
   return wrapper_window_.get();
 }
 

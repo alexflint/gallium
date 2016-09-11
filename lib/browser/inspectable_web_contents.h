@@ -3,7 +3,7 @@
 
 #include "content/public/browser/web_contents.h"
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsDelegate;
 class InspectableWebContentsView;
@@ -33,6 +33,6 @@ class InspectableWebContents {
   virtual InspectableWebContentsDelegate* GetDelegate() const = 0;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

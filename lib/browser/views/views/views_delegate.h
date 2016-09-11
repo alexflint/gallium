@@ -8,7 +8,7 @@
 #include "base/compiler_specific.h"
 #include "ui/views/views_delegate.h"
 
-namespace brightray {
+namespace gallium {
 
 class ViewsDelegate : public views::ViewsDelegate {
  public:
@@ -59,6 +59,6 @@ class ViewsDelegate : public views::ViewsDelegate {
 
 
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BRIGHTRAY_BROWSER_VIEWS_VIEWS_DELEGATE_H_

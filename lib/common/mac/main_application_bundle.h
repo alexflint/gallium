@@ -7,7 +7,7 @@ namespace base {
 class FilePath;
 }
 
-namespace brightray {
+namespace gallium {
 
 // The "main" application bundle is the outermost bundle for this logical
 // application. E.g., if you have MyApp.app and
@@ -16,6 +16,6 @@ namespace brightray {
 NSBundle* MainApplicationBundle();
 base::FilePath MainApplicationBundlePath();
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

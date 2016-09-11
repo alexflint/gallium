@@ -9,7 +9,7 @@
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/views/window/client_view.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -190,4 +190,4 @@ void InspectableWebContentsViewViews::Layout() {
   contents_web_view_->SetBoundsRect(new_contents_bounds);
 }
 
-}  // namespace brightray
+}  // namespace gallium

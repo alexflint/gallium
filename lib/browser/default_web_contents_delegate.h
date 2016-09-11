@@ -3,7 +3,7 @@
 
 #include "content/public/browser/web_contents_delegate.h"
 
-namespace brightray {
+namespace gallium {
 
 // This class provides some sane default behaviors to any content::WebContents
 // instance (e.g., keyboard shortcut handling on Mac).
@@ -26,6 +26,6 @@ class DefaultWebContentsDelegate : public content::WebContentsDelegate {
 #endif
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

@@ -4,7 +4,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/strings/utf_string_conversions.h"
 
-namespace brightray {
+namespace gallium {
 
 std::string GetApplicationName() {
   auto module = GetModuleHandle(nullptr);
@@ -20,4 +20,4 @@ std::string GetApplicationVersion() {
   return base::UTF16ToUTF8(info->product_version());
 }
 
-}  // namespace brightray
+}  // namespace gallium

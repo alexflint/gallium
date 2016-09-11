@@ -12,7 +12,7 @@
 #include "content/public/app/content_main.h"
 #include "content/public/browser/browser_thread.h"
 
-std::unique_ptr<brightray::MainDelegate> delegate;
+std::unique_ptr<gallium::MainDelegate> delegate;
 
 int GalliumLoop(const char* argv0, struct gallium_error** err) {
   uint64_t tid;
@@ -20,7 +20,7 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
   printf("in GalliumLoop, thread=%llu\n", tid);
   fflush(stdout);
 
-  delegate.reset(new brightray::MainDelegate);
+  delegate.reset(new gallium::MainDelegate);
   content::ContentMainParams params(delegate.get());
 
   const char* argv[] = {argv0};
@@ -32,7 +32,7 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
 
 void DoCreateWindow(const char* title) {
   printf("At DoCreateWindow\n");
-  auto window = brightray_example::Window::Create(delegate->browser_client()->browser_context());
+  auto window = gallium::Window::Create(delegate->browser_client()->browser_context());
   window->Show();
 }
 

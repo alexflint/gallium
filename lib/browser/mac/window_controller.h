@@ -4,22 +4,19 @@
 #import "base/memory/scoped_ptr.h"
 #import <Cocoa/Cocoa.h>
 
-namespace brightray {
+namespace gallium {
 class BrowserContext;
-}
-
-namespace brightray_example {
 class WindowMac;
 }
 
 @interface WindowController : NSWindowController {
  @private
-  scoped_ptr<brightray_example::WindowMac> wrapper_window_;
+  scoped_ptr<gallium::WindowMac> wrapper_window_;
 }
 
-@property (nonatomic, readonly, assign) brightray_example::WindowMac* wrapperWindow;
+@property (nonatomic, readonly, assign) gallium::WindowMac* wrapperWindow;
 
-- (instancetype)initWithBrowserContext:(brightray::BrowserContext*)browserContext;
+- (instancetype)initWithBrowserContext:(gallium::BrowserContext*)browserContext;
 
 @end
 

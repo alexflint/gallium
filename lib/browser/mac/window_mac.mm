@@ -5,9 +5,9 @@
 
 #import "browser/mac/window_controller.h"
 
-namespace brightray_example {
+namespace gallium {
 
-Window* Window::Create(brightray::BrowserContext* browser_context) {
+Window* Window::Create(gallium::BrowserContext* browser_context) {
   // controller will clean itself up when its window is closed, but the static analyzer doesn't know
   // that.
   uint64_t tid;
@@ -23,7 +23,7 @@ Window* Window::Create(brightray::BrowserContext* browser_context) {
 #endif
 }
 
-WindowMac::WindowMac(brightray::BrowserContext* browser_context, WindowController* controller)
+WindowMac::WindowMac(gallium::BrowserContext* browser_context, WindowController* controller)
   : Window(browser_context),
     controller_(controller) {
 }

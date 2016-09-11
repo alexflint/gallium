@@ -7,7 +7,7 @@
 #import "ui/base/cocoa/underlay_opengl_hosting_window.h"
 #include "ui/gfx/mac/scoped_ns_disable_screen_updates.h"
 
-using namespace brightray;
+using namespace gallium;
 
 @implementation BRYInspectableWebContentsView
 

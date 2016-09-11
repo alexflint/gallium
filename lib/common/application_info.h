@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace brightray {
+namespace gallium {
 
 std::string GetApplicationName();
 std::string GetApplicationVersion();

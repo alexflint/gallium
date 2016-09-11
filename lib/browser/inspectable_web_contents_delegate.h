@@ -5,7 +5,7 @@
 
 #include "ui/gfx/image/image_skia.h"
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsDelegate {
  public:
@@ -27,6 +27,6 @@ class InspectableWebContentsDelegate {
 #endif
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BRIGHTRAY_INSPECTABLE_WEB_CONTENTS_DELEGATE_H_

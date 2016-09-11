@@ -4,7 +4,7 @@
 #include "content/public/app/content_main.h"
 
 int BrightrayExampleMain(int argc, const char* argv[]) {
-  brightray::MainDelegate delegate;
+  gallium::MainDelegate delegate;
   content::ContentMainParams params(&delegate);
   params.argc = argc;
   params.argv = argv;

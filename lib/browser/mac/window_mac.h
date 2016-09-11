@@ -5,11 +5,11 @@
 
 @class WindowController;
 
-namespace brightray_example {
+namespace gallium {
   
 class WindowMac : public Window {
  public:
-  WindowMac(brightray::BrowserContext*, WindowController*);
+  WindowMac(gallium::BrowserContext*, WindowController*);
   ~WindowMac();
 
   void Show() override;

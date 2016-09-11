@@ -13,7 +13,7 @@
 #include "content/public/common/content_switches.h"
 #include "ui/base/resource/resource_bundle.h"
 
-namespace brightray {
+namespace gallium {
 
 MainDelegate::MainDelegate() {
 }
@@ -67,4 +67,4 @@ content::ContentRendererClient* MainDelegate::CreateContentRendererClient() {
   return renderer_client_.get();
 }
 
-}  // namespace brightray
+}  // namespace gallium

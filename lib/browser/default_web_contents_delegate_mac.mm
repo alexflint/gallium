@@ -3,7 +3,7 @@
 #import "content/public/browser/native_web_keyboard_event.h"
 #import <AppKit/AppKit.h>
 
-namespace brightray {
+namespace gallium {
 
 void DefaultWebContentsDelegate::HandleKeyboardEvent(content::WebContents*, const content::NativeWebKeyboardEvent& event) {
   if (event.skip_in_browser)

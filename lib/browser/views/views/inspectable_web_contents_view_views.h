@@ -12,7 +12,7 @@ class WebView;
 class Widget;
 }
 
-namespace brightray {
+namespace gallium {
 
 class InspectableWebContentsImpl;
 
@@ -55,6 +55,6 @@ class InspectableWebContentsViewViews : public InspectableWebContentsView,
   DISALLOW_COPY_AND_ASSIGN(InspectableWebContentsViewViews);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BROWSER_VIEWS_INSPECTABLE_WEB_CONTENTS_VIEW_VIEWS_H_

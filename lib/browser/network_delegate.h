@@ -7,7 +7,7 @@
 
 #include "net/base/network_delegate.h"
 
-namespace brightray {
+namespace gallium {
 
 class NetworkDelegate : public net::NetworkDelegate {
  public:
@@ -60,6 +60,6 @@ class NetworkDelegate : public net::NetworkDelegate {
   DISALLOW_COPY_AND_ASSIGN(NetworkDelegate);
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif

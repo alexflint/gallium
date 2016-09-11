@@ -10,7 +10,7 @@
 #include "ui/views/linux_ui/linux_ui.h"
 #endif
 
-namespace brightray {
+namespace gallium {
 
 ViewsDelegate::ViewsDelegate() {
   DCHECK(!views::ViewsDelegate::views_delegate);
@@ -111,4 +111,4 @@ bool ViewsDelegate::WindowManagerProvidesTitleBar(bool maximized) {
 #endif
 }
 
-}  // namespace brightray
+}  // namespace gallium

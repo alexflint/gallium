@@ -17,7 +17,7 @@ namespace base {
 class ListValue;
 }
 
-namespace brightray {
+namespace gallium {
 
 /**
  * Dispatcher for messages sent from the DevTools frontend running in an
@@ -73,6 +73,6 @@ class DevToolsEmbedderMessageDispatcher {
   HandlerMap handlers_;
 };
 
-}  // namespace brightray
+}  // namespace gallium
 
 #endif  // BRIGHTRAY_BROWSER_DEVTOOLS_EMBEDDER_MESSAGE_DISPATCHER_H_

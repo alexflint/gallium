@@ -1,9 +1,9 @@
 #include "browser/inspectable_web_contents_delegate.h"
 
-namespace brightray {
+namespace gallium {
 
 gfx::ImageSkia InspectableWebContentsDelegate::GetDevToolsWindowIcon() {
   return gfx::ImageSkia();
 }
 
-}  // namespace brightray
+}  // namespace gallium

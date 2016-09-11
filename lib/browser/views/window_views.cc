@@ -9,7 +9,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 
-namespace brightray_example {
+namespace gallium {
 
 namespace {
 
@@ -40,11 +40,11 @@ class WidgetDelegateView : public views::WidgetDelegateView {
 
 }
 
-Window* Window::Create(brightray::BrowserContext* browser_context) {
+Window* Window::Create(gallium::BrowserContext* browser_context) {
   return new WindowViews(browser_context);
 }
 
-WindowViews::WindowViews(brightray::BrowserContext* browser_context)
+WindowViews::WindowViews(gallium::BrowserContext* browser_context)
     : Window(browser_context),
       widget_(new views::Widget) {
   auto delegate_view = new WidgetDelegateView(make_scoped_ptr(this).Pass());

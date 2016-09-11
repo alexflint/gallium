@@ -7,7 +7,7 @@
 #include "base/bind.h"
 #include "base/values.h"
 
-namespace brightray {
+namespace gallium {
 
 namespace {
 
@@ -249,4 +249,4 @@ void DevToolsEmbedderMessageDispatcher::RegisterHandler(
   handlers_[method] = handler;
 }
 
-}  // namespace brightray
+}  // namespace gallium
