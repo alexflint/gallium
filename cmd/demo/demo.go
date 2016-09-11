@@ -1,21 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"os"
-	"strings"
+	"runtime"
 	"time"
 
 	"github.com/alexflint/gallium"
 )
 
 func main() {
-	f, err := os.OpenFile("/Users/alex/gallium.log", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0755)
-	//f, err := os.Create("/Users/alex/gallium.log")
-	if err == nil {
-		defer f.Close()
-		fmt.Fprintf(f, "%v Gallium invoked with args %v\n", time.Now(), strings.Join(os.Args, " "))
-	}
+	runtime.LockOSThread()
+	go Main()
+	gallium.Loop(os.Args)
+}
 
-	gallium.Run(os.Args)
+func Main() {
+	time.Sleep(time.Second)
+	gallium.CreateWindow("Here is a window")
+	time.Sleep(time.Second)
+	gallium.CreateWindow("Here is another window")
 }
