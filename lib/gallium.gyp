@@ -9,10 +9,6 @@
       'common/main.cc',
     ],
     'lib_sources': [
-      'browser/toplevel_browser_client.cc',
-      'browser/toplevel_browser_client.h',
-      'browser/toplevel_browser_main_parts.cc',
-      'browser/toplevel_browser_main_parts.h',
       'browser/mac/window_controller.mm',
       'browser/mac/window_controller.h',
       'browser/mac/window_mac.h',

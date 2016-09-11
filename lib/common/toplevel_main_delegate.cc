@@ -1,6 +1,6 @@
 #include "common/toplevel_main_delegate.h"
 
-#include "browser/toplevel_browser_client.h"
+#include "browser/browser_client.h"
 #include "renderer/renderer_client.h"
 
 namespace brightray_example {
@@ -17,7 +17,7 @@ brightray::BrowserClient* MainDelegate::get_browser_client() {
 }
 
 content::ContentBrowserClient* MainDelegate::CreateContentBrowserClient() {
-  browser_client_.reset(new BrowserClient);
+  browser_client_.reset(new brightray::BrowserClient);
   return browser_client_.get();
 }
 

@@ -1,7 +1,7 @@
 #ifndef BRIGHTRAY_EXAMPLE_COMMON_MAIN_DELEGATE_H_
 #define BRIGHTRAY_EXAMPLE_COMMON_MAIN_DELEGATE_H_
 
-#include "browser/toplevel_browser_client.h"
+#include "browser/browser_client.h"
 #include "renderer/renderer_client.h"
 
 #include "common/main_delegate.h"
@@ -19,7 +19,7 @@ private:
   content::ContentBrowserClient* CreateContentBrowserClient() override;
   content::ContentRendererClient* CreateContentRendererClient() override;
 
-  scoped_ptr<BrowserClient> browser_client_;
+  scoped_ptr<brightray::BrowserClient> browser_client_;
   scoped_ptr<RendererClient> renderer_client_;
 
   DISALLOW_COPY_AND_ASSIGN(MainDelegate);
