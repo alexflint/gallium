@@ -49,8 +49,12 @@ BrowserContext::BrowserContext() : resource_context_(new ResourceContext) {
 void BrowserContext::Initialize() {
   if (!PathService::Get(DIR_USER_DATA, &path_)) {
     PathService::Get(DIR_APP_DATA, &path_);
+    printf("DIR_APP_DATA is %s\n", path_.value().c_str()); fflush(stdout);
     path_ = path_.Append(base::FilePath::FromUTF8Unsafe(GetApplicationName()));
+    printf("setting DIR_USER_DATA to %s\n", path_.value().c_str()); fflush(stdout);
     PathService::Override(DIR_USER_DATA, path_);
+  } else {
+    printf("DIR_USER_DATA already set to %s\n", path_.value().c_str()); fflush(stdout);
   }
 
   auto prefs_path = GetPath().Append(FILE_PATH_LITERAL("Preferences"));
@@ -152,5 +156,6 @@ content::PushMessagingService* BrowserContext::GetPushMessagingService() {
 content::SSLHostStateDelegate* BrowserContext::GetSSLHostStateDelegate() {
   return nullptr;
 }
+
 
 }  // namespace gallium

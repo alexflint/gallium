@@ -1,12 +1,10 @@
 package gallium
 
 /*
-#cgo CFLAGS: -Flib/build/Debug
-#cgo LDFLAGS: -framework Gallium
 #cgo CFLAGS: -mmacosx-version-min=10.8
 #cgo LDFLAGS: -Flib/build/Debug
 #cgo LDFLAGS: -framework Gallium
-#cgo LDFLAGS: -Wl,-rpath -Wl,@executable_path/../Frameworks
+#cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>
@@ -87,7 +85,7 @@ func Loop(args []string, onready func(*Browser)) error {
 }
 
 func (b *Browser) CreateWindow(url, title string) error {
-	log.Println("=== gallium.CreateWindow ===")
+	log.Println("=== gallium:CreateWindow ===")
 	cerr := newCerr()
 	defer cerr.free()
 	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr.st)

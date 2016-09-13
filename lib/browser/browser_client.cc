@@ -17,9 +17,7 @@
 namespace gallium {
 
 namespace {
-
 BrowserClient* g_browser_client;
-
 }
 
 BrowserClient* BrowserClient::Get() {

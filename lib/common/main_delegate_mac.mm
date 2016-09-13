@@ -21,9 +21,9 @@ namespace gallium {
 
 namespace {
 
-base::FilePath GetFrameworksPath() {
-  return MainApplicationBundlePath().Append("Contents").Append("Frameworks");
-}
+// base::FilePath GetFrameworksPath() {
+//   return MainApplicationBundlePath().Append("Contents").Append("Frameworks");
+// }
 
 }
 
@@ -33,18 +33,24 @@ base::FilePath MainDelegate::GetResourcesPakFilePath() {
 }
 
 void MainDelegate::OverrideFrameworkBundlePath() {
-  base::FilePath helper_path = GetFrameworksPath().Append("Gallium.framework");
+  base::mac::SetOverrideFrameworkBundlePath(
+    base::FilePath("/Users/alex/Code/gallium/lib/build/Debug/Gallium.framework"));
 
-  base::mac::SetOverrideFrameworkBundlePath(helper_path);
+  //base::FilePath helper_path = GetFrameworksPath().Append("Gallium.framework");
+  //base::mac::SetOverrideFrameworkBundlePath(helper_path);
 }
 
 void MainDelegate::OverrideChildProcessPath() {
-  base::FilePath helper_path = GetFrameworksPath().Append("Gallium Helper.app")
-    .Append("Contents")
-    .Append("MacOS")
-    .Append("Gallium Helper");
+  PathService::Override(
+    content::CHILD_PROCESS_EXE,
+    base::FilePath("/Users/alex/Code/gallium/lib/build/Debug/Gallium Helper.app"));
 
-  PathService::Override(content::CHILD_PROCESS_EXE, helper_path);
+  // base::FilePath helper_path = GetFrameworksPath().Append("Gallium Helper.app")
+  //   .Append("Contents")
+  //   .Append("MacOS")
+  //   .Append("Gallium Helper");
+
+  // PathService::Override(content::CHILD_PROCESS_EXE, helper_path);
 }
 
 }

@@ -58,10 +58,6 @@ content::ContentBrowserClient* MainDelegate::CreateContentBrowserClient() {
   return browser_client_.get();
 }
 
-// scoped_ptr<BrowserClient> MainDelegate::CreateBrowserClient() {
-//   return make_scoped_ptr(new BrowserClient).Pass();
-// }
-
 content::ContentRendererClient* MainDelegate::CreateContentRendererClient() {
   renderer_client_.reset(new RendererClient);
   return renderer_client_.get();

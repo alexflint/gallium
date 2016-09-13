@@ -9,22 +9,24 @@ namespace gallium {
 
 namespace {
 
-std::string ApplicationInfoDictionaryValue(NSString* key) {
-  return base::SysNSStringToUTF8([MainApplicationBundle().infoDictionary objectForKey:key]);
-}
+// std::string ApplicationInfoDictionaryValue(NSString* key) {
+//   return base::SysNSStringToUTF8([MainApplicationBundle().infoDictionary objectForKey:key]);
+// }
 
-std::string ApplicationInfoDictionaryValue(CFStringRef key) {
-  return ApplicationInfoDictionaryValue(base::mac::CFToNSCast(key));
-}
+// std::string ApplicationInfoDictionaryValue(CFStringRef key) {
+//   return ApplicationInfoDictionaryValue(base::mac::CFToNSCast(key));
+// }
 
 }
 
 std::string GetApplicationName() {
-  return ApplicationInfoDictionaryValue(kCFBundleNameKey);
+  return "gallium";
+  //return ApplicationInfoDictionaryValue(kCFBundleNameKey);
 }
 
 std::string GetApplicationVersion() {
-  return ApplicationInfoDictionaryValue(@"CFBundleShortVersionString");
+  return "0.1";
+  //return ApplicationInfoDictionaryValue(@"CFBundleShortVersionString");
 }
 
 }

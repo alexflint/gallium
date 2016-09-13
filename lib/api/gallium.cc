@@ -23,8 +23,13 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
   delegate.reset(new gallium::MainDelegate);
   content::ContentMainParams params(delegate.get());
 
-  const char* argv[] = {argv0};
-  params.argc = 1;
+  const char* argv[] = {
+    argv0,
+    "--single-process",
+    "--enable-logging=stderr",
+    "--v=1",
+  };
+  params.argc = 4;
   params.argv = argv;
 
   return content::ContentMain(params);
@@ -32,7 +37,7 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
 
 // DoCreateWindow is the code that runs on the UI thread when GalliumCreateWindow is called
 void DoCreateWindow(const std::string& url, const std::string& title) {
-  printf("At DoCreateWindow\n");
+  printf("at DoCreateWindow\n");
   auto window = gallium::Window::Create(
     delegate->browser_client()->browser_context());
   window->SetInitURL(url);
@@ -41,7 +46,7 @@ void DoCreateWindow(const std::string& url, const std::string& title) {
 
 // GalliumCreateWindow creates a window pointed at the given url
 struct gallium_window* GalliumCreateWindow(const char* url, const char* title, struct gallium_error** err) {
-  printf("in GalliumCreateWindow\n");
+  printf("at GalliumCreateWindow\n");
   content::BrowserThread::PostTask(
     content::BrowserThread::UI,
     FROM_HERE,
