@@ -113,7 +113,7 @@ func main() {
 	must(os.MkdirAll(filepath.Dir(exeDst), 0777))
 	must(copyFile(exeDst, args.Executable))
 
-	// Overwrite the info.plist
+	// Write Info.plist
 	tpl, err := template.New("info.plist.tpl").Parse(string(MustAsset("info.plist.tpl")))
 	must(err)
 
@@ -126,6 +126,11 @@ func main() {
 		"BundleIdentifier": args.BundleIdentifier,
 	})
 	must(w.Close())
+
+	// Write PkgInfo. I copied this verbatim from another bundle.
+	pkginfo := []byte{0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f}
+	pkginfoDst := filepath.Join(tmpBundle, "Contents", "PkgInfo")
+	must(ioutil.WriteFile(pkginfoDst, pkginfo, 0777))
 
 	// Delete the bundle.app dir if it already exists
 	must(os.RemoveAll(args.Output))
