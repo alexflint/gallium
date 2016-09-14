@@ -128,7 +128,7 @@ func main() {
 	must(w.Close())
 
 	// Write PkgInfo. I copied this verbatim from another bundle.
-	pkginfo := []byte{0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f}
+	pkginfo := []byte{0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f}
 	pkginfoDst := filepath.Join(tmpBundle, "Contents", "PkgInfo")
 	must(ioutil.WriteFile(pkginfoDst, pkginfo, 0777))
 
