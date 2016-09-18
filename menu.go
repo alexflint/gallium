@@ -2,19 +2,30 @@ package gallium
 
 /*
 #cgo CFLAGS: -mmacosx-version-min=10.8
-// #cgo LDFLAGS: -Flib/build/Debug
-// #cgo LDFLAGS: -framework Gallium
-// #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>
 #include "lib/api/gallium.h"
 #include "lib/api/menu.h"
+
+//#include "_cgo_export.h"
+
+extern void cgo_onMenuClicked(void*);
+
+static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
+	gallium_nsmenu_t* menu,
+	const char* title,
+	const char* keyEquivalent,
+	int id) {
+
+	int *idholder = (int*)malloc(sizeof(int));
+	*idholder = id;
+	return NSMenu_AddMenuItem(menu, title, keyEquivalent, &cgo_onMenuClicked, idholder);
+}
+
 */
 import "C"
-import "log"
-
-type Event struct{}
+import "unsafe"
 
 type MenuEntry interface {
 	menu()
@@ -23,7 +34,7 @@ type MenuEntry interface {
 type MenuItem struct {
 	Title    string
 	Shortcut string
-	OnClick  func(*Event)
+	OnClick  func()
 }
 
 func (MenuItem) menu() {}
@@ -35,27 +46,71 @@ type Menu struct {
 
 func (Menu) menu() {}
 
+var menu *menuManager
+
 func SetMenu(menus []Menu) {
+	menu = newMenuManager()
 	root := C.NSMenu_New(C.CString("<root>"))
-	for _, menu := range menus {
-		buildMenu(root, menu)
+	for _, m := range menus {
+		menu.add(m, root)
 	}
 	C.NSApplication_SetMainMenu(C.NSApplication_SharedApplication(), root)
 }
 
-func buildMenu(parent *C.gallium_nsmenu_t, menu MenuEntry) {
+//export cgo_onMenuClicked
+func cgo_onMenuClicked(data unsafe.Pointer) {
+	logger.Println("in cgo_onMenuClicked")
+
+	if menu == nil {
+		logger.Println("onMenuClicked called but menu manager was nil")
+		return
+	}
+
+	if data == nil {
+		logger.Println("onMenuClicked called but data parameter was nil")
+		return
+	}
+
+	id := *(*int)(data)
+	logger.Printf("cgo_onMenuClicked: id=%d", id)
+
+	item, found := menu.items[id]
+	if !found {
+		logger.Printf("onMenuClicked received non-existent ID %d", id)
+		return
+	}
+
+	if item.OnClick == nil {
+		logger.Printf("onMenuClicked found item with nil OnClick: %s", item.Title)
+		return
+	}
+
+	item.OnClick()
+}
+
+type menuManager struct {
+	items map[int]MenuItem
+}
+
+func newMenuManager() *menuManager {
+	return &menuManager{make(map[int]MenuItem)}
+}
+
+func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 	switch menu := menu.(type) {
 	case Menu:
-		item := C.NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(""))
+		item := C.NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(""), nil, nil)
 		submenu := C.NSMenu_New(C.CString(menu.Title))
 		C.NSMenuItem_SetSubmenu(item, submenu)
 		for _, entry := range menu.Entries {
-			buildMenu(submenu, entry)
+			m.add(entry, submenu)
 		}
 	case MenuItem:
-		C.NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(menu.Shortcut))
+		id := len(m.items)
+		m.items[id] = menu
+		C.helper_NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(menu.Shortcut), C.int(id))
 	default:
-		log.Printf("unexpected menu entry: %T", menu)
+		logger.Printf("unexpected menu entry: %T", menu)
 	}
 }
 

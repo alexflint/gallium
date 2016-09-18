@@ -7,24 +7,7 @@
 extern "C" {
 #endif
 
-typedef struct gallium_menu_item gallium_menu_item_t;
-
-// gallium_error represents an error
-typedef struct GALLIUM_EXPORT gallium_menu {
-	const char* title;
-	gallium_menu_item_t* items;
-	int item_count;
-} gallium_menu_t;
-
-// gallium_error represents an error
-typedef struct GALLIUM_EXPORT gallium_menu_item {
-	const char* title;
-	const char* shortcut;
-	gallium_menu_t* submenu;
-} gallium_menu_item_t;
-
-// GalliumCreateWindow creates a window pointed at the given url
-GALLIUM_EXPORT void SetMenu(gallium_menu_t* menu, gallium_error_t** err);
+typedef void(*gallium_callback_t)(void*);
 
 typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
@@ -35,7 +18,9 @@ GALLIUM_EXPORT gallium_nsmenu_t* NSMenu_New(const char* title);
 GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
-	const char* keyEquivalent);
+	const char* keyEquivalent,
+	gallium_callback_t callback,
+	void* callbackArg);
 
 GALLIUM_EXPORT void NSMenuItem_SetSubmenu(
 	gallium_nsmenuitem_t* menuitem,
@@ -49,6 +34,7 @@ GALLIUM_EXPORT void NSApplication_SetMainMenu(
 
 GALLIUM_EXPORT void NSApplication_Run(
 	gallium_nsapplication_t* app);
+
 
 #ifdef __cplusplus
 }

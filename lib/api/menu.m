@@ -1,6 +1,37 @@
 #include "menu.h"
 #import <Cocoa/Cocoa.h>
 
+// CCallback is an objective C wrapper around a C function pointer. It 
+// has a single method "call", which invokes the underlying C function
+// pointer with the void* data pointer provided to the constructor. This
+// makes it possible to pass a C function pointer to APIs that follow the
+// target/selector pattern.
+@interface CCallback : NSObject {
+	gallium_callback_t _cfunc;
+	void* _arg;
+}
+- (CCallback*)initWithFunc:(gallium_callback_t)cfunc arg:(void*)arg;
+- (IBAction)call:(id)sender;
+@end
+
+@implementation CCallback
+- (CCallback*)initWithFunc:(gallium_callback_t)cfunc arg:(void*)arg {
+	_cfunc = cfunc;
+	_arg = arg;
+	return self;
+}
+
+- (IBAction)call:(id)sender {
+	NSLog(@"in CCallback:call");
+	if (_cfunc == nil) {
+		NSLog(@"got CCallback:call but function pointer was nil");
+		return;
+	}
+	_cfunc(_arg);
+}
+@end
+
+
 typedef struct gallium_nsmenu {
 	NSMenu* impl;
 } gallium_nsmenu_t;
@@ -26,10 +57,14 @@ gallium_nsmenu_t* NSMenu_New(const char* title) {
 gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
-	const char* keyEquivalent) {
+	const char* keyEquivalent,
+	gallium_callback_t callback,
+	void* callbackArg) {
 
 	gallium_nsmenuitem_t* st = (gallium_nsmenuitem_t*)malloc(sizeof(gallium_nsmenuitem_t));
-	st->impl = [menu->impl addItemWithTitle:str(title) action:nil keyEquivalent:str(keyEquivalent)];
+	st->impl = [[NSMenuItem alloc] initWithTitle:str(title) action:@selector(call:) keyEquivalent:str(keyEquivalent)];
+	[st->impl setTarget:[[CCallback alloc] initWithFunc:callback arg:callbackArg]];
+	[menu->impl addItem:st->impl];
 	return st;
 }
 
@@ -55,20 +90,4 @@ void NSApplication_SetMainMenu(
 
 void NSApplication_Run(gallium_nsapplication_t* app) {
 	[app->impl run];
-}
-
-void SetMenu(gallium_menu_t* menu, gallium_error_t** err) {
-	NSMenu* root = [[NSMenu alloc] initWithTitle:@"root"];
-	
-	NSMenuItem* gallium = [root addItemWithTitle:@"Gallium" action:nil keyEquivalent:@""];
-	gallium.submenu = [[NSMenu alloc] initWithTitle:@"Gallium"];
-	[gallium.submenu addItemWithTitle:@"item" action:nil keyEquivalent:@""];
-
-	NSMenuItem* view = [root addItemWithTitle:@"View" action:nil keyEquivalent:@""];
-	view.submenu = [[NSMenu alloc] initWithTitle:@"View"];
-	[view.submenu addItemWithTitle:@"Show" action:nil keyEquivalent:@""];
-
-	NSApplication* app = [NSApplication sharedApplication];
-	app.mainMenu = root;
-	[app run];
 }
