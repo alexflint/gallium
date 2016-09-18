@@ -29,7 +29,6 @@ bool MainDelegate::BasicStartupComplete(int* exit_code) {
   content_client_.reset(new ContentClient);
   SetContentClient(content_client_.get());
 #if defined(OS_MACOSX)
-  OverrideChildProcessPath();
   OverrideFrameworkBundlePath();
 #endif
   return false;

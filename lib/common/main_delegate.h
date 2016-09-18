@@ -40,7 +40,6 @@ class MainDelegate : public content::ContentMainDelegate {
   // Subclasses can override this to custom the paths of child process and
   // framework bundle.
   virtual base::FilePath GetResourcesPakFilePath();
-  virtual void OverrideChildProcessPath();
   virtual void OverrideFrameworkBundlePath();
 #endif
 

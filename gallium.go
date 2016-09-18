@@ -5,6 +5,7 @@ package gallium
 #cgo LDFLAGS: -Flib/build/Debug
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
+#cgo LDFLAGS: -Wl,-rpath,/Users/alex/Code/scratch/Frameworks
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>

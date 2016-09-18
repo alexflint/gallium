@@ -1,9 +1,6 @@
 package gallium
 
 /*
-#cgo CFLAGS: -mmacosx-version-min=10.8
-#cgo LDFLAGS: -mmacosx-version-min=10.8
-
 #include <stdlib.h>
 #include "lib/api/gallium.h"
 #include "lib/api/menu.h"

@@ -40,17 +40,4 @@ void MainDelegate::OverrideFrameworkBundlePath() {
   //base::mac::SetOverrideFrameworkBundlePath(helper_path);
 }
 
-void MainDelegate::OverrideChildProcessPath() {
-  PathService::Override(
-    content::CHILD_PROCESS_EXE,
-    base::FilePath("/Users/alex/Code/gallium/lib/build/Debug/Gallium Helper.app"));
-
-  // base::FilePath helper_path = GetFrameworksPath().Append("Gallium Helper.app")
-  //   .Append("Contents")
-  //   .Append("MacOS")
-  //   .Append("Gallium Helper");
-
-  // PathService::Override(content::CHILD_PROCESS_EXE, helper_path);
-}
-
 }
