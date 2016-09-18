@@ -15,10 +15,7 @@
 std::unique_ptr<gallium::MainDelegate> delegate;
 
 int GalliumLoop(const char* argv0, struct gallium_error** err) {
-  uint64_t tid;
-  pthread_threadid_np(NULL, &tid);
-  printf("in GalliumLoop, thread=%llu\n", tid);
-  fflush(stdout);
+  printf("in GalliumLoop\n"); fflush(stdout);
 
   delegate.reset(new gallium::MainDelegate);
   content::ContentMainParams params(delegate.get());
@@ -32,7 +29,10 @@ int GalliumLoop(const char* argv0, struct gallium_error** err) {
   params.argc = 4;
   params.argv = argv;
 
-  return content::ContentMain(params);
+  printf("calling content::ContentMain...\n"); fflush(stdout);
+  int ret = content::ContentMain(params);
+  printf("content::ContentMain returned %d\n", ret); fflush(stdout);
+  return ret;
 }
 
 // DoCreateWindow is the code that runs on the UI thread when GalliumCreateWindow is called

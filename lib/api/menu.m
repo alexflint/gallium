@@ -41,10 +41,6 @@ typedef struct gallium_nsmenuitem {
 	NSMenuItem* impl;
 } gallium_nsmenuitem_t;
 
-typedef struct gallium_nsapplication {
-	NSApplication* impl;
-} gallium_nsapplication_t;
-
 NSString* str(const char* cstr) {
 	return [NSString stringWithUTF8String:cstr];
 }
@@ -108,19 +104,19 @@ void NSMenuItem_SetSubmenu(
 	menuitem->impl.submenu = submenu->impl;
 }
 
-gallium_nsapplication_t* NSApplication_SharedApplication() {
-	gallium_nsapplication_t* st = (gallium_nsapplication_t*)malloc(sizeof(gallium_nsapplication_t));
-	st->impl = [NSApplication sharedApplication];
-	return st;
+void NSApplication_SetMainMenu(gallium_nsmenu_t* menu) {
+	[[NSApplication sharedApplication] setMainMenu:menu->impl];
 }
 
-void NSApplication_SetMainMenu(
-	gallium_nsapplication_t* app,
-	gallium_nsmenu_t* menu) {
-
-	app->impl.mainMenu = menu->impl;
+void NSApplication_Run() {
+	[[NSApplication sharedApplication] run];
 }
 
-void NSApplication_Run(gallium_nsapplication_t* app) {
-	[app->impl run];
+void SetUIApplication() {
+	NSLog(@"in SetUIApplication");
+	[[NSApplication sharedApplication] setActivationPolicy:NSApplicationActivationPolicyRegular];
+	[[NSApplication sharedApplication] setPresentationOptions:NSApplicationPresentationDefault]; // probably not necessary since it's the default
+	[[NSApplication sharedApplication] activateIgnoringOtherApps:NO];
+	[NSMenu setMenuBarVisible:NO]; // these two lines may not be necessary, either; using -setActivationPolicy: instead of TransformProcessType() may be enough
+	[NSMenu setMenuBarVisible:YES];
 }

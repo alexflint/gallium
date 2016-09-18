@@ -29,6 +29,7 @@ namespace {
 
 base::FilePath MainDelegate::GetResourcesPakFilePath() {
   auto path = [base::mac::FrameworkBundle() pathForResource:@"content_shell" ofType:@"pak"];
+  NSLog(@"path=%@", path);
   return base::mac::NSStringToFilePath(path);
 }
 

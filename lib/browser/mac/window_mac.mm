@@ -10,9 +10,7 @@ namespace gallium {
 Window* Window::Create(gallium::BrowserContext* browser_context) {
   // controller will clean itself up when its window is closed, but the static analyzer doesn't know
   // that.
-  uint64_t tid;
-  pthread_threadid_np(NULL, &tid);
-  NSLog(@"in Window::Create, thread=%llu, main thread? %d\n", tid, [NSThread isMainThread]);
+  NSLog(@"in Window::Create, main thread? %d\n", [NSThread isMainThread]);
 
 #ifndef __clang_analyzer__
   auto controller = [[WindowController alloc] initWithBrowserContext:browser_context];

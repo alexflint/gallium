@@ -55,7 +55,7 @@ func SetMenu(menus []Menu) {
 	for _, m := range menus {
 		menu.add(m, root)
 	}
-	C.NSApplication_SetMainMenu(C.NSApplication_SharedApplication(), root)
+	C.NSApplication_SetMainMenu(root)
 }
 
 //export cgo_onMenuClicked
@@ -160,5 +160,5 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 
 func RunApplication() {
 	logger.Println("in RunApplication")
-	C.NSApplication_Run(C.NSApplication_SharedApplication())
+	C.NSApplication_Run()
 }

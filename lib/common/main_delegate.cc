@@ -26,6 +26,7 @@ BrowserClient* MainDelegate::browser_client() {
 }
 
 bool MainDelegate::BasicStartupComplete(int* exit_code) {
+  printf("MainDelegate::BasicStartupComplete\n"); fflush(stdout);
   content_client_.reset(new ContentClient);
   SetContentClient(content_client_.get());
 #if defined(OS_MACOSX)
@@ -35,6 +36,7 @@ bool MainDelegate::BasicStartupComplete(int* exit_code) {
 }
 
 void MainDelegate::PreSandboxStartup() {
+  printf("MainDelegate::PreSandboxStartup\n"); fflush(stdout);
   InitializeResourceBundle();
 }
 

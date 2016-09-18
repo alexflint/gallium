@@ -82,6 +82,7 @@ func Loop(args []string, onready func(*Browser)) error {
 		time.Sleep(time.Second) // TODO: find out when the browser is actually ready
 		onready(&Browser{})
 	}()
+	C.SetUIApplication()
 	C.GalliumLoop(C.CString(args[0]), &cerr.st)
 	return cerr.err()
 }

@@ -11,7 +11,6 @@ typedef void(*gallium_callback_t)(void*);
 
 typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
-typedef struct GALLIUM_EXPORT gallium_nsapplication gallium_nsapplication_t;
 
 typedef enum gallium_modifier {
 	GalliumCmdModifier = 1 << 0,
@@ -36,14 +35,13 @@ GALLIUM_EXPORT void NSMenuItem_SetSubmenu(
 	gallium_nsmenuitem_t* menuitem,
 	gallium_nsmenu_t* submenu);
 
-GALLIUM_EXPORT gallium_nsapplication_t* NSApplication_SharedApplication();
-
 GALLIUM_EXPORT void NSApplication_SetMainMenu(
-	gallium_nsapplication_t* app,
 	gallium_nsmenu_t* submenu);
 
-GALLIUM_EXPORT void NSApplication_Run(
-	gallium_nsapplication_t* app);
+GALLIUM_EXPORT void NSApplication_Run();
+
+// Tells OSX that this is a UI application
+GALLIUM_EXPORT void SetUIApplication();
 
 
 #ifdef __cplusplus
