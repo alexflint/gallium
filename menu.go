@@ -8,19 +8,18 @@ package gallium
 #include "lib/api/gallium.h"
 #include "lib/api/menu.h"
 
-//#include "_cgo_export.h"
-
+// It does not seem that we can import "_cgo_export.h" from here
 extern void cgo_onMenuClicked(void*);
 
+// This is a wrapper around NSMenu_AddMenuItem that adds the function pointer
+// argument, since this does not seem to be possible from Go directly.
 static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
 	const char* keyEquivalent,
-	int id) {
+	void *callbackArg) {
 
-	int *idholder = (int*)malloc(sizeof(int));
-	*idholder = id;
-	return NSMenu_AddMenuItem(menu, title, keyEquivalent, &cgo_onMenuClicked, idholder);
+	return NSMenu_AddMenuItem(menu, title, keyEquivalent, &cgo_onMenuClicked, callbackArg);
 }
 
 */
@@ -108,7 +107,11 @@ func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 	case MenuItem:
 		id := len(m.items)
 		m.items[id] = menu
-		C.helper_NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(menu.Shortcut), C.int(id))
+
+		callbackArg := C.malloc(C.sizeof_int)
+		*(*C.int)(callbackArg) = C.int(id)
+
+		C.helper_NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(menu.Shortcut), callbackArg)
 	default:
 		logger.Printf("unexpected menu entry: %T", menu)
 	}
