@@ -9,19 +9,20 @@ package gallium
 
 #include <stdlib.h>
 #include "lib/api/gallium.h"
+#include "lib/api/menu.h"
 */
 import "C"
 import (
 	"fmt"
 	"io/ioutil"
-	logging "log"
+	"log"
 	"os"
 	"syscall"
 	"time"
 	"unsafe"
 )
 
-var log *logging.Logger
+var logger *log.Logger
 
 func init() {
 	f, err := os.OpenFile("/Users/alex/Library/Logs/Gallium.log", os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0777)
@@ -32,18 +33,18 @@ func init() {
 	fmt.Fprint(f, "\n=== GALLIUM INITIALIZED ===\n")
 
 	// Create the log and write header
-	log = logging.New(f, "", logging.Ldate|logging.Ltime|logging.Lshortfile)
+	logger = log.New(f, "", log.Ldate|log.Ltime|log.Lshortfile)
 
 	// redirect stdout to the log file
 	err = syscall.Dup2(int(f.Fd()), int(os.Stdout.Fd()))
 	if err != nil {
-		log.Println(err)
+		logger.Println(err)
 	}
 
 	// redirect stderr to the log file
 	err = syscall.Dup2(int(f.Fd()), int(os.Stderr.Fd()))
 	if err != nil {
-		log.Println(err)
+		logger.Println(err)
 	}
 }
 
@@ -73,7 +74,7 @@ func (e *cerr) err() error {
 
 // Loop starts the browser loop and does not return unless there is an initialization error
 func Loop(args []string, onready func(*Browser)) error {
-	log.Println("=== gallium.Run ===")
+	logger.Println("=== gallium.Run ===")
 	cerr := newCerr()
 	defer cerr.free()
 	go func() {
@@ -85,7 +86,7 @@ func Loop(args []string, onready func(*Browser)) error {
 }
 
 func (b *Browser) CreateWindow(url, title string) error {
-	log.Println("=== gallium:CreateWindow ===")
+	logger.Println("=== gallium:CreateWindow ===")
 	cerr := newCerr()
 	defer cerr.free()
 	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr.st)

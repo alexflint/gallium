@@ -96,6 +96,8 @@
       'app/library_main.h',
       'api/gallium.cc',
       'api/gallium.h',
+      'api/menu.m',
+      'api/menu.h',
     ],
     'conditions': [
       ['OS=="win"', {

@@ -1,5 +1,5 @@
-#ifndef BRIGHTRAY_EXAMPLE_COMMON_GALLIUM_H_
-#define BRIGHTRAY_EXAMPLE_COMMON_GALLIUM_H_
+#ifndef GALLIUM_API_GALLIUM_H_
+#define GALLIUM_API_GALLIUM_H_
 
 #ifdef __cplusplus
 extern "C" {
