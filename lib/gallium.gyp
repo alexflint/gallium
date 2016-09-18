@@ -112,73 +112,6 @@
   ],
   'targets': [
     {
-      'target_name': '<(project_name)',
-      'type': 'executable',
-      'dependencies': [
-        '<(project_name)_lib',
-      ],
-      'sources': [
-        '<@(app_sources)',
-      ],
-      'conditions': [
-        ['OS=="mac"', {
-          'product_name': '<(product_name)',
-          'mac_bundle': 1,
-          'dependencies!': [
-            '<(project_name)_lib',
-          ],
-          'dependencies': [
-            '<(project_name)_framework',
-            '<(project_name)_helper',
-          ],
-          'xcode_settings': {
-            'INFOPLIST_FILE': 'browser/mac/Info.plist',
-            'LD_RUNPATH_SEARCH_PATHS': '@executable_path/../Frameworks',
-          },
-          'copies': [
-            {
-              'destination': '<(PRODUCT_DIR)/<(product_name).app/Contents/Frameworks',
-              'files': [
-                '<(PRODUCT_DIR)/<(product_name) Helper.app',
-                '<(PRODUCT_DIR)/<(product_name).framework',
-              ],
-            },
-          ],
-          # 'postbuilds': [
-          #   {
-          #     # This postbuid step is responsible for creating the following
-          #     # helpers:
-          #     #
-          #     # <(product_name) EH.app and <(product_name) NP.app are created
-          #     # from <(product_name).app.
-          #     #
-          #     # The EH helper is marked for an executable heap. The NP helper
-          #     # is marked for no PIE (ASLR).
-          #     'postbuild_name': 'Make More Helpers',
-          #     'action': [
-          #       'vendor/brightray/tools/mac/make_more_helpers.sh',
-          #       'Frameworks',
-          #       '<(product_name)',
-          #     ],
-          #   },
-          # ]
-        }],
-        ['OS=="win"', {
-          'copies': [
-            {
-              'destination': '<(PRODUCT_DIR)',
-              'files': [
-                '<(libchromiumcontent_library_dir)/chromiumcontent.dll',
-                '<(libchromiumcontent_library_dir)/content_shell.pak',
-                '<(libchromiumcontent_library_dir)/icudtl.dat',
-                '<(libchromiumcontent_library_dir)/libGLESv2.dll',
-              ],
-            },
-          ],
-        }],
-      ],
-    },
-    {
       'target_name': '<(project_name)_lib',
       'type': 'static_library',
       'sources': [
@@ -318,22 +251,6 @@
           'export_dependent_settings': [
             '<(project_name)_lib',
           ],
-        },
-        {
-          'target_name': '<(project_name)_helper',
-          'product_name': '<(product_name) Helper',
-          'type': 'executable',
-          'dependencies': [
-            '<(project_name)_framework',
-          ],
-          'sources': [
-            '<@(app_sources)',
-          ],
-          'mac_bundle': 1,
-          'xcode_settings': {
-            'INFOPLIST_FILE': 'renderer/mac/Info.plist',
-            'LD_RUNPATH_SEARCH_PATHS': '@executable_path/../../../../Frameworks',
-          },
         },
       ],
     }],

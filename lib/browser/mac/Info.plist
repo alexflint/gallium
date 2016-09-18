@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.roben.brightray.example</string>
+	<string>org.gallium.application</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>NSMainNibFile</key>
