@@ -13,12 +13,22 @@ typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
 typedef struct GALLIUM_EXPORT gallium_nsapplication gallium_nsapplication_t;
 
+typedef enum gallium_modifier {
+	GalliumCmdModifier = 1 << 0,
+	GalliumCtrlModifier = 1 << 1,
+	GalliumCmdOrCtrlModifier = 1 << 2,
+	GalliumAltOrOptionModifier = 1 << 3,
+	GalliumFunctionModifier = 1 << 4,
+	GalliumShiftModifier = 1 << 5,
+} gallium_modifier_t;
+
 GALLIUM_EXPORT gallium_nsmenu_t* NSMenu_New(const char* title);
 
 GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
-	const char* keyEquivalent,
+	const char* shortcutkey,
+	const gallium_modifier_t shortcutModifier,
 	gallium_callback_t callback,
 	void* callbackArg);
 

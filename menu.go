@@ -16,15 +16,20 @@ extern void cgo_onMenuClicked(void*);
 static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
-	const char* keyEquivalent,
+	const char* shortcutKey,
+	gallium_modifier_t shortcutModifier,
 	void *callbackArg) {
 
-	return NSMenu_AddMenuItem(menu, title, keyEquivalent, &cgo_onMenuClicked, callbackArg);
+	return NSMenu_AddMenuItem(menu, title, shortcutKey, shortcutModifier, &cgo_onMenuClicked, callbackArg);
 }
 
 */
 import "C"
-import "unsafe"
+import (
+	"fmt"
+	"strings"
+	"unsafe"
+)
 
 type MenuEntry interface {
 	menu()
@@ -80,7 +85,7 @@ func cgo_onMenuClicked(data unsafe.Pointer) {
 	}
 
 	if item.OnClick == nil {
-		logger.Printf("onMenuClicked found item with nil OnClick: %s", item.Title)
+		logger.Printf("onMenuClicked found %s but OnClick was nil", item.Title)
 		return
 	}
 
@@ -98,7 +103,7 @@ func newMenuManager() *menuManager {
 func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 	switch menu := menu.(type) {
 	case Menu:
-		item := C.NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(""), nil, nil)
+		item := C.NSMenu_AddMenuItem(parent, C.CString(menu.Title), nil, 0, nil, nil)
 		submenu := C.NSMenu_New(C.CString(menu.Title))
 		C.NSMenuItem_SetSubmenu(item, submenu)
 		for _, entry := range menu.Entries {
@@ -111,10 +116,49 @@ func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 		callbackArg := C.malloc(C.sizeof_int)
 		*(*C.int)(callbackArg) = C.int(id)
 
-		C.helper_NSMenu_AddMenuItem(parent, C.CString(menu.Title), C.CString(menu.Shortcut), callbackArg)
+		key, modifiers, _ := parseShortcut(menu.Shortcut)
+
+		C.helper_NSMenu_AddMenuItem(
+			parent,
+			C.CString(menu.Title),
+			C.CString(key),
+			C.gallium_modifier_t(modifiers),
+			callbackArg)
 	default:
 		logger.Printf("unexpected menu entry: %T", menu)
 	}
+}
+
+func parseShortcut(s string) (key string, modifiers int, err error) {
+	parts := strings.Split(s, "+")
+	if len(parts) == 0 {
+		return "", 0, fmt.Errorf("empty shortcut")
+	}
+	key = parts[len(parts)-1]
+	if len(key) == 0 {
+		return "", 0, fmt.Errorf("empty key")
+	}
+	for _, part := range parts[:len(parts)-1] {
+		switch strings.ToLower(part) {
+		case "cmd":
+			modifiers |= int(C.GalliumCmdModifier)
+		case "ctrl":
+			modifiers |= int(C.GalliumCmdModifier)
+		case "cmdctrl":
+			modifiers |= int(C.GalliumCmdOrCtrlModifier)
+		case "alt":
+			modifiers |= int(C.GalliumAltOrOptionModifier)
+		case "option":
+			modifiers |= int(C.GalliumAltOrOptionModifier)
+		case "fn":
+			modifiers |= int(C.GalliumFunctionModifier)
+		case "shift":
+			modifiers |= int(C.GalliumShiftModifier)
+		default:
+			return "", 0, fmt.Errorf("unknown modifier: %s", part)
+		}
+	}
+	return
 }
 
 func RunApplication() {

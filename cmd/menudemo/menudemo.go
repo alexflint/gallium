@@ -1,19 +1,40 @@
 package main
 
-import "github.com/alexflint/gallium"
+import (
+	"log"
+	"os"
+
+	"github.com/alexflint/gallium"
+)
+
+func menuQuit_OnClick() {
+	os.Exit(0)
+}
+
+func menuAAA_OnClick() {
+	log.Println("you clicked AAA")
+}
 
 func main() {
 	gallium.SetMenu([]gallium.Menu{
 		gallium.Menu{
 			Title: "menudemo",
 			Entries: []gallium.MenuEntry{
-				gallium.MenuItem{Title: "Quit"},
+				gallium.MenuItem{
+					Title:    "Quit",
+					Shortcut: "cmd+q",
+					OnClick:  menuQuit_OnClick,
+				},
 			},
 		},
 		gallium.Menu{
 			Title: "View",
 			Entries: []gallium.MenuEntry{
-				gallium.MenuItem{Title: "AAA"},
+				gallium.MenuItem{
+					Title:    "AAA",
+					Shortcut: "cmd+shift+a",
+					OnClick:  menuAAA_OnClick,
+				},
 				gallium.MenuItem{Title: "BBB"},
 				gallium.MenuItem{Title: "CCC"},
 			},

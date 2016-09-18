@@ -1,5 +1,6 @@
 #include "menu.h"
 #import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
 // CCallback is an objective C wrapper around a C function pointer. It 
 // has a single method "call", which invokes the underlying C function
@@ -54,15 +55,47 @@ gallium_nsmenu_t* NSMenu_New(const char* title) {
 	return st;
 }
 
+NSEventModifierFlags makeModifierMask(gallium_modifier_t mask) {
+	// The OSX docs say that constants like "NSEventModifierFlagControl"
+	// are deprecated in favor of constants like "NSControlKeyMask" but 
+	// I cannot find the definitions of the latter symbols. Perhaps they
+	// are only defined in the swift versions of these APIs.
+	NSEventModifierFlags out = 0;
+	if (mask & GalliumCmdModifier) {
+		out |= NSCommandKeyMask;
+	}
+	if (mask & GalliumCtrlModifier) {
+		out |= NSControlKeyMask;
+	}
+	if (mask & GalliumCmdOrCtrlModifier) {
+		out |= NSCommandKeyMask;
+	}
+	if (mask & GalliumAltOrOptionModifier) {
+		out |= NSAlternateKeyMask;
+	}
+	if (mask & GalliumFunctionModifier) {
+		out |= NSFunctionKeyMask;
+	}
+	if (mask & GalliumShiftModifier) {
+		out |= NSShiftKeyMask;
+	}
+	return out;
+}
+
 gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
 	const char* title,
-	const char* keyEquivalent,
+	const char* shortcutkey,
+	const gallium_modifier_t shortcutModifier,
 	gallium_callback_t callback,
 	void* callbackArg) {
 
 	gallium_nsmenuitem_t* st = (gallium_nsmenuitem_t*)malloc(sizeof(gallium_nsmenuitem_t));
-	st->impl = [[NSMenuItem alloc] initWithTitle:str(title) action:@selector(call:) keyEquivalent:str(keyEquivalent)];
+	st->impl = [[NSMenuItem alloc] initWithTitle:str(title) action:@selector(call:) keyEquivalent:@""];
+	if (shortcutkey != nil) {
+		[st->impl setKeyEquivalent:str(shortcutkey)];
+		[st->impl setKeyEquivalentModifierMask:makeModifierMask(shortcutModifier)];
+	}
 	[st->impl setTarget:[[CCallback alloc] initWithFunc:callback arg:callbackArg]];
 	[menu->impl addItem:st->impl];
 	return st;
