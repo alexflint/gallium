@@ -1,2 +1,5 @@
 *.so filter=lfs diff=lfs merge=lfs -text
 *.dylib filter=lfs diff=lfs merge=lfs -text
+dist/Gallium.framework/Versions/A/Resources/icudtl.dat filter=lfs diff=lfs merge=lfs -text
+dist/Gallium.framework/Versions/A/Resources/content_shell.pak filter=lfs diff=lfs merge=lfs -text
+dist/Gallium.framework/Versions/A/Gallium filter=lfs diff=lfs merge=lfs -text
