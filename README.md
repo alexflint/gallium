@@ -48,8 +48,8 @@ func OnReady(browser *gallium.Browser) {
 To run the example as a full-fledged UI applicaiton, you need to build
 an app bundle:
 ```shell
-$ go install github.com/alexflint/gallium/cmd/gallium-bundle
 $ go build ./example
+$ go install github.com/alexflint/gallium/cmd/gallium-bundle
 $ gallium-bundle -o example.app example
 $ open example.app
 ```
@@ -66,7 +66,20 @@ $ go run example.go
 The goal of Gallium is to make it possible to write cross-platform
 desktop UI applications in Go.
 
-### runtime.LockOSThread and the "main" thread
+### Common pitfalls
+
+- When you run an app bundle with `open app.bundle`, OSX launch services
+  discards standard output and standard error. If you need to see
+  this output for debugging purposes, use a redirect:
+  ```go
+  gallium.RedirectStdoutStderr("output.log")
+  ```
+- When you run an app bundle with `open app.bundle`, OSX launch services
+  will only start your app if there is not already another instance
+  running, so if your app refuses to start, try checking the activity
+  monitor for an already running instance.
+
+### runtime.LockOSThread and the UI thread
 
 It is very important that the first statement in your main function
 be `runtime.LockOSThread()`. The reason for this is that gallium calls
