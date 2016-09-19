@@ -49,9 +49,6 @@ func init() {
 	}
 }
 
-// Browser is the handle that allows you to create windows
-type Browser struct{}
-
 // cerr holds a C-allocated error, which must be freed explicitly.
 type cerr struct {
 	st *C.struct_gallium_error
@@ -74,20 +71,25 @@ func (e *cerr) err() error {
 }
 
 // Loop starts the browser loop and does not return unless there is an initialization error
-func Loop(args []string, onready func(*Browser)) error {
+func Loop(args []string, onready func(*App)) error {
 	logger.Println("=== gallium.Run ===")
 	cerr := newCerr()
 	defer cerr.free()
 	go func() {
 		time.Sleep(time.Second) // TODO: find out when the browser is actually ready
-		onready(&Browser{})
+		onready(&App{})
 	}()
 	//C.SetUIApplication()
 	C.GalliumLoop(C.CString(args[0]), &cerr.st)
 	return cerr.err()
 }
 
-func (b *Browser) CreateWindow(url, title string) error {
+// App is the handle that allows you to create windows and menus
+type App struct{}
+
+// NewWindow creates a window that will oad the given URL and will display
+// the given title
+func (b *App) NewWindow(url, title string) error {
 	logger.Println("=== gallium:CreateWindow ===")
 	cerr := newCerr()
 	defer cerr.free()
