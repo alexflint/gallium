@@ -55,7 +55,7 @@ $ gallium-bundle -o example.app example
 $ open example.app
 ```
 
-![Result of the example](https://cloud.githubusercontent.com/assets/640247/18623150/b3a76860-7dee-11e6-8fb9-899f9d65d3cb.png)
+![Result of the example](https://cloud.githubusercontent.com/assets/640247/18623245/c71c2d26-7def-11e6-9ad3-1a5541d7fc86.png)
 
 Alternatively, you can run the executable directly, but the window
 will initially appear behind all other windows, and it will also not
