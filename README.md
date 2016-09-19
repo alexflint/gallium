@@ -1,20 +1,20 @@
 Write desktop UI applications in Go using embedded Chromium.
 
+### Warning
+
+This is an extremely early version of Gallium. Most APIs will probably change
+before the 1.0 release, and much of the functionality that is already implemented
+remains unstable.
+
 ### Installation
 
-This is an extremely early version of Gallium. All APIs will likely change
-significantly before verison 1.0, and much of the functionality that has'
-been implemented is unstable.
-
-### Installation
-
-First install git large file storage (you will be downloading a 90MB C library):
+First install git large file storage:
 ```shell
 $ brew install git-lfs
 $ git lfs install
 ```
 
-Install gallium:
+Install Gallium in the usual way:
 ```shell
 $ go get github.com/alexflint/gallium
 ```
@@ -22,7 +22,7 @@ $ go get github.com/alexflint/gallium
 This will fetch a 92MB framework containing a binary distribution
 of the Chromium content module, so it may take a few moments.
 
-### Quick start
+### Quickstart
 
 ```go
 package main
@@ -54,9 +54,9 @@ $ gallium-bundle -o example.app example
 $ open example.app
 ```
 
-You can also run the example directly, but the window will initially appear
-behind all other windows, and will not appear in the dock or the switcher, so you
-will have to find it manually:
+Alternatively, you can run the executable directly, but the window
+will initially appear behind all other windows, and it will also not
+appear in the dock or the switcher, so you will have to find it manually:
 ```shell
 $ go run example.go
 ```
@@ -71,18 +71,18 @@ desktop UI applications in Go.
 - When you run an app bundle with `open app.bundle`, OSX launch services
   discards standard output and standard error. If you need to see
   this output for debugging purposes, use a redirect:
-  ```go
+  ```
   gallium.RedirectStdoutStderr("output.log")
   ```
 - When you run an app bundle with `open app.bundle`, OSX launch services
   will only start your app if there is not already another instance
-  running, so if your app refuses to start, try checking the activity
-  monitor for an already running instance.
+  of the same application running, so if your app refuses to start then
+  try checking the activity monitor for an already running instance.
 
-### runtime.LockOSThread and the UI thread
+### UI thread issues and runtime.LockOSThread
 
 It is very important that the first statement in your main function
-be `runtime.LockOSThread()`. The reason for this is that gallium calls
+be `runtime.LockOSThread()`. The reason is that gallium calls
 out to various C functions in order to create and manage OSX UI elements,
 and many of these are required to be called from the first thread
 created by the process. But the Go runtime creates many threads and any
@@ -99,12 +99,12 @@ goroutine.
 ### Shared libraries and linking issues
 
 Gallium is based on Chromium, which it accesses via `Gallium.framework`.
-That frame contains `libchromiumcontent.dylib`, which is a shared library
-containing the chromium content module and is distributed in binary form
-by the same folks responsible for the excellent Electron framework. When
-you build your Go executable, the directives in `Gallium.framework` 
-instruct the linker to set up the binary to look for `Gallium.framework`
-in two places at runtime:
+That framework in turn contains `libchromiumcontent.dylib`, which is a 
+shared library containing the chromium content module and is distributed
+in binary form by the same folks responsible for the excellent Electron
+framework. When you build your Go executable, the directives in
+`Gallium.framework` instruct the linker to set up the executable to look for
+`Gallium.framework` in two places at runtime:
  1. `<dir containing executable>/../Frameworks/Gallium.framework`: this
      will resolve correctly if you choose to build and run your app as a
      bundle (and also means you can distribute the app bundle as a
