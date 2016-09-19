@@ -10,6 +10,7 @@ import (
 
 func main() {
 	runtime.LockOSThread()
+	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
 	gallium.Loop(os.Args, OnReady)
 }
 

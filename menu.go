@@ -24,6 +24,7 @@ static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 import "C"
 import (
 	"fmt"
+	"log"
 	"strings"
 	"unsafe"
 )
@@ -60,29 +61,29 @@ func SetMenu(menus []Menu) {
 
 //export cgo_onMenuClicked
 func cgo_onMenuClicked(data unsafe.Pointer) {
-	logger.Println("in cgo_onMenuClicked")
+	log.Println("in cgo_onMenuClicked")
 
 	if menu == nil {
-		logger.Println("onMenuClicked called but menu manager was nil")
+		log.Println("onMenuClicked called but menu manager was nil")
 		return
 	}
 
 	if data == nil {
-		logger.Println("onMenuClicked called but data parameter was nil")
+		log.Println("onMenuClicked called but data parameter was nil")
 		return
 	}
 
 	id := *(*int)(data)
-	logger.Printf("cgo_onMenuClicked: id=%d", id)
+	log.Printf("cgo_onMenuClicked: id=%d", id)
 
 	item, found := menu.items[id]
 	if !found {
-		logger.Printf("onMenuClicked received non-existent ID %d", id)
+		log.Printf("onMenuClicked received non-existent ID %d", id)
 		return
 	}
 
 	if item.OnClick == nil {
-		logger.Printf("onMenuClicked found %s but OnClick was nil", item.Title)
+		log.Printf("onMenuClicked found %s but OnClick was nil", item.Title)
 		return
 	}
 
@@ -122,7 +123,7 @@ func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 			C.gallium_modifier_t(modifiers),
 			callbackArg)
 	default:
-		logger.Printf("unexpected menu entry: %T", menu)
+		log.Printf("unexpected menu entry: %T", menu)
 	}
 }
 
@@ -159,6 +160,6 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 }
 
 func RunApplication() {
-	logger.Println("in RunApplication")
+	log.Println("in RunApplication")
 	C.NSApplication_Run()
 }

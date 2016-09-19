@@ -15,39 +15,10 @@ package gallium
 import "C"
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
-	"os"
-	"syscall"
 	"time"
 	"unsafe"
 )
-
-var logger *log.Logger
-
-func init() {
-	f, err := os.OpenFile("/Users/alex/Library/Logs/Gallium.log", os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0777)
-	if err != nil {
-		ioutil.WriteFile("/Users/alex/gallium.log", []byte(err.Error()), 0777)
-		return
-	}
-	fmt.Fprint(f, "\n=== GALLIUM INITIALIZED ===\n")
-
-	// Create the log and write header
-	logger = log.New(f, "", log.Ldate|log.Ltime|log.Lshortfile)
-
-	// redirect stdout to the log file
-	err = syscall.Dup2(int(f.Fd()), int(os.Stdout.Fd()))
-	if err != nil {
-		logger.Println(err)
-	}
-
-	// redirect stderr to the log file
-	err = syscall.Dup2(int(f.Fd()), int(os.Stderr.Fd()))
-	if err != nil {
-		logger.Println(err)
-	}
-}
 
 // cerr holds a C-allocated error, which must be freed explicitly.
 type cerr struct {
@@ -72,7 +43,7 @@ func (e *cerr) err() error {
 
 // Loop starts the browser loop and does not return unless there is an initialization error
 func Loop(args []string, onready func(*App)) error {
-	logger.Println("=== gallium.Run ===")
+	log.Println("=== gallium.Loop ===")
 	cerr := newCerr()
 	defer cerr.free()
 	go func() {
@@ -90,7 +61,7 @@ type App struct{}
 // NewWindow creates a window that will oad the given URL and will display
 // the given title
 func (b *App) NewWindow(url, title string) error {
-	logger.Println("=== gallium:CreateWindow ===")
+	log.Println("=== gallium.NewWindow ===")
 	cerr := newCerr()
 	defer cerr.free()
 	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr.st)
