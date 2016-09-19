@@ -1,5 +1,7 @@
 Write desktop UI applications in Go using embedded Chromium.
 
+Gallium lets you create windows, menus, dock icons, menubar icons, etc from Go. The idea is then to build all the UI components inside the window in HTML / javascript.
+
 ### Warning
 
 This is an extremely early version of Gallium. Most APIs will probably change
@@ -28,20 +30,19 @@ of the Chromium content module, so it may take a few moments.
 package main
 
 import (
-	"log"
-	"os"
-	"runtime"
+  "os"
+  "runtime"
 
-	"github.com/alexflint/gallium"
+  "github.com/alexflint/gallium"
 )
 
 func main() {
-	runtime.LockOSThread()  // must be the first statement in main - see below
-	gallium.Loop(os.Args, OnReady)  // must be called from main function
+  runtime.LockOSThread()         // must be the first statement in main - see below
+  gallium.Loop(os.Args, OnReady) // must be called from main function
 }
 
-func OnReady(browser *gallium.Browser) {
-	browser.CreateWindow("http://example.com/", "Example Title")
+func OnReady(app *gallium.App) {
+  app.NewWindow("http://example.com/", "Window title!")
 }
 ```
 
@@ -53,6 +54,8 @@ $ go install github.com/alexflint/gallium/cmd/gallium-bundle
 $ gallium-bundle -o example.app example
 $ open example.app
 ```
+
+![Result of the example](https://cloud.githubusercontent.com/assets/640247/18623150/b3a76860-7dee-11e6-8fb9-899f9d65d3cb.png)
 
 Alternatively, you can run the executable directly, but the window
 will initially appear behind all other windows, and it will also not
