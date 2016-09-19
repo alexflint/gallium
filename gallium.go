@@ -2,6 +2,7 @@ package gallium
 
 /*
 #cgo CFLAGS: -mmacosx-version-min=10.8
+#cgo CFLAGS: -DGALLIUM_DIR=${SRCDIR}
 #cgo LDFLAGS: -F${SRCDIR}/dist
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks

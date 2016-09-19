@@ -7,8 +7,8 @@ lib: force
 	PYTHONPATH=lib/vendor/gyp/pylib \
 		python lib/vendor/gyp/gyp_main.py --depth lib lib/gallium.gyp || exit 1
 	xcodebuild -project lib/gallium.xcodeproj || exit 1
-	#rm -rf dist/Gallium.framework
-	#mv lib/build/Debug/Gallium.framework dist/
+	rm -rf dist/Gallium.framework
+	mv lib/build/Debug/Gallium.framework dist/
 
 demo: lib force
 	go build ./cmd/demo || exit 1
