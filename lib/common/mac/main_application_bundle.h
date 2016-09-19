@@ -9,6 +9,8 @@ class FilePath;
 
 namespace gallium {
 
+NSBundle* GalliumFrameworkBundle();
+
 // The "main" application bundle is the outermost bundle for this logical
 // application. E.g., if you have MyApp.app and
 // MyApp.app/Contents/Frameworks/MyApp Helper.app, the main application bundle

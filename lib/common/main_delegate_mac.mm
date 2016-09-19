@@ -29,13 +29,24 @@ namespace {
 
 base::FilePath MainDelegate::GetResourcesPakFilePath() {
   auto path = [base::mac::FrameworkBundle() pathForResource:@"content_shell" ofType:@"pak"];
-  NSLog(@"path=%@", path);
+  NSLog(@"pak path: %@", path);
   return base::mac::NSStringToFilePath(path);
 }
 
 void MainDelegate::OverrideFrameworkBundlePath() {
-  base::mac::SetOverrideFrameworkBundlePath(
-    base::FilePath("/Users/alex/Code/gallium/lib/build/Debug/Gallium.framework"));
+  printf("in OverrideFrameworkBundlePath\n"); fflush(stdout);
+  auto bundle = GalliumFrameworkBundle();
+  if (bundle == nil) {
+    printf("GalliumFrameworkBundle returned nil\n"); fflush(stdout);
+    return;
+  }
+
+  NSLog(@"framework bundle: %@", [bundle bundlePath]);
+
+  base::mac::SetOverrideFrameworkBundle(GalliumFrameworkBundle());
+
+  // base::mac::SetOverrideFrameworkBundlePath(
+  //   base::FilePath("/Users/alex/Code/gallium/lib/build/Debug/Gallium.framework"));
 
   //base::FilePath helper_path = GetFrameworksPath().Append("Gallium.framework");
   //base::mac::SetOverrideFrameworkBundlePath(helper_path);

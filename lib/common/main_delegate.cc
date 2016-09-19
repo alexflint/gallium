@@ -26,10 +26,11 @@ BrowserClient* MainDelegate::browser_client() {
 }
 
 bool MainDelegate::BasicStartupComplete(int* exit_code) {
-  printf("MainDelegate::BasicStartupComplete\n"); fflush(stdout);
+  printf("MainDelegate::BasicStartupComplete...\n"); fflush(stdout);
   content_client_.reset(new ContentClient);
   SetContentClient(content_client_.get());
 #if defined(OS_MACOSX)
+  printf("going to OverrideFrameworkBundlePath...\n"); fflush(stdout);
   OverrideFrameworkBundlePath();
 #endif
   return false;
