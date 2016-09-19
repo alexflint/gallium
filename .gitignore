@@ -10,9 +10,6 @@
 /ipch/
 
 # Linux
-Makefile
-*.Makefile
-*.mk
 out/
 
 # Vim

@@ -2,10 +2,10 @@ package gallium
 
 /*
 #cgo CFLAGS: -mmacosx-version-min=10.8
-#cgo LDFLAGS: -Flib/build/Debug
+#cgo LDFLAGS: -Fdist
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
-#cgo LDFLAGS: -Wl,-rpath,/Users/alex/Code/scratch/Frameworks
+#cgo LDFLAGS: -Wl,-rpath,${SRCDIR}/dist
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>
@@ -82,7 +82,7 @@ func Loop(args []string, onready func(*Browser)) error {
 		time.Sleep(time.Second) // TODO: find out when the browser is actually ready
 		onready(&Browser{})
 	}()
-	C.SetUIApplication()
+	//C.SetUIApplication()
 	C.GalliumLoop(C.CString(args[0]), &cerr.st)
 	return cerr.err()
 }

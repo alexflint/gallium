@@ -112,7 +112,7 @@
   ],
   'targets': [
     {
-      'target_name': '<(project_name)_lib',
+      'target_name': '<(project_name)',
       'type': 'static_library',
       'sources': [
         '<@(lib_sources)',
@@ -208,7 +208,7 @@
           'product_name': '<(product_name)',
           'type': 'shared_library',
           'dependencies': [
-            '<(project_name)_lib',
+            '<(project_name)',
           ],
           'sources': [
             '<@(framework_sources)',
@@ -249,7 +249,7 @@
             },
           ],
           'export_dependent_settings': [
-            '<(project_name)_lib',
+            '<(project_name)',
           ],
         },
       ],

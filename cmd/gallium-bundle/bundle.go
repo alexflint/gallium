@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
@@ -84,11 +85,20 @@ func main() {
 		args.BundleIdentifier = bundleName
 	}
 
-	// Find gallium.framework
-	fwSrc := os.ExpandEnv("$GOPATH/src/github.com/alexflint/gallium/lib/build/Debug/Gallium.framework")
+	// get the path to the gallium package
+	golistCmd := exec.Command("go", "list", "-f", "{{.Dir}}", "github.com/alexflint/gallium")
+	golistOut, err := golistCmd.CombinedOutput()
+	if err != nil {
+		fmt.Printf("go list github.com/alexflint/gallium failed:\n%s\n", string(golistOut))
+		os.Exit(1)
+	}
+
+	// Find Gallium.framework
+	galliumDir := strings.TrimSpace(string(golistOut))
+	fwSrc := filepath.Join(galliumDir, "dist", "Gallium.framework")
 	st, err := os.Stat(fwSrc)
 	if err != nil {
-		fmt.Printf("framework not found at %s\n", fwSrc)
+		fmt.Printf("framework not found at %s: %v\n", fwSrc, err)
 		os.Exit(1)
 	}
 	if !st.IsDir() {
