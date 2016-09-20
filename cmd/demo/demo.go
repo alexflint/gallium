@@ -19,6 +19,14 @@ func handleMenuQuit() {
 	os.Exit(0)
 }
 
+func handleDoSomething() {
+	log.Println("do something")
+}
+
+func handleDoSomethingElse() {
+	log.Println("do something else")
+}
+
 func OnReady(browser *gallium.App) {
 	browser.NewWindow("http://example.com/", "Here is a window")
 	gallium.SetMenu([]gallium.Menu{
@@ -33,4 +41,17 @@ func OnReady(browser *gallium.App) {
 			},
 		},
 	})
+	gallium.AddStatusItem(
+		20,
+		"statusbar",
+		true,
+		gallium.MenuItem{
+			Title:   "Do something",
+			OnClick: handleDoSomething,
+		},
+		gallium.MenuItem{
+			Title:   "Do something else",
+			OnClick: handleDoSomethingElse,
+		},
+	)
 }

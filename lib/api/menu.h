@@ -1,6 +1,8 @@
 #ifndef GALLIUM_API_MENU_H_
 #define GALLIUM_API_MENU_H_
 
+#include <stdbool.h>
+
 #include "gallium.h"
 
 #ifdef __cplusplus
@@ -34,6 +36,12 @@ GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 GALLIUM_EXPORT void NSMenuItem_SetSubmenu(
 	gallium_nsmenuitem_t* menuitem,
 	gallium_nsmenu_t* submenu);
+
+GALLIUM_EXPORT void NSStatusBar_AddItem(
+	int width,
+	const char* title,
+	bool highlightMode,
+	gallium_nsmenu_t* menu);
 
 GALLIUM_EXPORT void NSApplication_SetMainMenu(
 	gallium_nsmenu_t* submenu);

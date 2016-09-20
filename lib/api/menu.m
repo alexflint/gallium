@@ -112,6 +112,21 @@ void NSApplication_Run() {
 	[[NSApplication sharedApplication] run];
 }
 
+void NSStatusBar_AddItem(
+	int width,
+	const char* title,
+	bool highlightMode,
+	gallium_nsmenu_t* menu) {
+
+	NSStatusBar* bar = [NSStatusBar systemStatusBar];
+	NSStatusItem* item = [bar statusItemWithLength:NSVariableStatusItemLength];
+	[item setTitle: str(title)];
+	[item setHighlightMode:highlightMode];
+	if (menu != nil) {
+		[item setMenu:menu->impl];
+	}
+}
+
 void SetUIApplication() {
 	NSLog(@"in SetUIApplication");
 	[[NSApplication sharedApplication] setActivationPolicy:NSApplicationActivationPolicyRegular];

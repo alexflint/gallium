@@ -51,12 +51,26 @@ func (Menu) menu() {}
 var menu *menuManager
 
 func SetMenu(menus []Menu) {
-	menu = newMenuManager()
+	if menu == nil {
+		menu = newMenuManager()
+	}
 	root := C.NSMenu_New(C.CString("<root>"))
 	for _, m := range menus {
 		menu.add(m, root)
 	}
 	C.NSApplication_SetMainMenu(root)
+}
+
+func AddStatusItem(width int, title string, highlight bool, entries ...MenuEntry) {
+	if menu == nil {
+		menu = newMenuManager()
+	}
+
+	root := C.NSMenu_New(C.CString("<statusbar>"))
+	for _, m := range entries {
+		menu.add(m, root)
+	}
+	C.NSStatusBar_AddItem(C.int(width), C.CString(title), C.bool(highlight), root)
 }
 
 //export cgo_onMenuClicked
