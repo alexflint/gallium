@@ -10,19 +10,17 @@ remains unstable.
 
 ### Installation
 
-First install git large file storage:
+First install git large file storage, then install Gallium:
 ```shell
 $ brew install git-lfs
 $ git lfs install
-```
-
-Install Gallium in the usual way:
-```shell
-$ go get github.com/alexflint/gallium
+$ go get github.com/alexflint/gallium  # will not work without git lfs!
 ```
 
 This will fetch a 92MB framework containing a binary distribution
-of the Chromium content module, so it may take a few moments.
+of the Chromium content module, so it may take a few moments. This
+is also why git large file storage must be installed (github has
+a limit on file size.)
 
 ### Quickstart
 
