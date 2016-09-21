@@ -8,6 +8,11 @@ This is an extremely early version of Gallium. Most APIs will probably change
 before the 1.0 release, and much of the functionality that is already implemented
 remains unstable.
 
+### Platforms
+
+Only OSX is supported right now. I intend to add support for Windows and Linux
+soon.
+
 ### Installation
 
 First install git large file storage, then install Gallium:
