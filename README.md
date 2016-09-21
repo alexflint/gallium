@@ -128,7 +128,7 @@ func handleDoSomethingElse() {
 }
 ```
 
-![Statusbar demo](https://cloud.githubusercontent.com/assets/640247/18698266/a218259a-7f7d-11e6-9dca-9fa28b23cc9c.png)
+![Statusbar demo](https://cloud.githubusercontent.com/assets/640247/18698431/06e9d88c-7f7f-11e6-9fa5-d6be40a07840.png)
 
 ### Relationship to other projects
 
