@@ -31,7 +31,7 @@ func OnReady(browser *gallium.App) {
 	browser.NewWindow("http://example.com/", "Here is a window")
 	gallium.SetMenu([]gallium.Menu{
 		gallium.Menu{
-			Title: "menudemo",
+			Title: "demo",
 			Entries: []gallium.MenuEntry{
 				gallium.MenuItem{
 					Title:    "Quit",
