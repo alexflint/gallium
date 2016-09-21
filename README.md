@@ -132,11 +132,11 @@ func handleDoSomethingElse() {
 
 ### Relationship to other projects
 
-[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications, except with the application logic written in node.js rather than Go. Electron and Gallium both use Chromium under the hood (in fact some of the C components for Gallium were re-used from Electron).
+[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications in node.js rather than Go. Electron and Gallium are similar in that the core UI is developed in HTML and javascript, but with Gallium the "outer layer" of logic is written in Go. Both Electron and Gallium use Chromium under the hood, and in fact some of the C components for Gallium were ported from Electron.
 
 The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is a C framework for embedding Chromium into other applications. I investigated CEF as a basis for Gallium but decided to use [libchromiumcontent](https://github.com/electron/libchromiumcontent) instead.
 
-[cef2go](https://github.com/cztomczak/cef2go) is another Go wrapper for Chromium based on CEF, but so far it still requires some manual steps to use as a library.
+[cef2go](https://github.com/cztomczak/cef2go) is a Go wrapper for Chromium based on CEF, but so far it still requires some manual steps to use as a library.
 
 ### Rationale
 
