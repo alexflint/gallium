@@ -1,6 +1,6 @@
-Write desktop UI applications in Go using embedded Chromium.
+Write desktop applications in Go, HTML, Javascript, and CSS.
 
-Gallium lets you create windows, menus, dock icons, menubar icons, etc from Go. The idea is then to build all the UI components inside the window in HTML / javascript.
+Gallium is a Go library for managing windows, menus, dock icons, and desktop notifications. Each window contains a webview component, in which you code your UI in HTML. Under the hood, the webview is running Chromium.
 
 ### Warning
 
@@ -36,10 +36,10 @@ import (
 
 func main() {
   runtime.LockOSThread()         // must be the first statement in main - see below
-  gallium.Loop(os.Args, OnReady) // must be called from main function
+  gallium.Loop(os.Args, onReady) // must be called from main function
 }
 
-func OnReady(app *gallium.App) {
+func onReady(app *gallium.App) {
   app.NewWindow("http://example.com/", "Window title!")
 }
 ```
@@ -61,6 +61,82 @@ appear in the dock or the switcher, so you will have to find it manually:
 ```shell
 $ go run example.go
 ```
+
+### Menus
+
+```go
+func main() {
+  runtime.LockOSThread()
+  gallium.Loop(os.Args, onReady)
+}
+
+func onReady(browser *gallium.App) {
+  browser.NewWindow("http://example.com/", "Here is a window")
+  gallium.SetMenu([]gallium.Menu{
+    gallium.Menu{
+      Title: "menudemo",
+      Entries: []gallium.MenuEntry{
+        gallium.MenuItem{
+          Title:    "Quit",
+          Shortcut: "Cmd+q",
+          OnClick:  handleMenuQuit,
+        },
+      },
+    },
+  })
+}
+
+func handleMenuQuit() {
+  log.Println("quit clicked")
+  os.Exit(0)
+}
+```
+
+![Menu demo](https://cloud.githubusercontent.com/assets/640247/18698299/e5c21f62-7f7d-11e6-9b35-73a8230bb45d.png)
+
+### Statusbar
+
+```go
+func main() {
+  runtime.LockOSThread()
+  gallium.Loop(os.Args, onReady)
+}
+
+func onReady(browser *gallium.App) {
+  browser.NewWindow("http://example.com/", "Here is a window")
+  gallium.AddStatusItem(
+    20,
+    "statusbar",
+    true,
+    gallium.MenuItem{
+      Title:   "Do something",
+      OnClick: handleDoSomething,
+    },
+    gallium.MenuItem{
+      Title:   "Do something else",
+      OnClick: handleDoSomethingElse,
+    },
+  )
+}
+
+func handleDoSomething() {
+  log.Println("do something")
+}
+
+func handleDoSomethingElse() {
+  log.Println("do something else")
+}
+```
+
+![Statusbar demo](https://cloud.githubusercontent.com/assets/640247/18698266/a218259a-7f7d-11e6-9dca-9fa28b23cc9c.png)
+
+### Relationship to other projects
+
+[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications, except with the application logic written in node.js rather than Go. Electron and Gallium both use Chromium under the hood (in fact some of the C components for Gallium were re-used from Electron).
+
+The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is a C framework for embedding Chromium into other applications. I investigated CEF as a basis for Gallium but decided to use [libchromiumcontent](https://github.com/electron/libchromiumcontent) instead.
+
+[cef2go](https://github.com/cztomczak/cef2go) is another Go wrapper for Chromium based on CEF, but so far it still requires some manual steps to use as a library.
 
 ### Rationale
 

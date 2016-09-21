@@ -43,7 +43,7 @@ func OnReady(browser *gallium.App) {
 	})
 	gallium.AddStatusItem(
 		20,
-		"statusbar",
+		"demo",
 		true,
 		gallium.MenuItem{
 			Title:   "Do something",
