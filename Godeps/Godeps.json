@@ -1,0 +1,14 @@
+{
+	"ImportPath": "github.com/alexflint/gallium",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/alexflint/go-arg",
+			"Rev": "f882700b723834ad1371307b81930cde4b81c0aa"
+		}
+	]
+}
