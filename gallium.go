@@ -3,6 +3,7 @@ package gallium
 /*
 #cgo CFLAGS: -mmacosx-version-min=10.8
 #cgo CFLAGS: -DGALLIUM_DIR=${SRCDIR}
+#cgo CFLAGS: -Idist/include
 #cgo LDFLAGS: -F${SRCDIR}/dist
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
@@ -10,8 +11,8 @@ package gallium
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>
-#include "lib/api/gallium.h"
-#include "lib/api/menu.h"
+#include "gallium/gallium.h"
+#include "gallium/menu.h"
 */
 import "C"
 import (

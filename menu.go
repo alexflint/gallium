@@ -2,8 +2,8 @@ package gallium
 
 /*
 #include <stdlib.h>
-#include "lib/api/gallium.h"
-#include "lib/api/menu.h"
+#include "gallium/gallium.h"
+#include "gallium/menu.h"
 
 // It does not seem that we can import "_cgo_export.h" from here
 extern void cgo_onMenuClicked(void*);
@@ -17,7 +17,13 @@ static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 	gallium_modifier_t shortcutModifier,
 	void *callbackArg) {
 
-	return NSMenu_AddMenuItem(menu, title, shortcutKey, shortcutModifier, &cgo_onMenuClicked, callbackArg);
+	return NSMenu_AddMenuItem(
+		menu,
+		title,
+		shortcutKey,
+		shortcutModifier,
+		&cgo_onMenuClicked,
+		callbackArg);
 }
 
 */
@@ -171,6 +177,31 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 		}
 	}
 	return
+}
+
+type Notification struct {
+	Title           string
+	Subtitle        string
+	InformativeText string
+	// image
+	Identifier        string
+	ActionButtonTitle string
+	OtherButtonTitle  string
+}
+
+func Post(n Notification) {
+	cn := C.NSUserNotification_New(
+		C.CString(n.Title),
+		C.CString(n.Subtitle),
+		C.CString(n.InformativeText),
+		nil,
+		C.CString(n.Identifier),
+		len(n.ActionButtonTitle) > 0,
+		len(n.OtherButtonTitle) > 0,
+		C.CString(n.ActionButtonTitle),
+		C.CString(n.OtherButtonTitle))
+
+	C.NSUserNotificationCenter_DeliverNotification(cn)
 }
 
 func RunApplication() {
