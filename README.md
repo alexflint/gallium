@@ -13,6 +13,11 @@ remains unstable.
 Only OSX is supported right now. I intend to add support for Windows and Linux
 soon.
 
+### Discussion
+
+Join the `#gallium` channel over at the Gophers slack. (You can request an invite to
+the Gophers slack team [here](https://gophersinvite.herokuapp.com/).)
+
 ### Installation
 
 First install git large file storage, then install Gallium:
