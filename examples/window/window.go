@@ -27,9 +27,9 @@ func handleDoSomethingElse() {
 	log.Println("do something else")
 }
 
-func OnReady(browser *gallium.App) {
-	browser.NewWindow("http://example.com/", "Here is a window")
-	gallium.SetMenu([]gallium.Menu{
+func OnReady(app *gallium.App) {
+	app.NewWindow("http://example.com/", "Here is a window")
+	app.SetMenu([]gallium.Menu{
 		{
 			Title: "demo",
 			Entries: []gallium.MenuEntry{
@@ -41,7 +41,7 @@ func OnReady(browser *gallium.App) {
 			},
 		},
 	})
-	gallium.AddStatusItem(
+	app.AddStatusItem(
 		20,
 		"demo",
 		true,

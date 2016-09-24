@@ -2,6 +2,7 @@
 #define GALLIUM_API_MENU_H_
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "gallium.h"
 
@@ -58,6 +59,12 @@ GALLIUM_EXPORT gallium_nsusernotification_t* NSUserNotification_New(
 
 GALLIUM_EXPORT void NSUserNotificationCenter_DeliverNotification(
 	gallium_nsusernotification_t* n);
+
+GALLIUM_EXPORT gallium_nsimage_t* NSImage_NewFromPNG(
+	const void* buf,
+	int size);
+
+GALLIUM_EXPORT void NSImage_WriteToFile(gallium_nsimage_t* img, const char* path);
 
 GALLIUM_EXPORT void NSApplication_SetMainMenu(
 	gallium_nsmenu_t* submenu);

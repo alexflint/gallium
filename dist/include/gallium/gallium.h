@@ -18,7 +18,11 @@ struct GALLIUM_EXPORT gallium_window {
 };
 
 // GalliumLoop runs the chromium browser loop
-GALLIUM_EXPORT int GalliumLoop(const char* argv0, struct gallium_error**);
+GALLIUM_EXPORT int GalliumLoop(
+	int app_id,
+	const char* argv0,
+	void(*on_ready)(int),
+	struct gallium_error** err);
 
 // GalliumCreateWindow creates a window pointed at the given url
 GALLIUM_EXPORT struct gallium_window* GalliumCreateWindow(

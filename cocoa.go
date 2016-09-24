@@ -29,10 +29,10 @@ static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 */
 import "C"
 import (
+	"errors"
 	"fmt"
 	"log"
 	"strings"
-	"unsafe"
 )
 
 type MenuEntry interface {
@@ -54,61 +54,7 @@ type Menu struct {
 
 func (Menu) menu() {}
 
-var menu *menuManager
-
-func SetMenu(menus []Menu) {
-	if menu == nil {
-		menu = newMenuManager()
-	}
-	root := C.NSMenu_New(C.CString("<root>"))
-	for _, m := range menus {
-		menu.add(m, root)
-	}
-	C.NSApplication_SetMainMenu(root)
-}
-
-func AddStatusItem(width int, title string, highlight bool, entries ...MenuEntry) {
-	if menu == nil {
-		menu = newMenuManager()
-	}
-
-	root := C.NSMenu_New(C.CString("<statusbar>"))
-	for _, m := range entries {
-		menu.add(m, root)
-	}
-	C.NSStatusBar_AddItem(C.int(width), C.CString(title), C.bool(highlight), root)
-}
-
-//export cgo_onMenuClicked
-func cgo_onMenuClicked(data unsafe.Pointer) {
-	log.Println("in cgo_onMenuClicked")
-
-	if menu == nil {
-		log.Println("onMenuClicked called but menu manager was nil")
-		return
-	}
-
-	if data == nil {
-		log.Println("onMenuClicked called but data parameter was nil")
-		return
-	}
-
-	id := *(*int)(data)
-	log.Printf("cgo_onMenuClicked: id=%d", id)
-
-	item, found := menu.items[id]
-	if !found {
-		log.Printf("onMenuClicked received non-existent ID %d", id)
-		return
-	}
-
-	if item.OnClick == nil {
-		log.Printf("onMenuClicked found %s but OnClick was nil", item.Title)
-		return
-	}
-
-	item.OnClick()
-}
+var menuMgr *menuManager
 
 type menuManager struct {
 	items map[int]MenuItem
@@ -179,22 +125,74 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 	return
 }
 
+func (app *App) SetMenu(menus []Menu) {
+	if menuMgr == nil {
+		menuMgr = newMenuManager()
+	}
+	root := C.NSMenu_New(C.CString("<root>"))
+	for _, m := range menus {
+		menuMgr.add(m, root)
+	}
+	C.NSApplication_SetMainMenu(root)
+}
+
+func (app *App) AddStatusItem(width int, title string, highlight bool, entries ...MenuEntry) {
+	if menuMgr == nil {
+		menuMgr = newMenuManager()
+	}
+
+	root := C.NSMenu_New(C.CString("<statusbar>"))
+	for _, m := range entries {
+		menuMgr.add(m, root)
+	}
+	C.NSStatusBar_AddItem(C.int(width), C.CString(title), C.bool(highlight), root)
+}
+
+// Image holds a handle to a platform-specific image structure. On OSX it is NSImage.
+type Image struct {
+	c *C.gallium_nsimage_t
+}
+
+var (
+	ErrImageDecodeFailed = errors.New("image could not be decoded")
+)
+
+// ImageFromPNG creates an image from a buffer containing a PNG-encoded image.
+func ImageFromPNG(buf []byte) (*Image, error) {
+	cbuf := C.CBytes(buf)
+	defer C.free(cbuf)
+	cimg := C.NSImage_NewFromPNG(cbuf, C.int(len(buf)))
+	if cimg == nil {
+		return nil, ErrImageDecodeFailed
+	}
+	return &Image{cimg}, nil
+}
+
+// ImageToPNG writes an image to the given file
+func ImageToPNG(image *Image, path string) {
+	C.NSImage_WriteToFile(image.c, C.CString(path))
+}
+
 type Notification struct {
-	Title           string
-	Subtitle        string
-	InformativeText string
-	// image
+	Title             string
+	Subtitle          string
+	InformativeText   string
+	Image             *Image
 	Identifier        string
 	ActionButtonTitle string
 	OtherButtonTitle  string
 }
 
-func Post(n Notification) {
+func (app *App) Post(n Notification) {
+	var cimg *C.gallium_nsimage_t
+	if n.Image != nil {
+		cimg = n.Image.c
+	}
 	cn := C.NSUserNotification_New(
 		C.CString(n.Title),
 		C.CString(n.Subtitle),
 		C.CString(n.InformativeText),
-		nil,
+		cimg,
 		C.CString(n.Identifier),
 		len(n.ActionButtonTitle) > 0,
 		len(n.OtherButtonTitle) > 0,
