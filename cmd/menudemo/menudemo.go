@@ -17,7 +17,7 @@ func menuAAA_OnClick() {
 
 func main() {
 	gallium.SetMenu([]gallium.Menu{
-		gallium.Menu{
+		{
 			Title: "menudemo",
 			Entries: []gallium.MenuEntry{
 				gallium.MenuItem{
@@ -27,7 +27,7 @@ func main() {
 				},
 			},
 		},
-		gallium.Menu{
+		{
 			Title: "View",
 			Entries: []gallium.MenuEntry{
 				gallium.MenuItem{
@@ -39,7 +39,7 @@ func main() {
 				gallium.MenuItem{Title: "CCC"},
 			},
 		},
-		gallium.Menu{
+		{
 			Title: "Help",
 			Entries: []gallium.MenuEntry{
 				gallium.MenuItem{Title: "What"},
