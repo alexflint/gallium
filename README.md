@@ -80,9 +80,9 @@ func main() {
   gallium.Loop(os.Args, onReady)
 }
 
-func onReady(browser *gallium.App) {
-  browser.NewWindow("http://example.com/", "Here is a window")
-  gallium.SetMenu([]gallium.Menu{
+func onReady(app *gallium.App) {
+  app.NewWindow("http://example.com/", "Here is a window")
+  app.SetMenu([]gallium.Menu{
     gallium.Menu{
       Title: "demo",
       Entries: []gallium.MenuEntry{
@@ -112,9 +112,9 @@ func main() {
   gallium.Loop(os.Args, onReady)
 }
 
-func onReady(browser *gallium.App) {
-  browser.NewWindow("http://example.com/", "Here is a window")
-  gallium.AddStatusItem(
+func onReady(app *gallium.App) {
+  app.NewWindow("http://example.com/", "Here is a window")
+  app.AddStatusItem(
     20,
     "statusbar",
     true,
