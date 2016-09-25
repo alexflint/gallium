@@ -54,7 +54,7 @@ func onReady(app *gallium.App) {
 }
 ```
 
-To run the example as a full-fledged UI applicaiton, you need to build
+To run the example as a full-fledged UI application, you need to build
 an app bundle:
 ```shell
 $ go build ./example
