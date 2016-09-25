@@ -1,7 +1,8 @@
+//go:generate go-bindata -o bindata.go gopher.png
+
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"runtime"
@@ -16,13 +17,7 @@ func main() {
 }
 
 func onReady(app *gallium.App) {
-	imgbuf, err := ioutil.ReadFile("/Users/alex/gopher.png")
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
-
-	img, err := gallium.ImageFromPNG(imgbuf)
+	img, err := gallium.ImageFromPNG(MustAsset("gopher.png"))
 	if err != nil {
 		log.Println(err)
 		os.Exit(1)

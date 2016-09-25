@@ -104,7 +104,7 @@ func handleMenuQuit() {
 
 ![Menu demo](https://cloud.githubusercontent.com/assets/640247/18698299/e5c21f62-7f7d-11e6-9b35-73a8230bb45d.png)
 
-### Statusbar
+### Status Bar
 
 ```go
 func main() {
@@ -139,6 +139,32 @@ func handleDoSomethingElse() {
 ```
 
 ![Statusbar demo](https://cloud.githubusercontent.com/assets/640247/18698431/06e9d88c-7f7f-11e6-9fa5-d6be40a07840.png)
+
+### Desktop Notifications
+
+Note that the OSX Notification Center determines whether or not to show any
+given desktop notification, so you may need to open the notification center
+and scroll to the bottom in order to see notifications during development.
+
+```go
+func main() {
+  runtime.LockOSThread()
+  gallium.Loop(os.Args, onReady)
+}
+
+func onReady(app *gallium.App) {
+  img, err := gallium.ImageFromPNG(pngBuffer)
+  if err != nil {
+    ...
+  }
+
+  app.Post(gallium.Notification{
+    Title:    "Wow this is a notification",
+    Subtitle: "The subtitle",
+    Image:    img,
+  })
+}
+```
 
 ### Relationship to other projects
 
