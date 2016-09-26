@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"runtime"
 
 	"github.com/alexflint/gallium"
 )
@@ -16,7 +17,15 @@ func menuAAA_OnClick() {
 }
 
 func main() {
-	gallium.SetMenu([]gallium.Menu{
+	runtime.LockOSThread()
+	gallium.Loop(os.Args, onReady)
+
+}
+
+func onReady(app *gallium.App) {
+	app.NewWindow("http://example.com/", "Here is a window")
+
+	app.SetMenu([]gallium.Menu{
 		{
 			Title: "menudemo",
 			Entries: []gallium.MenuEntry{
@@ -49,5 +58,5 @@ func main() {
 		},
 	})
 
-	gallium.RunApplication()
+	log.Println("menu loaded")
 }
