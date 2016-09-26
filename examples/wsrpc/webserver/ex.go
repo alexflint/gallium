@@ -15,19 +15,16 @@ import (
 	"github.com/alexflint/gallium/examples/wsrpc/shared"
 )
 
-//Arith is
-type Arith struct{}
-
-//Multiply is
-func (t *Arith) Multiply(args *shared.Args, reply *int) error {
-	*reply = args.A * args.B
-	return nil
-}
-
 func main() {
 	runtime.LockOSThread()
+
+	// start backend
+	go runWebServer()
+
+	// start frontend
 	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
 	gallium.Loop(os.Args, OnReady)
+
 }
 
 func handleMenuQuit() {
@@ -72,8 +69,18 @@ func OnReady(app *gallium.App) {
 	)
 }
 
-func runWS() {
+//Arith is
+type Arith struct{}
+
+//Multiply is
+func (t *Arith) Multiply(args *shared.Args, reply *int) error {
+	*reply = args.A * args.B
+	return nil
+}
+
+func runWebServer() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+
 	fmt.Println("webserver running on http://localhost:7000")
 
 	ws, err := webserver.New("localhost:7000", new(Arith))

@@ -34,7 +34,9 @@ func (g *GUI) Write(args *shared.Args, reply *int) error {
 
 func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+	
 	fmt.Println("browser on http://localhost:7000")
+
 	b, err := browser.New("localhost:7000", new(GUI))
 	if err != nil {
 		log.Fatal(err)
