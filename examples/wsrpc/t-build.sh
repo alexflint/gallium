@@ -1,4 +1,4 @@
-# basic build sript
+# basic build & run script
 
 # does not do any embedding yet
 
@@ -11,11 +11,11 @@ cp ex.html $DIR/webserver
 cp ex.js $DIR/webserver
 
 cd $DIR/webserver
-#go run ex.go
+go generate             #embeds assets (html & js)
 
-#TODO: embedd assets
 
-go build ex.go
+# bundle
+go build ex.go bindata.go
 gallium-bundle -o ex.app ex
 open ex.app
 

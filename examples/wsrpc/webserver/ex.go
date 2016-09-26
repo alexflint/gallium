@@ -1,3 +1,5 @@
+//go:generate go-bindata -o bindata.go ex.html ex.js
+
 package main
 
 import (
@@ -18,7 +20,8 @@ import (
 func main() {
 	runtime.LockOSThread()
 
-	// start backend
+	// start backend on goroutine.
+	// TODO can be done better to ahndle log, errors, signalling...
 	go runWebServer()
 
 	// start frontend
@@ -40,8 +43,10 @@ func handleDoSomethingElse() {
 	log.Println("do something else")
 }
 
+// OnReady ...
 func OnReady(app *gallium.App) {
-	app.NewWindow("http://localhost:7000", "Here is a window")
+	app.NewWindow("http://localhost:7000/ex.html", "Here is a window")
+
 	app.SetMenu([]gallium.Menu{
 		{
 			Title: "demo",
@@ -81,7 +86,7 @@ func (t *Arith) Multiply(args *shared.Args, reply *int) error {
 func runWebServer() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
 
-	fmt.Println("webserver running on http://localhost:7000")
+	fmt.Println("webserver running on http://localhost:7000/")
 
 	ws, err := webserver.New("localhost:7000", new(Arith))
 
