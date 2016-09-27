@@ -179,7 +179,8 @@ The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is
 The goal of Gallium is to make it possible to write cross-platform
 desktop UI applications in Go.
 
-### Common pitfalls
+### Common pitfallsense
+
 
 - When you run an app bundle with `open app.bundle`, OSX launch services
   discards standard output and standard error. If you need to see
