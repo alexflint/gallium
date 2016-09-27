@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"runtime"
 
 	"github.com/alexflint/gallium"
 )
@@ -16,7 +17,13 @@ func menuAAA_OnClick() {
 }
 
 func main() {
-	gallium.SetMenu([]gallium.Menu{
+	runtime.LockOSThread()
+	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
+	gallium.Loop(os.Args, OnReady)
+}
+
+func OnReady(app *gallium.App) {
+	app.SetMenu([]gallium.Menu{
 		{
 			Title: "menudemo",
 			Entries: []gallium.MenuEntry{
@@ -48,6 +55,4 @@ func main() {
 			},
 		},
 	})
-
-	gallium.RunApplication()
 }
