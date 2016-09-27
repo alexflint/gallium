@@ -1,0 +1,19 @@
+language: go
+os:
+  - osx
+
+osx_image: xcode8
+
+before_install:
+  - brew install git-lfs
+  - git lfs install --system
+  - git lfs pull
+
+sudo: false
+
+go:
+  - 1.7
+  - tip
+
+script:
+  - go test -v ./...
