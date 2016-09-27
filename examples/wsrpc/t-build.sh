@@ -4,8 +4,13 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# grab deps
+go get -u github.com/gopherjs/gopherjs
+go get -u github.com/gopherjs/jquery
+go get -u github.com/gopherjs/websocket
+go get golang.org/x/net/websocket
+
 cd $DIR/browser
-go get  
 gopherjs build ex.go
 cp ex.html $DIR/webserver
 cp ex.js $DIR/webserver
