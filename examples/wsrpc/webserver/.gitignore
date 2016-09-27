@@ -1,0 +1,7 @@
+.DS_Store
+*.js
+*.html
+
+bindata.go
+ex
+./ex.app/*

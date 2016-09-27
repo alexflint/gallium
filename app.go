@@ -98,7 +98,7 @@ type App struct {
 	ready chan struct{}
 }
 
-// NewWindow creates a window that will oad the given URL and will display
+// NewWindow creates a window that will load the given URL and will display
 // the given title
 func (b *App) NewWindow(url, title string) error {
 	log.Println("=== gallium.NewWindow ===")
