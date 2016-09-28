@@ -28,7 +28,10 @@ func handleDoSomethingElse() {
 }
 
 func OnReady(app *gallium.App) {
-	app.NewWindow("http://example.com/", "Here is a window")
+	app.OpenWindow(func(w *gallium.WindowOptions) {
+		w.URL = "http://example.com/"
+		w.Title = "Here is a window"
+	})
 	app.SetMenu([]gallium.Menu{
 		{
 			Title: "demo",

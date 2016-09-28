@@ -12,10 +12,10 @@ typedef struct GALLIUM_EXPORT gallium_error {
 	const char* msg;
 } gallium_error_t;
 
-// gallium_window represents a window
-struct GALLIUM_EXPORT gallium_window {
-	int index;
-};
+// gallium_view represents the contents of a window. It contains the top-level
+// chromium objects corresponding to a window, but not the Cocoa objects for
+// that window
+typedef struct GALLIUM_EXPORT gallium_view gallium_view_t;
 
 // GalliumLoop runs the chromium browser loop
 GALLIUM_EXPORT int GalliumLoop(
@@ -25,10 +25,16 @@ GALLIUM_EXPORT int GalliumLoop(
 	struct gallium_error** err);
 
 // GalliumCreateWindow creates a window pointed at the given url
-GALLIUM_EXPORT struct gallium_window* GalliumCreateWindow(
-	const char* url,
-	const char* title,
-	struct gallium_error** err);
+GALLIUM_EXPORT void GalliumCreateWindow(
+	const char* url);
+
+// GalliumView_New creates a new chromium view
+GALLIUM_EXPORT gallium_view_t* GalliumView_New();
+
+// GalliumView_LoadURL loads a URL in the given view
+GALLIUM_EXPORT void GalliumView_LoadURL(
+	gallium_view_t* view,
+	const char* url);
 
 #ifdef __cplusplus
 }

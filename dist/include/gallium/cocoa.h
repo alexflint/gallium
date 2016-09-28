@@ -1,5 +1,5 @@
-#ifndef GALLIUM_API_MENU_H_
-#define GALLIUM_API_MENU_H_
+#ifndef GALLIUM_API_COCOA_H_
+#define GALLIUM_API_COCOA_H_
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -16,6 +16,7 @@ typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
 typedef struct GALLIUM_EXPORT gallium_nsusernotification gallium_nsusernotification_t;
 typedef struct GALLIUM_EXPORT gallium_nsimage gallium_nsimage_t;
+typedef struct GALLIUM_EXPORT gallium_nswindow gallium_nswindow_t;
 
 typedef enum gallium_modifier {
 	GalliumCmdModifier = 1 << 0,
@@ -26,7 +27,22 @@ typedef enum gallium_modifier {
 	GalliumShiftModifier = 1 << 5,
 } gallium_modifier_t;
 
+GALLIUM_EXPORT gallium_nswindow_t* NSWindow_New(
+	const char* title,
+	int width,
+	int height,
+	int x,
+	int y,
+	bool titleBar,
+	bool frame,
+	bool resizable,
+	bool closeButton,
+	bool minButton,
+	bool fullScreenButton);
+
 GALLIUM_EXPORT gallium_nsmenu_t* NSMenu_New(const char* title);
+
+GALLIUM_EXPORT void NSWindow_Attach(gallium_nswindow_t* window, gallium_view_t* view);
 
 GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,
