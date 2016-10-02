@@ -16,7 +16,6 @@ typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
 typedef struct GALLIUM_EXPORT gallium_nsusernotification gallium_nsusernotification_t;
 typedef struct GALLIUM_EXPORT gallium_nsimage gallium_nsimage_t;
-typedef struct GALLIUM_EXPORT gallium_nswindow gallium_nswindow_t;
 
 typedef enum gallium_modifier {
 	GalliumCmdModifier = 1 << 0,
