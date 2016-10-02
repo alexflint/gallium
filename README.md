@@ -1,3 +1,6 @@
+[![GoDoc](https://godoc.org/github.com/alexflint/gallium?status.svg)](https://godoc.org/github.com/alexflint/gallium)
+[![Build Status](https://travis-ci.org/alexflint/gallium.svg?branch=master)](https://travis-ci.org/alexflint/gallium)
+
 Write desktop applications in Go, HTML, Javascript, and CSS.
 
 Gallium is a Go library for managing windows, menus, dock icons, and desktop notifications. Each window contains a webview component, in which you code your UI in HTML. Under the hood, the webview is running Chromium.
