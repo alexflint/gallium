@@ -119,10 +119,6 @@ type Window struct {
 	cwindow *C.gallium_window_t
 }
 
-func (b *App) OldCreateWindow(url string) {
-	C.GalliumCreateWindow(C.CString(url))
-}
-
 // OpenWindow creates a window that will load the given URL and will display
 // the given title
 func (b *App) OpenWindow(opts ...func(*WindowOptions)) (*Window, error) {
