@@ -27,22 +27,7 @@ typedef enum gallium_modifier {
 	GalliumShiftModifier = 1 << 5,
 } gallium_modifier_t;
 
-GALLIUM_EXPORT gallium_nswindow_t* NSWindow_New(
-	const char* title,
-	int width,
-	int height,
-	int x,
-	int y,
-	bool titleBar,
-	bool frame,
-	bool resizable,
-	bool closeButton,
-	bool minButton,
-	bool fullScreenButton);
-
 GALLIUM_EXPORT gallium_nsmenu_t* NSMenu_New(const char* title);
-
-GALLIUM_EXPORT void NSWindow_Attach(gallium_nswindow_t* window, gallium_view_t* view);
 
 GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_nsmenu_t* menu,

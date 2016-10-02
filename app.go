@@ -116,8 +116,7 @@ type WindowOptions struct {
 }
 
 type Window struct {
-	cwindow *C.gallium_nswindow_t
-	cview   *C.gallium_view_t
+	cwindow *C.gallium_window_t
 }
 
 func (b *App) OldCreateWindow(url string) {
@@ -146,7 +145,8 @@ func (b *App) OpenWindow(opts ...func(*WindowOptions)) (*Window, error) {
 	}
 
 	// Create the Cocoa window
-	cwin := C.NSWindow_New(
+	cwin := C.GalliumOpenWindow(
+		C.CString(opt.URL),
 		C.CString(opt.Title),
 		C.int(opt.Width),
 		C.int(opt.Height),
@@ -159,20 +159,8 @@ func (b *App) OpenWindow(opts ...func(*WindowOptions)) (*Window, error) {
 		C.bool(opt.MinButton),
 		C.bool(opt.FullScreenButton))
 
-	// Create a Chromium view and add it as a subview of the window
-	log.Println("Calling GalliumView_New")
-	cview := C.GalliumView_New()
-	log.Println("after GalliumView_New")
-	//C.NSWindow_Attach(cwin, cview)
-
-	// Load the initial URL
-	// if opt.URL != "" {
-	// 	C.GalliumView_LoadURL(cview, C.CString(opt.URL))
-	// }
-
 	// TODO: associate menu
 	return &Window{
 		cwindow: cwin,
-		cview:   cview,
 	}, nil
 }
