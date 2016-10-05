@@ -1,5 +1,5 @@
-#ifndef GALLIUM_API_MENU_H_
-#define GALLIUM_API_MENU_H_
+#ifndef GALLIUM_API_COCOA_H_
+#define GALLIUM_API_COCOA_H_
 
 #include <stdbool.h>
 #include <stdint.h>

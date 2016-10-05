@@ -12,7 +12,7 @@ package gallium
 
 #include <stdlib.h>
 #include "gallium/gallium.h"
-#include "gallium/menu.h"
+#include "gallium/cocoa.h"
 
 // It does not seem that we can import "_cgo_export.h" from here
 extern void cgo_onReady(int);
@@ -25,6 +25,7 @@ static inline void helper_GalliumLoop(int app_id, const char* arg0, struct galli
 */
 import "C"
 import (
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -54,7 +55,7 @@ func (e *cerr) err() error {
 
 // Loop starts the browser loop and does not return unless there is an initialization error
 func Loop(args []string, onReady func(*App)) error {
-	log.Println("=== gallium.Loop ===")
+	log.Println("\n\n=== gallium.Loop ===")
 	cerr := newCerr()
 	defer cerr.free()
 
@@ -98,12 +99,83 @@ type App struct {
 	ready chan struct{}
 }
 
-// NewWindow creates a window that will oad the given URL and will display
+// WindowOptions contains options for creating windows
+type WindowOptions struct {
+	Title            string // String to display in title bar
+	Width            int    // Width in pixels. Set to zero to use OS default.
+	Height           int    // Height in pixels. Set to zero to use OS default.
+	X                int    // X offset from left in pixels. Set to zero to use OS default.
+	Y                int    // Y offset from top in pixels. Set to zero to use OS default.
+	TitleBar         bool   // Whether the window title bar
+	Frame            bool   // Whether the window has a frame
+	Resizable        bool   // Whether the window border can be dragged to change its shape
+	CloseButton      bool   // Whether the window has a close button
+	MinButton        bool   // Whether the window has a miniaturize button
+	FullScreenButton bool   // Whether the window has a full screen button
+	Menu             []MenuEntry
+}
+
+// FramedWindow contains options for an "ordinary" window with title bar,
+// frame, and min/max/close buttons.
+var FramedWindow = WindowOptions{
+	Width:            800,
+	Height:           600,
+	X:                100,
+	Y:                100,
+	TitleBar:         true,
+	Frame:            true,
+	Resizable:        true,
+	CloseButton:      true,
+	MinButton:        true,
+	FullScreenButton: true,
+	Title:            "Gallium",
+}
+
+// FramelessWindow contains options for a window with no frame or border, but that
+// is still resizable.
+var FramelessWindow = WindowOptions{
+	Width:     800,
+	Height:    600,
+	X:         100,
+	Y:         100,
+	Resizable: true,
+}
+
+type Window struct {
+	cwindow *C.gallium_window_t
+}
+
+var (
+	errZeroWidth  = errors.New("window width was zero")
+	errZeroHeight = errors.New("window height was zero")
+)
+
+// OpenWindow creates a window that will load the given URL and will display
 // the given title
-func (b *App) NewWindow(url, title string) error {
-	log.Println("=== gallium.NewWindow ===")
-	cerr := newCerr()
-	defer cerr.free()
-	C.GalliumCreateWindow(C.CString(url), C.CString(title), &cerr.c)
-	return nil
+func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
+	if opt.Width == 0 {
+		return nil, errZeroWidth
+	}
+	if opt.Height == 0 {
+		return nil, errZeroHeight
+	}
+	// Create the Cocoa window
+	cwin := C.GalliumOpenWindow(
+		C.CString(url),
+		C.CString(opt.Title),
+		C.int(opt.Width),
+		C.int(opt.Height),
+		C.int(opt.X),
+		C.int(opt.Y),
+		C.bool(opt.TitleBar),
+		C.bool(opt.Frame),
+		C.bool(opt.Resizable),
+		C.bool(opt.CloseButton),
+		C.bool(opt.MinButton),
+		C.bool(opt.FullScreenButton))
+
+	// TODO: associate menu
+	return &Window{
+		cwindow: cwin,
+	}, nil
 }

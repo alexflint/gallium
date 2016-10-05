@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"runtime"
 
@@ -11,47 +11,23 @@ import (
 func main() {
 	runtime.LockOSThread()
 	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, OnReady)
+	gallium.Loop(os.Args, onReady)
 }
 
-func handleMenuQuit() {
-	log.Println("quit clicked")
-	os.Exit(0)
-}
+func onReady(app *gallium.App) {
+	opt := gallium.FramedWindow
+	opt.Title = "Framed Window"
+	_, err := app.OpenWindow("http://example.com/", opt)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-func handleDoSomething() {
-	log.Println("do something")
-}
-
-func handleDoSomethingElse() {
-	log.Println("do something else")
-}
-
-func OnReady(app *gallium.App) {
-	app.NewWindow("http://example.com/", "Here is a window")
-	app.SetMenu([]gallium.Menu{
-		{
-			Title: "demo",
-			Entries: []gallium.MenuEntry{
-				gallium.MenuItem{
-					Title:    "Quit",
-					Shortcut: "Cmd+q",
-					OnClick:  handleMenuQuit,
-				},
-			},
-		},
-	})
-	app.AddStatusItem(
-		20,
-		"demo",
-		true,
-		gallium.MenuItem{
-			Title:   "Do something",
-			OnClick: handleDoSomething,
-		},
-		gallium.MenuItem{
-			Title:   "Do something else",
-			OnClick: handleDoSomethingElse,
-		},
-	)
+	opt = gallium.FramelessWindow
+	opt.Title = "Frameless Window"
+	_, err = app.OpenWindow("http://example.com/", opt)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
