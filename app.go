@@ -28,6 +28,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 	"unsafe"
 )
@@ -60,7 +61,8 @@ func Loop(args []string, onReady func(*App)) error {
 	defer cerr.free()
 
 	app := App{
-		ready: make(chan struct{}),
+		ready:  make(chan struct{}),
+		server: newServer(http.DefaultServeMux),
 	}
 
 	go func() {
@@ -97,6 +99,9 @@ type App struct {
 	// ready is how the cgo onready callback indicates to the Loop goroutine that
 	// chromium is initialized
 	ready chan struct{}
+
+	// local http server only accessible by gallium using a random secure token
+	server *server
 }
 
 // WindowOptions contains options for creating windows
@@ -153,6 +158,9 @@ var (
 // OpenWindow creates a window that will load the given URL and will display
 // the given title
 func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
+	if url == "" {
+		url = b.server.URL()
+	}
 	if opt.Width == 0 {
 		return nil, errZeroWidth
 	}
