@@ -1,3 +1,4 @@
+//go:generate gallium-main
 //go:generate go-bindata -o bindata.go gopher.png
 
 package main
@@ -5,18 +6,15 @@ package main
 import (
 	"log"
 	"os"
-	"runtime"
 
 	"github.com/alexflint/gallium"
 )
 
-func main() {
-	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, onReady)
-}
+type notifications struct{}
 
-func onReady(app *gallium.App) {
+func New() *notifications { return &notifications{} }
+
+func (*notifications) Start(app *gallium.App) {
 	img, err := gallium.ImageFromPNG(MustAsset("gopher.png"))
 	if err != nil {
 		log.Println(err)

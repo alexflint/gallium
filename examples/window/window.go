@@ -1,20 +1,19 @@
+//go:generate gallium-main
+
 package main
 
 import (
 	"fmt"
 	"os"
-	"runtime"
 
 	"github.com/alexflint/gallium"
 )
 
-func main() {
-	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, onReady)
-}
+type window struct{}
 
-func onReady(app *gallium.App) {
+func New() *window { return &window{} }
+
+func (*window) Start(app *gallium.App) {
 	opt := gallium.FramedWindow
 	opt.Title = "Framed Window"
 	_, err := app.OpenWindow("http://example.com/", opt)
