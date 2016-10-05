@@ -21,5 +21,5 @@ func init() {
 }
 
 func onReady(app *gallium.App) {
-	app.NewWindow("", "Here is a window")
+	app.OpenWindow("", gallium.FramedWindow)
 }
