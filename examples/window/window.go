@@ -15,14 +15,17 @@ func main() {
 }
 
 func onReady(app *gallium.App) {
-	_, err := app.OpenWindow(func(win *gallium.WindowOptions) {
-		win.X = 0
-		win.Y = 0
-		win.Width = 800
-		win.Height = 600
-		win.Title = "Regular"
-		win.URL = "http://example.com/"
-	})
+	opt := gallium.FramedWindow
+	opt.Title = "Framed Window"
+	_, err := app.OpenWindow("http://example.com/", opt)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	opt = gallium.FramelessWindow
+	opt.Title = "Frameless Window"
+	_, err = app.OpenWindow("http://example.com/", opt)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

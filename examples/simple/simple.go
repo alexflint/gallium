@@ -11,7 +11,7 @@ import (
 func main() {
 	runtime.LockOSThread()
 	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, OnReady)
+	gallium.Loop(os.Args, onReady)
 }
 
 func handleMenuQuit() {
@@ -27,11 +27,8 @@ func handleDoSomethingElse() {
 	log.Println("do something else")
 }
 
-func OnReady(app *gallium.App) {
-	app.OpenWindow(func(w *gallium.WindowOptions) {
-		w.URL = "http://example.com/"
-		w.Title = "Here is a window"
-	})
+func onReady(app *gallium.App) {
+	app.OpenWindow("http://example.com/", gallium.FramedWindow)
 	app.SetMenu([]gallium.Menu{
 		{
 			Title: "demo",

@@ -25,6 +25,7 @@ static inline void helper_GalliumLoop(int app_id, const char* arg0, struct galli
 */
 import "C"
 import (
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -100,7 +101,6 @@ type App struct {
 
 // WindowOptions contains options for creating windows
 type WindowOptions struct {
-	URL              string // Initial URL to load; leave empty to load nothing
 	Title            string // String to display in title bar
 	Width            int    // Width in pixels. Set to zero to use OS default.
 	Height           int    // Height in pixels. Set to zero to use OS default.
@@ -115,34 +115,53 @@ type WindowOptions struct {
 	Menu             []MenuEntry
 }
 
+// FramedWindow contains options for an "ordinary" window with title bar,
+// frame, and min/max/close buttons.
+var FramedWindow = WindowOptions{
+	Width:            800,
+	Height:           600,
+	X:                100,
+	Y:                100,
+	TitleBar:         true,
+	Frame:            true,
+	Resizable:        true,
+	CloseButton:      true,
+	MinButton:        true,
+	FullScreenButton: true,
+	Title:            "Gallium",
+}
+
+// FramelessWindow contains options for a window with no frame or border, but that
+// is still resizable.
+var FramelessWindow = WindowOptions{
+	Width:     800,
+	Height:    600,
+	X:         100,
+	Y:         100,
+	Resizable: true,
+}
+
 type Window struct {
 	cwindow *C.gallium_window_t
 }
 
+var (
+	errZeroWidth  = errors.New("window width was zero")
+	errZeroHeight = errors.New("window height was zero")
+)
+
 // OpenWindow creates a window that will load the given URL and will display
 // the given title
-func (b *App) OpenWindow(opts ...func(*WindowOptions)) (*Window, error) {
-	opt := WindowOptions{
-		Width:            800,
-		Height:           800,
-		X:                100,
-		Y:                100,
-		TitleBar:         true,
-		Frame:            true,
-		Resizable:        true,
-		CloseButton:      true,
-		MinButton:        true,
-		FullScreenButton: true,
-		Title:            "Gallium", // is this a good idea?
+func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
+	if opt.Width == 0 {
+		return nil, errZeroWidth
 	}
-
-	for _, f := range opts {
-		f(&opt)
+	if opt.Height == 0 {
+		return nil, errZeroHeight
 	}
-
 	// Create the Cocoa window
 	cwin := C.GalliumOpenWindow(
-		C.CString(opt.URL),
+		C.CString(url),
 		C.CString(opt.Title),
 		C.int(opt.Width),
 		C.int(opt.Height),
