@@ -4,9 +4,12 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 )
+
+const tokenKey = "x-gallium-token"
 
 type server struct {
 	http.Server
@@ -26,6 +29,7 @@ func newServer(h http.Handler) *server {
 	s.listener = l
 	s.token = token()
 	s.Handler = newProtectedHandler(h, s.token)
+	log.Printf("Starting server %s", s.BaseURL())
 	go s.Serve(l)
 	return s
 }
@@ -48,7 +52,7 @@ func (s *server) BaseURL() string {
 }
 
 func (s *server) URL() string {
-	return s.BaseURL() + "/?gallium-token=" + s.token
+	return s.BaseURL() + "/?" + tokenKey + "=" + s.token
 }
 
 type protectedHandler struct {
@@ -64,17 +68,39 @@ func newProtectedHandler(h http.Handler, token string) http.Handler {
 }
 
 func (h *protectedHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if c, err := r.Cookie("x-gallium-token"); err == nil && c.Value == h.token {
-		h.handler.ServeHTTP(w, r)
+	if c, err := r.Cookie(tokenKey); err == nil && c.Value == h.token {
+		h.serve(w, r)
 		return
 	}
-	if r.URL.Query().Get("gallium-token") == h.token {
+	if r.URL.Query().Get(tokenKey) == h.token {
 		http.SetCookie(w, &http.Cookie{
-			Name:  "x-gallium-token",
+			Name:  tokenKey,
 			Value: h.token,
 		})
-		h.handler.ServeHTTP(w, r)
+		h.serve(w, r)
 		return
 	}
+	log.Printf("gallium=%q method=%s path=%q", "unauthorized", r.Method, r.RequestURI)
 	w.WriteHeader(http.StatusUnauthorized)
+}
+
+func (h *protectedHandler) serve(w http.ResponseWriter, r *http.Request) {
+	// Strip query parameter token
+	params := r.URL.Query()
+	params.Del(tokenKey)
+	r.URL.RawQuery = params.Encode()
+	r.RequestURI = r.URL.RequestURI()
+
+	// Stripe cookie token
+	cookies := r.Cookies()[:]
+	r.Header.Del("Cookie")
+	for _, c := range cookies {
+		if c.Name == tokenKey {
+			continue
+		}
+		r.AddCookie(c)
+	}
+
+	log.Printf("gallium=%q method=%s path=%q", "ok", r.Method, r.URL.Path)
+	h.handler.ServeHTTP(w, r)
 }
