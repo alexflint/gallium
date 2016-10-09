@@ -35,12 +35,12 @@ func newServer(h http.Handler) *server {
 }
 
 func token() string {
-	p := make([]byte, 128)
-	_, err := rand.Read(p)
+	var p [128]byte
+	_, err := rand.Read(p[:])
 	if err != nil {
 		panic(fmt.Sprintf("Failed generating random token: %s", err.Error()))
 	}
-	return base64.RawURLEncoding.EncodeToString(p)
+	return base64.RawURLEncoding.EncodeToString(p[:])
 }
 
 func (s *server) Close() error {
@@ -91,7 +91,7 @@ func (h *protectedHandler) serve(w http.ResponseWriter, r *http.Request) {
 	r.URL.RawQuery = params.Encode()
 	r.RequestURI = r.URL.RequestURI()
 
-	// Stripe cookie token
+	// Strip cookie token
 	cookies := r.Cookies()[:]
 	r.Header.Del("Cookie")
 	for _, c := range cookies {
