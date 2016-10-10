@@ -117,6 +117,9 @@ func (s *sseSource) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/event-stream")
 	w.Header().Set("Cache-Control", "no-cache")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte{'\n'})
+	f.Flush()
 
 	ctx := r.Context()
 	for {

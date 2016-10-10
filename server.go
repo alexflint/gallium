@@ -11,8 +11,13 @@ import (
 
 const tokenKey = "x-gallium-token"
 
+type emitter interface {
+	Emit(event string, data interface{}) error
+}
+
 type server struct {
 	http.Server
+	emitter
 
 	listener net.Listener
 	token    string
@@ -28,7 +33,9 @@ func newServer(h http.Handler) *server {
 	}
 	s.listener = l
 	s.token = token()
-	s.Handler = newProtectedHandler(h, s.token)
+	sse := newSSESource(h)
+	s.emitter = sse
+	s.Handler = newProtectedHandler(sse, s.token)
 	log.Printf("Starting server %s", s.BaseURL())
 	go s.Serve(l)
 	return s

@@ -79,6 +79,11 @@ func Loop(args []string, onReady func(*App)) error {
 	return cerr.err()
 }
 
+// Emit send a Server Sent Event to all the browsers currently connected to the embedded http server
+func (a *App) Emit(event string, data interface{}) error {
+	return a.server.Emit(event, data)
+}
+
 // appManager is the singleton for managing app instances
 type appManager []*App
 

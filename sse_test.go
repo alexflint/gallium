@@ -43,6 +43,30 @@ func TestSSECallsUnderlyingHandler(t *testing.T) {
 	}
 }
 
+func TestSSEFlushesOnStart(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	s := newSSESource(nil)
+	w, r := httptest.NewRecorder(), httptest.NewRequest(http.MethodGet, "/gallium.events", nil)
+	r = r.WithContext(ctx)
+	cancel()
+	s.ServeHTTP(w, r)
+	if w.Code != http.StatusOK {
+		t.Errorf("Failed request: %d", w.Code)
+	}
+	if ct := w.Header().Get("Content-Type"); ct != "text/event-stream" {
+		t.Errorf("Unexpected Content Type: %s", ct)
+	}
+	if w.Body.String() != "\n" {
+		t.Errorf(`
+		Expected body: %q
+		Received body: %q
+		`, "\n", w.Body.String())
+	}
+	if !w.Flushed {
+		t.Error("Connection must be flushed when started")
+	}
+}
+
 func TestReceiveEvents(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	s := newSSESource(nil)
@@ -57,6 +81,7 @@ func TestReceiveEvents(t *testing.T) {
 	}()
 
 	var expected bytes.Buffer
+	fmt.Fprintln(&expected, ``)
 	fmt.Fprintln(&expected, "event: first")
 	fmt.Fprintln(&expected, `data: {"foo":"bar"}`)
 	fmt.Fprintln(&expected, ``)
