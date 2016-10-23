@@ -68,9 +68,9 @@ $ open example.app
 
 ![Result of the example](https://cloud.githubusercontent.com/assets/640247/18623245/c71c2d26-7def-11e6-9ad3-1a5541d7fc86.png)
 
-Alternatively, you can run the executable directly, but the window
-will initially appear behind all other windows, and it will also not
-appear in the dock or the switcher, so you will have to find it manually:
+If you run the executable directly without building an app bundle then
+many UI elements, such as menus, will not work correctly.
+
 ```shell
 $ go run example.go
 ```
@@ -194,6 +194,9 @@ desktop UI applications in Go.
   will only start your app if there is not already another instance
   of the same application running, so if your app refuses to start then
   try checking the activity monitor for an already running instance.
+- If you run the binary directly without building an app bundle then
+  your menus will not show up, and the window will initially appear
+  behind other applications.
 
 ### UI thread issues and runtime.LockOSThread
 
