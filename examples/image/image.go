@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	buf, err := ioutil.ReadFile("/Users/alex/gopher.png")
+	buf, err := ioutil.ReadFile("gopher.png")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

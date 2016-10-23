@@ -141,16 +141,30 @@ func (app *App) SetMenu(menus []Menu) {
 	C.NSApplication_SetMainMenu(root)
 }
 
-func (app *App) AddStatusItem(width int, title string, highlight bool, entries ...MenuEntry) {
+type StatusItemOptions struct {
+	Image     *Image      // image to show in the status bar, must be non-nil
+	Width     float64     // width of item in pixels (zero means automatic size)
+	Highlight bool        // whether to highlight the item when clicked
+	Menu      []MenuEntry // the menu to display when the item is clicked
+}
+
+func (app *App) AddStatusItem(opts StatusItemOptions) {
 	if menuMgr == nil {
 		menuMgr = newMenuManager()
 	}
-
-	root := C.NSMenu_New(C.CString("<statusbar>"))
-	for _, m := range entries {
-		menuMgr.add(m, root)
+	if opts.Image == nil {
+		panic("status item image must not be nil")
 	}
-	C.NSStatusBar_AddItem(C.int(width), C.CString(title), C.bool(highlight), root)
+
+	menu := C.NSMenu_New(C.CString("<statusbar>"))
+	for _, m := range opts.Menu {
+		menuMgr.add(m, menu)
+	}
+	C.NSStatusBar_AddItem(
+		opts.Image.c,
+		C.float(opts.Width),
+		C.bool(opts.Highlight),
+		menu)
 }
 
 // Image holds a handle to a platform-specific image structure (e.g. NSImage on macOS).
@@ -171,11 +185,6 @@ func ImageFromPNG(buf []byte) (*Image, error) {
 		return nil, ErrImageDecodeFailed
 	}
 	return &Image{cimg}, nil
-}
-
-// ImageToPNG writes an image to the given file
-func ImageToPNG(image *Image, path string) {
-	C.NSImage_WriteToFile(image.c, C.CString(path))
 }
 
 // Notification represents a desktop notification
