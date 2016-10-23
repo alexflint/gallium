@@ -184,6 +184,7 @@ func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 		C.bool(opt.FullScreenButton))
 
 	// TODO: associate menu
+	log.Println("cwin:", cwin)
 	return &Window{
 		c: cwin,
 	}, nil
@@ -201,5 +202,5 @@ func (w *Window) Shape() Rect {
 
 // Shape gets the current shape of the window.
 func (w *Window) SetShape(r Rect) {
-	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Height))
+	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Top))
 }
