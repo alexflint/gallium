@@ -44,17 +44,4 @@ func OnReady(app *gallium.App) {
 			},
 		},
 	})
-	app.AddStatusItem(
-		20,
-		"demo",
-		true,
-		gallium.MenuItem{
-			Title:   "Do something",
-			OnClick: handleDoSomething,
-		},
-		gallium.MenuItem{
-			Title:   "Do something else",
-			OnClick: handleDoSomethingElse,
-		},
-	)
 }
