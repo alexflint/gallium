@@ -99,13 +99,18 @@ type App struct {
 	ready chan struct{}
 }
 
+// Rect represents a rectangular region on the screen
+type Rect struct {
+	Width  int // Width in pixels
+	Height int // Height in pixels
+	Left   int // Left is offset from left in pixel
+	Top    int // Left is offset from top in pixels
+}
+
 // WindowOptions contains options for creating windows
 type WindowOptions struct {
 	Title            string // String to display in title bar
-	Width            int    // Width in pixels. Set to zero to use OS default.
-	Height           int    // Height in pixels. Set to zero to use OS default.
-	X                int    // X offset from left in pixels. Set to zero to use OS default.
-	Y                int    // Y offset from top in pixels. Set to zero to use OS default.
+	Shape            Rect   // Initial size and position of window
 	TitleBar         bool   // Whether the window title bar
 	Frame            bool   // Whether the window has a frame
 	Resizable        bool   // Whether the window border can be dragged to change its shape
@@ -118,10 +123,12 @@ type WindowOptions struct {
 // FramedWindow contains options for an "ordinary" window with title bar,
 // frame, and min/max/close buttons.
 var FramedWindow = WindowOptions{
-	Width:            800,
-	Height:           600,
-	X:                100,
-	Y:                100,
+	Shape: Rect{
+		Width:  800,
+		Height: 600,
+		Left:   100,
+		Top:    100,
+	},
 	TitleBar:         true,
 	Frame:            true,
 	Resizable:        true,
@@ -134,15 +141,18 @@ var FramedWindow = WindowOptions{
 // FramelessWindow contains options for a window with no frame or border, but that
 // is still resizable.
 var FramelessWindow = WindowOptions{
-	Width:     800,
-	Height:    600,
-	X:         100,
-	Y:         100,
+	Shape: Rect{
+		Width:  800,
+		Height: 600,
+		Left:   100,
+		Top:    100,
+	},
 	Resizable: true,
 }
 
+// Window represents a window registered with the native UI toolkit (e.g. NSWindow on macOS)
 type Window struct {
-	cwindow *C.gallium_window_t
+	c *C.gallium_window_t
 }
 
 var (
@@ -150,23 +160,22 @@ var (
 	errZeroHeight = errors.New("window height was zero")
 )
 
-// OpenWindow creates a window that will load the given URL and will display
-// the given title
+// OpenWindow creates a window that will load the given URL.
 func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
-	if opt.Width == 0 {
+	if opt.Shape.Width == 0 {
 		return nil, errZeroWidth
 	}
-	if opt.Height == 0 {
+	if opt.Shape.Height == 0 {
 		return nil, errZeroHeight
 	}
 	// Create the Cocoa window
 	cwin := C.GalliumOpenWindow(
 		C.CString(url),
 		C.CString(opt.Title),
-		C.int(opt.Width),
-		C.int(opt.Height),
-		C.int(opt.X),
-		C.int(opt.Y),
+		C.int(opt.Shape.Width),
+		C.int(opt.Shape.Height),
+		C.int(opt.Shape.Left),
+		C.int(opt.Shape.Top),
 		C.bool(opt.TitleBar),
 		C.bool(opt.Frame),
 		C.bool(opt.Resizable),
@@ -176,6 +185,21 @@ func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 
 	// TODO: associate menu
 	return &Window{
-		cwindow: cwin,
+		c: cwin,
 	}, nil
+}
+
+// Shape gets the current shape of the window.
+func (w *Window) Shape() Rect {
+	return Rect{
+		Width:  int(C.GalliumWindowGetWidth(w.c)),
+		Height: int(C.GalliumWindowGetHeight(w.c)),
+		Left:   int(C.GalliumWindowGetLeft(w.c)),
+		Top:    int(C.GalliumWindowGetTop(w.c)),
+	}
+}
+
+// Shape gets the current shape of the window.
+func (w *Window) SetShape(r Rect) {
+	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Height))
 }

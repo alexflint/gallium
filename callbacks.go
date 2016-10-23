@@ -7,9 +7,9 @@ import (
 
 import "C"
 
-// This file contains all Go functions that are exported to cgo because
-// the presence of an export means that the C prelude gets copied into
-// two locations.
+// This file contains all Go functions that are exported to cgo. They
+// are here because the presence of an export means that the C prelude
+// gets copied into two locations.
 
 //export cgo_onReady
 func cgo_onReady(appId int) {

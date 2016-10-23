@@ -35,10 +35,12 @@ import (
 	"strings"
 )
 
+// MenuEntry is the interface for menus and menu items.
 type MenuEntry interface {
 	menu()
 }
 
+// A MenuItem has a title and can be clicked on. It is a leaf node in the menu tree.
 type MenuItem struct {
 	Title    string
 	Shortcut string
@@ -47,6 +49,7 @@ type MenuItem struct {
 
 func (MenuItem) menu() {}
 
+// A Menu has a title and a list of entries. It is a non-leaf node in the menu tree.
 type Menu struct {
 	Title   string
 	Entries []MenuEntry
@@ -54,8 +57,10 @@ type Menu struct {
 
 func (Menu) menu() {}
 
+// menuMgr is the singleton that owns the menu
 var menuMgr *menuManager
 
+// menuManager translates Menus and MenuItems to their native equivalent (e.g. NSMenuItem on macOS)
 type menuManager struct {
 	items map[int]MenuItem
 }
@@ -148,7 +153,7 @@ func (app *App) AddStatusItem(width int, title string, highlight bool, entries .
 	C.NSStatusBar_AddItem(C.int(width), C.CString(title), C.bool(highlight), root)
 }
 
-// Image holds a handle to a platform-specific image structure. On OSX it is NSImage.
+// Image holds a handle to a platform-specific image structure (e.g. NSImage on macOS).
 type Image struct {
 	c *C.gallium_nsimage_t
 }
@@ -173,6 +178,7 @@ func ImageToPNG(image *Image, path string) {
 	C.NSImage_WriteToFile(image.c, C.CString(path))
 }
 
+// Notification represents a desktop notification
 type Notification struct {
 	Title             string
 	Subtitle          string
@@ -183,6 +189,7 @@ type Notification struct {
 	OtherButtonTitle  string
 }
 
+// Post shows the given desktop notification
 func (app *App) Post(n Notification) {
 	var cimg *C.gallium_nsimage_t
 	if n.Image != nil {
@@ -202,7 +209,9 @@ func (app *App) Post(n Notification) {
 	C.NSUserNotificationCenter_DeliverNotification(cn)
 }
 
+// RunApplication is for debugging only. It allows creation of menus and
+// desktop notifications without firing up any parts of chromium. It will
+// be removed before the 1.0 release.
 func RunApplication() {
-	log.Println("in RunApplication")
 	C.NSApplication_Run()
 }
