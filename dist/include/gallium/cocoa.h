@@ -41,12 +41,11 @@ GALLIUM_EXPORT void NSMenuItem_SetSubmenu(
 	gallium_nsmenu_t* submenu);
 
 GALLIUM_EXPORT void NSStatusBar_AddItem(
-	gallium_nsimage_t* image,
+  gallium_nsimage_t* image,
 	float width,
 	bool highlightMode,
 	gallium_nsmenu_t* menu);
 
-  
 GALLIUM_EXPORT gallium_nsusernotification_t* NSUserNotification_New(
 	const char* title,
 	const char* subtitle,
