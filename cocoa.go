@@ -182,6 +182,7 @@ func ImageFromPNG(buf []byte) (*Image, error) {
 	return &Image{cimg}, nil
 }
 
+// Notification represents a desktop notification
 type Notification struct {
 	Title             string
 	Subtitle          string
