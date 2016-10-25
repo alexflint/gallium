@@ -38,6 +38,26 @@ GALLIUM_EXPORT gallium_window_t* GalliumOpenWindow(const char* url,
                                       bool minButton,
                                       bool fullScreenButton);
 
+  
+// GalliumWindowGetWidth gets the width of a window
+GALLIUM_EXPORT int GalliumWindowGetWidth(gallium_window_t* window);
+
+// GalliumWindowGetWidth gets the width of a window
+GALLIUM_EXPORT int GalliumWindowGetHeight(gallium_window_t* window);
+
+// GalliumWindowGetWidth gets the width of a window
+GALLIUM_EXPORT int GalliumWindowGetLeft(gallium_window_t* window);
+
+// GalliumWindowGetWidth gets the width of a window
+GALLIUM_EXPORT int GalliumWindowGetTop(gallium_window_t* window);
+
+// GalliumWindowGetWidth gets the width of a window
+GALLIUM_EXPORT void GalliumWindowSetShape(gallium_window_t* window,
+                                          int width,
+                                          int height,
+                                          int left,
+                                          int top);
+
 #ifdef __cplusplus
 }
 #endif
