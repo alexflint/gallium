@@ -184,7 +184,6 @@ func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 		C.bool(opt.FullScreenButton))
 
 	// TODO: associate menu
-	log.Println("cwin:", cwin)
 	return &Window{
 		c: cwin,
 	}, nil
@@ -203,4 +202,30 @@ func (w *Window) Shape() Rect {
 // Shape gets the current shape of the window.
 func (w *Window) SetShape(r Rect) {
 	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Top))
+}
+
+// URL gets the URL that the window is currently at.
+func (w *Window) URL() string {
+	return C.GoString(C.GalliumWindowGetURL(w.c))
+}
+
+// LoadURL causes the window to load the given URL
+func (w *Window) LoadURL(url string) {
+	log.Println("Window.LoadURL:", url)
+	C.GalliumWindowLoadURL(w.c, C.CString(url))
+}
+
+// OpenDevTools shows the developer tools, or does nothing if they are already open.
+func (w *Window) OpenDevTools() {
+	C.GalliumWindowOpenDevTools(w.c)
+}
+
+// CloseDevTools closes the developer tools, or does nothing if they are already closed.
+func (w *Window) CloseDevTools() {
+	C.GalliumWindowCloseDevTools(w.c)
+}
+
+// DevToolsVisible returns whether the developer tools are showing
+func (w *Window) DevToolsAreOpen() bool {
+	return bool(C.GalliumWindowDevToolsAreOpen(w.c))
 }
