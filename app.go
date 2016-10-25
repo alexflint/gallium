@@ -28,6 +28,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 	"unsafe"
 )
@@ -60,7 +61,8 @@ func Loop(args []string, onReady func(*App)) error {
 	defer cerr.free()
 
 	app := App{
-		ready: make(chan struct{}),
+		ready:  make(chan struct{}),
+		server: newServer(http.DefaultServeMux),
 	}
 
 	go func() {
@@ -75,6 +77,11 @@ func Loop(args []string, onReady func(*App)) error {
 	appId := apps.add(&app)
 	C.helper_GalliumLoop(C.int(appId), C.CString(args[0]), &cerr.c)
 	return cerr.err()
+}
+
+// Emit send a Server Sent Event to all the browsers currently connected to the embedded http server
+func (a *App) Emit(event string, data interface{}) error {
+	return a.server.Emit(event, data)
 }
 
 // appManager is the singleton for managing app instances
@@ -97,6 +104,9 @@ type App struct {
 	// ready is how the cgo onready callback indicates to the Loop goroutine that
 	// chromium is initialized
 	ready chan struct{}
+
+	// local http server only accessible by gallium using a random secure token
+	server *server
 }
 
 // WindowOptions contains options for creating windows
@@ -153,6 +163,9 @@ var (
 // OpenWindow creates a window that will load the given URL and will display
 // the given title
 func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
+	if url == "" {
+		url = b.server.URL()
+	}
 	if opt.Width == 0 {
 		return nil, errZeroWidth
 	}
