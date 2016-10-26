@@ -161,7 +161,7 @@ var (
 )
 
 // OpenWindow creates a window that will load the given URL.
-func (b *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
+func (app *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 	if opt.Shape.Width == 0 {
 		return nil, errZeroWidth
 	}
