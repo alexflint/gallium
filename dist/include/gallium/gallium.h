@@ -58,6 +58,21 @@ GALLIUM_EXPORT void GalliumWindowSetShape(gallium_window_t* window,
                                           int left,
                                           int top);
 
+// GalliumWindowGetURL gets the URL that the window is currently at
+GALLIUM_EXPORT const char* GalliumWindowGetURL(gallium_window_t* window);
+
+// GalliumWindowLoadURL causes the window to load the given URL
+GALLIUM_EXPORT void GalliumWindowLoadURL(gallium_window_t* window, const char* url);
+
+// GalliumWindowOpenDevTools opens the developer tools for the given window
+GALLIUM_EXPORT void GalliumWindowOpenDevTools(gallium_window_t* window);
+
+// GalliumWindowCloseDevTools closes the developer tools for the given window
+GALLIUM_EXPORT void GalliumWindowCloseDevTools(gallium_window_t* window);
+
+// GalliumWindowDevToolsVisible returns true if the developer tools are currently visible for the given window
+GALLIUM_EXPORT bool GalliumWindowDevToolsAreOpen(gallium_window_t* window);
+  
 #ifdef __cplusplus
 }
 #endif
