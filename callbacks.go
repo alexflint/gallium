@@ -13,7 +13,6 @@ import "C"
 
 //export cgo_onReady
 func cgo_onReady(appId int) {
-	log.Printf("cgo_onReady called with %d", appId)
 	// do not actually call the user function from here because that would
 	// block the UI loop
 	apps.get(appId).ready <- struct{}{}
@@ -21,8 +20,6 @@ func cgo_onReady(appId int) {
 
 //export cgo_onMenuClicked
 func cgo_onMenuClicked(data unsafe.Pointer) {
-	log.Println("in cgo_onMenuClicked")
-
 	if menuMgr == nil {
 		log.Println("onMenuClicked called but menu manager was nil")
 		return
@@ -34,8 +31,6 @@ func cgo_onMenuClicked(data unsafe.Pointer) {
 	}
 
 	id := *(*int)(data)
-	log.Printf("cgo_onMenuClicked: id=%d", id)
-
 	item, found := menuMgr.items[id]
 	if !found {
 		log.Printf("onMenuClicked received non-existent ID %d", id)
