@@ -11,7 +11,7 @@ package gallium
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
 #include <stdlib.h>
-#include "gallium/gallium.h"
+#include "gallium/browser.h"
 #include "gallium/cocoa.h"
 
 // It does not seem that we can import "_cgo_export.h" from here
@@ -211,16 +211,42 @@ func (w *Window) URL() string {
 
 // LoadURL causes the window to load the given URL
 func (w *Window) LoadURL(url string) {
-	log.Println("Window.LoadURL:", url)
 	C.GalliumWindowLoadURL(w.c, C.CString(url))
 }
 
-// OpenDevTools shows the developer tools, or does nothing if they are already open.
+// Reload reloads the current URL
+func (w *Window) Reload() {
+	C.GalliumWindowReload(w.c)
+}
+
+// Reload reloads the current URL, ignoring cached versions of resources.
+func (w *Window) ReloadNoCache() {
+	C.GalliumWindowReloadNoCache(w.c)
+}
+
+// Open opens the window. This is the default state for a window created
+// via OpenWindow, so you only need to call this if you manually closed
+// the window.
+func (w *Window) Open() {
+	C.GalliumWindowOpen(w.c)
+}
+
+// Close closes the window, as if the close button had been clicked.
+func (w *Window) Close() {
+	C.GalliumWindowClose(w.c)
+}
+
+// Miniaturize miniaturizes the window, as if the min button had been clicked.
+func (w *Window) Miniaturize() {
+	C.GalliumWindowMiniaturize(w.c)
+}
+
+// OpenDevTools opens the developer tools for this window.
 func (w *Window) OpenDevTools() {
 	C.GalliumWindowOpenDevTools(w.c)
 }
 
-// CloseDevTools closes the developer tools, or does nothing if they are already closed.
+// CloseDevTools closes the developer tools.
 func (w *Window) CloseDevTools() {
 	C.GalliumWindowCloseDevTools(w.c)
 }
