@@ -84,9 +84,18 @@ GALLIUM_EXPORT void GalliumWindowOpenDevTools(gallium_window_t* window);
 
 // GalliumWindowCloseDevTools closes the developer tools for the given window
 GALLIUM_EXPORT void GalliumWindowCloseDevTools(gallium_window_t* window);
-
+  
 // GalliumWindowDevToolsVisible returns true if the developer tools are currently visible for the given window
 GALLIUM_EXPORT bool GalliumWindowDevToolsAreOpen(gallium_window_t* window);
+  
+// GalliumWindowNativeWindow gets a native handle for this window (NSWindow*).
+GALLIUM_EXPORT void* GalliumWindowNativeWindow(gallium_window_t* window);
+
+// GalliumWindowNativeWindow gets a native handle for the window controller (NSWindowController*).
+GALLIUM_EXPORT void* GalliumWindowNativeController(gallium_window_t* window);
+
+// GalliumWindowNativeWindow gets a native handle for the window content (content::WebContent*).
+GALLIUM_EXPORT void* GalliumWindowNativeContent(gallium_window_t* window);
   
 #ifdef __cplusplus
 }
