@@ -139,7 +139,7 @@ var FramedWindow = WindowOptions{
 }
 
 // FramelessWindow contains options for a window with no frame or border, but that
-// is still resizable. Note: frameless windows cannot accept keyboard input (see #31).
+// is still resizable.
 var FramelessWindow = WindowOptions{
 	Shape: Rect{
 		Width:  800,

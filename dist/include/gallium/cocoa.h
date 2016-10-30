@@ -72,10 +72,6 @@ GALLIUM_EXPORT void NSApplication_SetMainMenu(
 
 GALLIUM_EXPORT void NSApplication_Run();
 
-// Tells OSX that this is a UI application
-GALLIUM_EXPORT void SetUIApplication();
-
-
 #ifdef __cplusplus
 }
 #endif

@@ -197,7 +197,6 @@ desktop UI applications in Go.
 - If you run the binary directly without building an app bundle then
   your menus will not show up, and the window will initially appear
   behind other applications.
-- Frameless windows cannot accept keyboard input (see #31).
 
 ### UI thread issues and runtime.LockOSThread
 
