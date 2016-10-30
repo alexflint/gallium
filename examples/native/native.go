@@ -29,7 +29,7 @@ void SetAlpha(void* window, float alpha) {
 import "C"
 
 func onReady(ui *gallium.App) {
-	window, err := ui.OpenWindow("http://www.example.com/", gallium.FramedWindow)
+	window, err := ui.OpenWindow("http://example.com/", gallium.FramedWindow)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -53,7 +53,7 @@ func main() {
 }
 
 func onReady(app *gallium.App) {
-  app.NewWindow("http://example.com/", "Window title!")
+  app.OpenWindow("http://example.com/", gallium.FramedWindow)
 }
 ```
 
@@ -62,7 +62,7 @@ an app bundle:
 ```shell
 $ go build ./example
 $ go install github.com/alexflint/gallium/cmd/gallium-bundle
-$ gallium-bundle -o example.app example
+$ gallium-bundle example
 $ open example.app
 ```
 
@@ -84,7 +84,7 @@ func main() {
 }
 
 func onReady(app *gallium.App) {
-  app.NewWindow("http://example.com/", "Here is a window")
+  app.OpenWindow("http://example.com/", gallium.FramedWindow)
   app.SetMenu([]gallium.Menu{
     gallium.Menu{
       Title: "demo",
@@ -116,7 +116,7 @@ func main() {
 }
 
 func onReady(app *gallium.App) {
-  app.NewWindow("http://example.com/", "Here is a window")
+  app.OpenWindow("http://example.com/", gallium.FramedWindow)
   app.AddStatusItem(
     20,
     "statusbar",
@@ -166,6 +166,58 @@ func onReady(app *gallium.App) {
     Subtitle: "The subtitle",
     Image:    img,
   })
+}
+```
+
+### Writing native code
+
+You can write C or Objective-C code that interfaces directly with native
+windowing APIs using golang's excellent C bridging technology, cgo. The
+following example uses the macOS native API `[NSWindow setAlphaValue]` to
+create a semi-transparent window.
+
+```go
+package main
+
+import (
+  "log"
+  "os"
+  "runtime"
+
+  "github.com/alexflint/gallium"
+)
+
+/*
+#cgo CFLAGS: -x objective-c
+#cgo CFLAGS: -framework Cocoa
+#cgo LDFLAGS: -framework Cocoa
+
+#include <Cocoa/Cocoa.h>
+#include <dispatch/dispatch.h>
+
+void SetAlpha(void* window, float alpha) {
+  // Cocoa requires that all UI operations happen on the main thread. Since
+  // gallium.Loop will have initiated the Cocoa event loop, we can can use
+  // dispatch_async to run code on the main thread.
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSWindow* w = (NSWindow*)window;
+    [w setAlphaValue:alpha];
+  });
+}
+*/
+import "C"
+
+func onReady(ui *gallium.App) {
+  window, err := ui.OpenWindow("http://example.com/", gallium.FramedWindow)
+  if err != nil {
+    log.Fatal(err)
+  }
+  C.SetAlpha(window.NativeWindow(), 0.5)
+}
+
+func main() {
+  runtime.LockOSThread()
+  gallium.Loop(os.Args, onReady)
 }
 ```
 
