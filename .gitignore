@@ -15,3 +15,5 @@ out/
 # Vim
 /*.swp
 *.app
+
+/build/
