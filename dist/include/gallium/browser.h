@@ -64,6 +64,21 @@ GALLIUM_EXPORT const char* GalliumWindowGetURL(gallium_window_t* window);
 // GalliumWindowLoadURL causes the window to load the given URL
 GALLIUM_EXPORT void GalliumWindowLoadURL(gallium_window_t* window, const char* url);
 
+// GalliumWindowReload reloads the current page
+GALLIUM_EXPORT void GalliumWindowReload(gallium_window_t* window);
+
+// GalliumWindowReload reloads the current page, ignoring any cached resources
+GALLIUM_EXPORT void GalliumWindowReloadNoCache(gallium_window_t* window);
+
+// GalliumWindowOpen opens the window (only for use after GalliumWindowClose)
+GALLIUM_EXPORT void GalliumWindowOpen(gallium_window_t* window);
+
+// GalliumWindowClose closes the window
+GALLIUM_EXPORT void GalliumWindowClose(gallium_window_t* window);
+
+// GalliumWindowClose miniaturizes the window
+GALLIUM_EXPORT void GalliumWindowMiniaturize(gallium_window_t* window);
+
 // GalliumWindowOpenDevTools opens the developer tools for the given window
 GALLIUM_EXPORT void GalliumWindowOpenDevTools(gallium_window_t* window);
 

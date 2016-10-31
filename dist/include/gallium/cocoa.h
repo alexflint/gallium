@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "gallium.h"
+#include "gallium/browser.h"
 
 #ifdef __cplusplus
 extern "C" {

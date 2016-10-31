@@ -2,7 +2,6 @@ package gallium
 
 /*
 #include <stdlib.h>
-#include "gallium/gallium.h"
 #include "gallium/cocoa.h"
 
 // It does not seem that we can import "_cgo_export.h" from here
