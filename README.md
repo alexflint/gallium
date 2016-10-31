@@ -236,13 +236,13 @@ desktop UI applications in Go.
 
 ### Common pitfalls
 
-- When you run an app bundle with `open app.bundle`, OSX launch services
+- When you run an app bundle with `open Foo.app`, OSX launch services
   discards standard output and standard error. If you need to see
   this output for debugging purposes, use a redirect:
   ```
   gallium.RedirectStdoutStderr("output.log")
   ```
-- When you run an app bundle with `open app.bundle`, OSX launch services
+- When you run an app bundle with `open Foo.app`, OSX launch services
   will only start your app if there is not already another instance
   of the same application running, so if your app refuses to start then
   try checking the activity monitor for an already running instance.
