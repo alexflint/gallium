@@ -78,12 +78,13 @@ $ go run example.go
 ### Menus
 
 ```go
-func main() {
-  runtime.LockOSThread()
-  gallium.Loop(os.Args, onReady)
-}
+//go:generate gallium-main
 
-func onReady(app *gallium.App) {
+type menu struct {}
+
+func New() gallium.Starter { return &menu{} }
+
+func (*menu) Start(app *gallium.App) {
   app.NewWindow("http://example.com/", "Here is a window")
   app.SetMenu([]gallium.Menu{
     gallium.Menu{
@@ -110,12 +111,13 @@ func handleMenuQuit() {
 ### Status Bar
 
 ```go
-func main() {
-  runtime.LockOSThread()
-  gallium.Loop(os.Args, onReady)
-}
+//go:generate gallium-main
 
-func onReady(app *gallium.App) {
+type status struct {}
+
+func New() gallium.Starter { return &status{} }
+
+func (*status) Start(app *gallium.App) {
   app.NewWindow("http://example.com/", "Here is a window")
   app.AddStatusItem(
     20,
@@ -150,12 +152,13 @@ given desktop notification, so you may need to open the notification center
 and scroll to the bottom in order to see notifications during development.
 
 ```go
-func main() {
-  runtime.LockOSThread()
-  gallium.Loop(os.Args, onReady)
-}
+//go:generate gallium-main
 
-func onReady(app *gallium.App) {
+type notifications struct {}
+
+func New() gallium.Starter { return &notifications{} }
+
+func (*notifications) Start(app *gallium.App) {
   img, err := gallium.ImageFromPNG(pngBuffer)
   if err != nil {
     ...
@@ -218,7 +221,7 @@ goroutine.
 ### Shared libraries and linking issues
 
 Gallium is based on Chromium, which it accesses via `Gallium.framework`.
-That framework in turn contains `libchromiumcontent.dylib`, which is a 
+That framework in turn contains `libchromiumcontent.dylib`, which is a
 shared library containing the chromium content module and is distributed
 in binary form by the same folks responsible for the excellent Electron
 framework. When you build your Go executable, the directives in

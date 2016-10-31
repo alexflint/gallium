@@ -53,8 +53,13 @@ func (e *cerr) err() error {
 	return fmt.Errorf("C error")
 }
 
+// Starter is used to initialize the gallium app
+type Starter interface {
+	Start(*App)
+}
+
 // Loop starts the browser loop and does not return unless there is an initialization error
-func Loop(args []string, onReady func(*App)) error {
+func Loop(args []string, starter Starter) error {
 	log.Println("\n\n=== gallium.Loop ===")
 	cerr := newCerr()
 	defer cerr.free()
@@ -66,7 +71,7 @@ func Loop(args []string, onReady func(*App)) error {
 	go func() {
 		select {
 		case <-app.ready:
-			onReady(&app)
+			starter.Start(&app)
 		case <-time.After(3 * time.Second):
 			log.Fatal("Waited for 3 seconds without ready signal")
 		}

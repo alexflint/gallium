@@ -1,28 +1,27 @@
+//go:generate gallium-main
+
 package main
 
 import (
 	"log"
 	"os"
-	"runtime"
 
 	"github.com/alexflint/gallium"
 )
 
-func menuQuit_OnClick() {
+type menu struct{}
+
+func New() *menu { return &menu{} }
+
+func (*menu) Quit() {
 	os.Exit(0)
 }
 
-func menuAAA_OnClick() {
+func (*menu) menuAAA() {
 	log.Println("you clicked AAA")
 }
 
-func main() {
-	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, OnReady)
-}
-
-func OnReady(app *gallium.App) {
+func (ex *menu) Start(app *gallium.App) {
 	app.SetMenu([]gallium.Menu{
 		{
 			Title: "menudemo",
@@ -30,7 +29,7 @@ func OnReady(app *gallium.App) {
 				gallium.MenuItem{
 					Title:    "Quit",
 					Shortcut: "cmd+q",
-					OnClick:  menuQuit_OnClick,
+					OnClick:  ex.Quit,
 				},
 			},
 		},
@@ -40,7 +39,7 @@ func OnReady(app *gallium.App) {
 				gallium.MenuItem{
 					Title:    "AAA",
 					Shortcut: "cmd+shift+a",
-					OnClick:  menuAAA_OnClick,
+					OnClick:  ex.menuAAA,
 				},
 				gallium.MenuItem{Title: "BBB"},
 				gallium.MenuItem{Title: "CCC"},

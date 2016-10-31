@@ -1,18 +1,17 @@
+//go:generate gallium-main
+
 package main
 
 import (
 	"log"
 	"os"
-	"runtime"
 
 	"github.com/alexflint/gallium"
 )
 
-func main() {
-	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, onReady)
-}
+type simple struct{}
+
+func New() *simple { return &simple{} }
 
 func handleMenuQuit() {
 	log.Println("quit clicked")
@@ -27,7 +26,7 @@ func handleDoSomethingElse() {
 	log.Println("do something else")
 }
 
-func onReady(app *gallium.App) {
+func (*simple) Start(app *gallium.App) {
 	app.OpenWindow("http://example.com/", gallium.FramedWindow)
 	app.SetMenu([]gallium.Menu{
 		{
