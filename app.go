@@ -255,3 +255,15 @@ func (w *Window) CloseDevTools() {
 func (w *Window) DevToolsAreOpen() bool {
 	return bool(C.GalliumWindowDevToolsAreOpen(w.c))
 }
+
+// NativeWindow gets a operating-system dependent handle for this window. Under macOS
+// this is NSWindow*.
+func (w *Window) NativeWindow() unsafe.Pointer {
+	return unsafe.Pointer(C.GalliumWindowNativeWindow(w.c))
+}
+
+// NativeWindow gets an operating-system dependent handle for the window controller.
+// Under macOS this is *NSWindowController.
+func (w *Window) NativeController() unsafe.Pointer {
+	return unsafe.Pointer(C.GalliumWindowNativeController(w.c))
+}
