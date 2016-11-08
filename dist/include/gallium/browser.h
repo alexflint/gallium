@@ -79,6 +79,33 @@ GALLIUM_EXPORT void GalliumWindowClose(gallium_window_t* window);
 // GalliumWindowClose miniaturizes the window
 GALLIUM_EXPORT void GalliumWindowMiniaturize(gallium_window_t* window);
 
+// GalliumWindowUndo undoes the last text editing action
+GALLIUM_EXPORT void GalliumWindowUndo(gallium_window_t* window);
+
+// GalliumWindowRedo redoes the last text editing action
+GALLIUM_EXPORT void GalliumWindowRedo(gallium_window_t* window);
+
+// GalliumWindow cuts the current text selection to the pastboard
+GALLIUM_EXPORT void GalliumWindowCut(gallium_window_t* window);
+
+// GalliumWindow copies the current text selection to the pasteboard
+GALLIUM_EXPORT void GalliumWindowCopy(gallium_window_t* window);
+
+// GalliumWindow pastes from the pasteboard
+GALLIUM_EXPORT void GalliumWindowPaste(gallium_window_t* window);
+
+// GalliumWindow pastes from the pasteboard, matching style to the current element
+GALLIUM_EXPORT void GalliumWindowPasteAndMatchStyle(gallium_window_t* window);
+
+// GalliumWindow deletes the current text selection
+GALLIUM_EXPORT void GalliumWindowDelete(gallium_window_t* window);
+
+// GalliumWindow selects all text in the current element
+GALLIUM_EXPORT void GalliumWindowSelectAll(gallium_window_t* window);
+
+// GalliumWindowUnselect unselects any text selection
+GALLIUM_EXPORT void GalliumWindowUnselect(gallium_window_t* window);
+
 // GalliumWindowOpenDevTools opens the developer tools for the given window
 GALLIUM_EXPORT void GalliumWindowOpenDevTools(gallium_window_t* window);
 

@@ -24,7 +24,6 @@ static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 		&cgo_onMenuClicked,
 		callbackArg);
 }
-
 */
 import "C"
 import (
