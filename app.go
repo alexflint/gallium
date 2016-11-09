@@ -29,6 +29,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"time"
 	"unsafe"
 )
@@ -141,7 +143,23 @@ var FramedWindow = WindowOptions{
 	CloseButton:      true,
 	MinButton:        true,
 	FullScreenButton: true,
-	Title:            "Gallium",
+	Title:            defaultWindowTitle(),
+}
+
+func defaultWindowTitle() string {
+	// try the display name first
+	if name := BundleInfo("CFBundleDisplayName"); name != "" {
+		return name
+	}
+	// then fall back to the short name
+	if name := BundleInfo("CFBundleName"); name != "" {
+		return name
+	}
+	// then fall back to the executable name
+	if len(os.Args) > 0 {
+		filepath.Base(os.Args[0])
+	}
+	return ""
 }
 
 // FramelessWindow contains options for a window with no frame or border, but that

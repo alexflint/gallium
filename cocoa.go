@@ -31,6 +31,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"unsafe"
 )
 
 // MenuEntry is the interface for menus and menu items.
@@ -220,6 +221,16 @@ func (app *App) Post(n Notification) {
 		C.CString(n.OtherButtonTitle))
 
 	C.NSUserNotificationCenter_DeliverNotification(cn)
+}
+
+// BundleInfo looks up an entry in the Info.plist for the current bundle.
+func BundleInfo(key string) string {
+	cstr := C.MainBundle_ObjectForKey(C.CString(key))
+	if cstr == nil {
+		return ""
+	}
+	defer C.free(unsafe.Pointer(cstr))
+	return C.GoString(cstr)
 }
 
 // RunApplication is for debugging only. It allows creation of menus and

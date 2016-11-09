@@ -75,6 +75,8 @@ GALLIUM_EXPORT void NSApplication_SetMainMenu(
 
 GALLIUM_EXPORT void NSApplication_Run();
 
+GALLIUM_EXPORT char* MainBundle_ObjectForKey(const char* key);
+
 #ifdef __cplusplus
 }
 #endif
