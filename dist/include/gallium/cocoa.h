@@ -36,6 +36,9 @@ GALLIUM_EXPORT gallium_nsmenuitem_t* NSMenu_AddMenuItem(
 	gallium_callback_t callback,
 	void* callbackArg);
 
+GALLIUM_EXPORT void NSMenu_AddSeparator(
+	gallium_nsmenu_t* menu);
+
 GALLIUM_EXPORT void NSMenuItem_SetSubmenu(
 	gallium_nsmenuitem_t* menuitem,
 	gallium_nsmenu_t* submenu);

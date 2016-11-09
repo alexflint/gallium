@@ -44,6 +44,9 @@ func OnReady(app *gallium.App) {
 				},
 				gallium.MenuItem{Title: "BBB"},
 				gallium.MenuItem{Title: "CCC"},
+				gallium.Separator,
+				gallium.MenuItem{Title: "DDD"},
+				gallium.MenuItem{Title: "EEE"},
 			},
 		},
 		{
