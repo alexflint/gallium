@@ -24,7 +24,6 @@ static inline gallium_nsmenuitem_t* helper_NSMenu_AddMenuItem(
 		&cgo_onMenuClicked,
 		callbackArg);
 }
-
 */
 import "C"
 import (
@@ -111,7 +110,7 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 		case "cmd":
 			modifiers |= int(C.GalliumCmdModifier)
 		case "ctrl":
-			modifiers |= int(C.GalliumCmdModifier)
+			modifiers |= int(C.GalliumCtrlModifier)
 		case "cmdctrl":
 			modifiers |= int(C.GalliumCmdOrCtrlModifier)
 		case "alt":

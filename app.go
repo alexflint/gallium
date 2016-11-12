@@ -32,6 +32,11 @@ import (
 	"unsafe"
 )
 
+var (
+	errZeroWidth  = errors.New("window width was zero")
+	errZeroHeight = errors.New("window height was zero")
+)
+
 // cerr holds a C-allocated error, which must be freed explicitly.
 type cerr struct {
 	c *C.struct_gallium_error
@@ -155,11 +160,6 @@ type Window struct {
 	c *C.gallium_window_t
 }
 
-var (
-	errZeroWidth  = errors.New("window width was zero")
-	errZeroHeight = errors.New("window height was zero")
-)
-
 // OpenWindow creates a window that will load the given URL.
 func (app *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 	if opt.Shape.Width == 0 {
@@ -239,6 +239,51 @@ func (w *Window) Close() {
 // Miniaturize miniaturizes the window, as if the min button had been clicked.
 func (w *Window) Miniaturize() {
 	C.GalliumWindowMiniaturize(w.c)
+}
+
+// Undo undoes the last text editing action
+func (w *Window) Undo() {
+	C.GalliumWindowUndo(w.c)
+}
+
+// Redo redoes the last text editing action
+func (w *Window) Redo() {
+	C.GalliumWindowRedo(w.c)
+}
+
+// Cut cuts the current text selection to the pastboard
+func (w *Window) Cut() {
+	C.GalliumWindowCut(w.c)
+}
+
+// Copy copies the current text selection to the pasteboard
+func (w *Window) Copy() {
+	C.GalliumWindowCopy(w.c)
+}
+
+// Paste pastes from the pasteboard
+func (w *Window) Paste() {
+	C.GalliumWindowPaste(w.c)
+}
+
+// PasteAndMatchStyle pastes from the pasteboard, matching style to the current element
+func (w *Window) PasteAndMatchStyle() {
+	C.GalliumWindowPasteAndMatchStyle(w.c)
+}
+
+// Delete deletes the current text selection
+func (w *Window) Delete() {
+	C.GalliumWindowDelete(w.c)
+}
+
+// SelectAll selects all text in the current element
+func (w *Window) SelectAll() {
+	C.GalliumWindowSelectAll(w.c)
+}
+
+// Unselect unselects any text selection
+func (w *Window) Unselect() {
+	C.GalliumWindowUnselect(w.c)
 }
 
 // OpenDevTools opens the developer tools for this window.
