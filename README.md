@@ -259,7 +259,7 @@ func main() {
 
 ### Relationship to other projects
 
-[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications in node.js rather than Go. Electron and Gallium are similar in that the core UI is developed in HTML and javascript, but with Gallium the "outer layer" of logic is written in Go. Both Electron and Gallium use Chromium under the hood, and in fact some of the C components for Gallium were ported from Electron.
+[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications in node.js. Electron and Gallium are similar in that the core UI is developed in HTML and javascript, but with Gallium the "outer layer" of logic is written in Go. Both Electron and Gallium use Chromium under the hood, and some of the C components for Gallium were ported from Electron.
 
 The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is a C framework for embedding Chromium into other applications. I investigated CEF as a basis for Gallium but decided to use [libchromiumcontent](https://github.com/electron/libchromiumcontent) instead.
 
