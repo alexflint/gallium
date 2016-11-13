@@ -8,54 +8,38 @@ import (
 	"github.com/alexflint/gallium"
 )
 
-func menuQuit_OnClick() {
-	os.Exit(0)
-}
-
-func menuAAA_OnClick() {
-	log.Println("you clicked AAA")
-}
-
 func main() {
 	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
-	gallium.Loop(os.Args, OnReady)
+	gallium.Loop(os.Args, onReady)
 }
 
-func OnReady(app *gallium.App) {
+func onReady(app *gallium.App) {
+	app.OpenWindow("http://example.com/", gallium.FramedWindow)
 	app.SetMenu([]gallium.Menu{
-		{
-			Title: "menudemo",
+		gallium.Menu{
+			Title: "demo",
 			Entries: []gallium.MenuEntry{
+				gallium.MenuItem{
+					Title:   "About",
+					OnClick: handleMenuAbout,
+				},
+				gallium.Separator,
 				gallium.MenuItem{
 					Title:    "Quit",
-					Shortcut: "cmd+q",
-					OnClick:  menuQuit_OnClick,
+					Shortcut: "Cmd+q",
+					OnClick:  handleMenuQuit,
 				},
-			},
-		},
-		{
-			Title: "View",
-			Entries: []gallium.MenuEntry{
-				gallium.MenuItem{
-					Title:    "AAA",
-					Shortcut: "cmd+shift+a",
-					OnClick:  menuAAA_OnClick,
-				},
-				gallium.MenuItem{Title: "BBB"},
-				gallium.MenuItem{Title: "CCC"},
-				gallium.Separator,
-				gallium.MenuItem{Title: "DDD"},
-				gallium.MenuItem{Title: "EEE"},
-			},
-		},
-		{
-			Title: "Help",
-			Entries: []gallium.MenuEntry{
-				gallium.MenuItem{Title: "What"},
-				gallium.MenuItem{Title: "Is"},
-				gallium.MenuItem{Title: "This?"},
 			},
 		},
 	})
+}
+
+func handleMenuAbout() {
+	log.Println("about clicked")
+	os.Exit(0)
+}
+
+func handleMenuQuit() {
+	log.Println("quit clicked")
+	os.Exit(0)
 }
