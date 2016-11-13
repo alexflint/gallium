@@ -90,6 +90,11 @@ func onReady(app *gallium.App) {
       Title: "demo",
       Entries: []gallium.MenuEntry{
         gallium.MenuItem{
+          Title:    "About",
+          OnClick:  handleMenuAbout,
+        },
+        gallium.Separator,
+        gallium.MenuItem{
           Title:    "Quit",
           Shortcut: "Cmd+q",
           OnClick:  handleMenuQuit,
@@ -97,6 +102,11 @@ func onReady(app *gallium.App) {
       },
     },
   })
+}
+
+func handleMenuAbout() {
+  log.Println("about clicked")
+  os.Exit(0)
 }
 
 func handleMenuQuit() {
