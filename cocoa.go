@@ -31,12 +31,16 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"unsafe"
 )
 
 // MenuEntry is the interface for menus and menu items.
 type MenuEntry interface {
 	menu()
 }
+
+// Separator displays a horizontal separator within a menu
+var Separator MenuEntry
 
 // A MenuItem has a title and can be clicked on. It is a leaf node in the menu tree.
 type MenuItem struct {
@@ -91,6 +95,9 @@ func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 			C.CString(key),
 			C.gallium_modifier_t(modifiers),
 			callbackArg)
+	case nil:
+		// nil means add a separator
+		C.NSMenu_AddSeparator(parent)
 	default:
 		log.Printf("unexpected menu entry: %T", menu)
 	}
@@ -214,6 +221,16 @@ func (app *App) Post(n Notification) {
 		C.CString(n.OtherButtonTitle))
 
 	C.NSUserNotificationCenter_DeliverNotification(cn)
+}
+
+// BundleInfo looks up an entry in the Info.plist for the current bundle.
+func BundleInfo(key string) string {
+	cstr := C.MainBundle_ObjectForKey(C.CString(key))
+	if cstr == nil {
+		return ""
+	}
+	defer C.free(unsafe.Pointer(cstr))
+	return C.GoString(cstr)
 }
 
 // RunApplication is for debugging only. It allows creation of menus and

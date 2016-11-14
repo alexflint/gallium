@@ -14,9 +14,9 @@ import (
 	arg "github.com/alexflint/go-arg"
 )
 
-func must(err error) {
+func must(err error, info ...interface{}) {
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(append(info, err.Error())...)
 		os.Exit(1)
 	}
 }
@@ -67,6 +67,7 @@ func main() {
 		Executable       string `arg:"positional,required"`
 		Output           string `arg:"-o"`
 		BundleIdentifier string
+		Icon             string `arg:"help:Path to a .icns file or a .iconset dir"`
 	}
 	arg.MustParse(&args)
 
@@ -84,6 +85,9 @@ func main() {
 	if args.BundleIdentifier == "" {
 		args.BundleIdentifier = bundleName
 	}
+
+	// extras for the Info.plist
+	extraProps := make(map[string]string)
 
 	// get the path to the gallium package
 	golistCmd := exec.Command("go", "list", "-f", "{{.Dir}}", "github.com/alexflint/gallium")
@@ -123,6 +127,40 @@ func main() {
 	must(os.MkdirAll(filepath.Dir(exeDst), 0777))
 	must(copyFile(exeDst, args.Executable))
 
+	// Copy the icon in
+	if args.Icon != "" {
+		st, err := os.Stat(args.Icon)
+		must(err)
+
+		iconExt := filepath.Ext(args.Icon)
+		iconName := strings.TrimSuffix(filepath.Base(args.Icon), iconExt) + ".icns"
+		iconDst := filepath.Join(tmpBundle, "Contents", "Resources", iconName)
+		must(os.MkdirAll(filepath.Dir(iconDst), 0777))
+		extraProps["CFBundleIconFile"] = iconName
+
+		// There are three kinds of source icons
+		switch {
+		case iconExt == ".icns":
+			if !st.Mode().IsRegular() {
+				fmt.Println("Icon had extension .icns but was not a regular file")
+				os.Exit(1)
+			}
+			must(copyFile(iconDst, args.Icon))
+		case iconExt == ".iconset":
+			if !st.IsDir() {
+				fmt.Println("Icon had extension .icns but was not a directory")
+				os.Exit(1)
+			}
+			must(buildIconSet(iconDst, args.Icon), "error building iconset:")
+		case iconExt == ".png":
+			fmt.Println("Building icons from raw images not implemented yet")
+			os.Exit(1)
+		default:
+			fmt.Println("Unrecognized icon extension:", iconExt)
+			os.Exit(1)
+		}
+	}
+
 	// Write Info.plist
 	tpl, err := template.New("info.plist.tpl").Parse(string(MustAsset("info.plist.tpl")))
 	must(err)
@@ -131,9 +169,10 @@ func main() {
 	w, err := os.Create(plistDst)
 	must(err)
 
-	tpl.Execute(w, map[string]string{
+	tpl.Execute(w, map[string]interface{}{
 		"BundleName":       bundleName,
 		"BundleIdentifier": args.BundleIdentifier,
+		"Extras":           extraProps,
 	})
 	must(w.Close())
 

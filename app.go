@@ -7,6 +7,7 @@ package gallium
 #cgo LDFLAGS: -F${SRCDIR}/dist
 #cgo LDFLAGS: -framework Gallium
 #cgo LDFLAGS: -Wl,-rpath,@executable_path/../Frameworks
+#cgo LDFLAGS: -Wl,-rpath,@loader_path/../Frameworks
 #cgo LDFLAGS: -Wl,-rpath,${SRCDIR}/dist
 #cgo LDFLAGS: -mmacosx-version-min=10.8
 
@@ -28,6 +29,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"time"
 	"unsafe"
 )
@@ -140,7 +143,23 @@ var FramedWindow = WindowOptions{
 	CloseButton:      true,
 	MinButton:        true,
 	FullScreenButton: true,
-	Title:            "Gallium",
+	Title:            defaultWindowTitle(),
+}
+
+func defaultWindowTitle() string {
+	// try the display name first
+	if name := BundleInfo("CFBundleDisplayName"); name != "" {
+		return name
+	}
+	// then fall back to the short name
+	if name := BundleInfo("CFBundleName"); name != "" {
+		return name
+	}
+	// then fall back to the executable name
+	if len(os.Args) > 0 {
+		filepath.Base(os.Args[0])
+	}
+	return ""
 }
 
 // FramelessWindow contains options for a window with no frame or border, but that

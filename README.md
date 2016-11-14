@@ -90,6 +90,11 @@ func onReady(app *gallium.App) {
       Title: "demo",
       Entries: []gallium.MenuEntry{
         gallium.MenuItem{
+          Title:    "About",
+          OnClick:  handleMenuAbout,
+        },
+        gallium.Separator,
+        gallium.MenuItem{
           Title:    "Quit",
           Shortcut: "Cmd+q",
           OnClick:  handleMenuQuit,
@@ -99,13 +104,18 @@ func onReady(app *gallium.App) {
   })
 }
 
+func handleMenuAbout() {
+  log.Println("about clicked")
+  os.Exit(0)
+}
+
 func handleMenuQuit() {
   log.Println("quit clicked")
   os.Exit(0)
 }
 ```
 
-![Menu demo](https://cloud.githubusercontent.com/assets/640247/18698299/e5c21f62-7f7d-11e6-9b35-73a8230bb45d.png)
+![Menu demo](https://cloud.githubusercontent.com/assets/640247/20243830/17fbaa8e-a91d-11e6-8eca-7ae7c1418a7e.png)
 
 ### Status Bar
 
@@ -169,6 +179,32 @@ func onReady(app *gallium.App) {
 }
 ```
 
+### Dock icons
+
+To add a dock icon, create a directory named `myapp.iconset` containing the following files:
+```
+icon_16x16.png          # 16 x 16
+icon_16x16@2x.png       # 32 x 32
+icon_32x32.png          # 32 x 32
+icon_32x32@2x.png       # 64 x 64
+icon_128x128.png        # 128 x 128
+icon_128x128@2x.png     # 256 x 256
+icon_256x256.png        # 256 x 256
+icon_256x256@2x.png     # 512 x 512
+icon_512x512.png        # 512 x 512
+icon_512x512@2x.png     # 1024 x 1024
+```
+
+Then build you app with
+```shell
+gallium-bundle myapp --icon myapp.iconset
+```
+
+Alternatively, if you have a `.icns` file:
+```shell
+gallium-bundle myapp --icon myapp.icns
+```
+
 ### Writing native code
 
 You can write C or Objective-C code that interfaces directly with native
@@ -223,7 +259,7 @@ func main() {
 
 ### Relationship to other projects
 
-[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications in node.js rather than Go. Electron and Gallium are similar in that the core UI is developed in HTML and javascript, but with Gallium the "outer layer" of logic is written in Go. Both Electron and Gallium use Chromium under the hood, and in fact some of the C components for Gallium were ported from Electron.
+[Electron](http://electron.atom.io/) is a well-known framework for writing desktop applications in node.js. Electron and Gallium are similar in that the core UI is developed in HTML and javascript, but with Gallium the "outer layer" of logic is written in Go. Both Electron and Gallium use Chromium under the hood, and some of the C components for Gallium were ported from Electron.
 
 The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is a C framework for embedding Chromium into other applications. I investigated CEF as a basis for Gallium but decided to use [libchromiumcontent](https://github.com/electron/libchromiumcontent) instead.
 

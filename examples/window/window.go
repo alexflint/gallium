@@ -8,9 +8,12 @@ import (
 	"github.com/alexflint/gallium"
 )
 
+func init() {
+	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
+}
+
 func main() {
 	runtime.LockOSThread()
-	gallium.RedirectStdoutStderr(os.ExpandEnv("$HOME/Library/Logs/Gallium.log"))
 	gallium.Loop(os.Args, onReady)
 }
 

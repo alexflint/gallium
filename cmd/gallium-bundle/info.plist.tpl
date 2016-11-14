@@ -26,11 +26,11 @@
 	<string>0721</string>
 	<key>DTXcodeBuild</key>
 	<string>7C1002</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>BRYApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
+	{{range $key, $val := .Extras}}
+		<key>{{$key}}</key>
+		<string>{{$val}}</string>
+	{{end}}
 </dict>
 </plist>
