@@ -1,9 +1,10 @@
-#ifndef GALLIUM_API_COCOA_H_
-#define GALLIUM_API_COCOA_H_
+#ifndef GALLIUM_COCOA_H_
+#define GALLIUM_COCOA_H_
 
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "gallium/export.h"
 #include "gallium/browser.h"
 
 #ifdef __cplusplus
@@ -81,4 +82,4 @@ GALLIUM_EXPORT char* MainBundle_ObjectForKey(const char* key);
 }
 #endif
 
-#endif
+#endif // ifndef GALLIUM_COCOA_H_

@@ -1,18 +1,14 @@
-#ifndef GALLIUM_API_GALLIUM_H_
-#define GALLIUM_API_GALLIUM_H_
+#ifndef GALLIUM_BROWSER_H_
+#define GALLIUM_BROWSER_H_
 
 #include <stdbool.h>
+
+#include "gallium/export.h"
+#include "gallium/rect.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define GALLIUM_EXPORT __attribute__ ((visibility ("default")))
-
-// gallium_error represents an error
-typedef struct GALLIUM_EXPORT gallium_error {
-	const char* msg;
-} gallium_error_t;
 
 // gallium_window represents a window
 typedef struct GALLIUM_EXPORT gallium_window gallium_window_t;
@@ -40,16 +36,7 @@ GALLIUM_EXPORT gallium_window_t* GalliumOpenWindow(const char* url,
 
   
 // GalliumWindowGetWidth gets the width of a window
-GALLIUM_EXPORT int GalliumWindowGetWidth(gallium_window_t* window);
-
-// GalliumWindowGetWidth gets the width of a window
-GALLIUM_EXPORT int GalliumWindowGetHeight(gallium_window_t* window);
-
-// GalliumWindowGetWidth gets the width of a window
-GALLIUM_EXPORT int GalliumWindowGetLeft(gallium_window_t* window);
-
-// GalliumWindowGetWidth gets the width of a window
-GALLIUM_EXPORT int GalliumWindowGetTop(gallium_window_t* window);
+GALLIUM_EXPORT gallium_rect_t GalliumWindowGetShape(gallium_window_t* window);
 
 // GalliumWindowGetWidth gets the width of a window
 GALLIUM_EXPORT void GalliumWindowSetShape(gallium_window_t* window,
@@ -128,4 +115,4 @@ GALLIUM_EXPORT void* GalliumWindowNativeContent(gallium_window_t* window);
 }
 #endif
 
-#endif
+#endif // ifndef GALLIUM_BROWSER_H_
