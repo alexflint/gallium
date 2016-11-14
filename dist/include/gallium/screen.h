@@ -1,11 +1,7 @@
 #ifndef GALLIUM_SCREEN_H_
 #define GALLIUM_SCREEN_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "gallium/export.h"
-#include "gallium/rect.h"
+#include "gallium/core.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -6,7 +6,7 @@ package gallium
 #cgo CFLAGS: -Idist/include
 
 #include <stdlib.h>
-#include "gallium/rect.h"
+#include "gallium/core.h"
 */
 import "C"
 
