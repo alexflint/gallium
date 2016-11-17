@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-typedef void(*global_shortcut_handler_t)(int);
+typedef void(*global_shortcut_handler_t)(int64_t);
 
 void GALLIUM_EXPORT GalliumAddGlobalShortcut(int ID,
                                              const char* key,
