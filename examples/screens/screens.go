@@ -11,7 +11,6 @@ import (
 func onReady(app *gallium.App) {
 	pretty.Println(gallium.FocusedScreen())
 	pretty.Println(gallium.Screens())
-	x
 }
 
 func main() {
