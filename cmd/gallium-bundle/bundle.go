@@ -64,26 +64,36 @@ func copyTree(dst, src string) error {
 
 func main() {
 	var args struct {
-		Executable       string `arg:"positional,required"`
-		Output           string `arg:"-o"`
-		BundleIdentifier string
-		Icon             string `arg:"help:Path to a .icns file or a .iconset dir"`
+		Executable string `arg:"positional,required"`
+		Output     string `arg:"-o"`
+		Identifier string `arg:"help:The bundle identifier (CFBundleIdentifier)"`
+		Name       string `arg:"help:The bundle name (CFBundleName)"`
+		Icon       string `arg:"help:Path to a .icns file or a .iconset dir"`
 	}
 	arg.MustParse(&args)
 
-	var bundleName string
+	// If output is empty then use the app name if there is one, or the executable otherwise
 	if args.Output == "" {
-		bundleName = filepath.Base(args.Executable)
-		args.Output = bundleName + ".app"
-	} else if !strings.HasSuffix(args.Output, ".app") {
-		fmt.Println("output must end with .app")
-		os.Exit(1)
-	} else {
-		bundleName = strings.TrimSuffix(filepath.Base(args.Output), ".app")
+		if args.Name == "" {
+			args.Output = filepath.Base(args.Executable) + ".app"
+		} else {
+			args.Output = args.Name + ".app"
+		}
 	}
 
-	if args.BundleIdentifier == "" {
-		args.BundleIdentifier = bundleName
+	if !strings.HasSuffix(args.Output, ".app") {
+		fmt.Println("output must end with .app")
+		os.Exit(1)
+	}
+
+	// If the bundle name is empty then use the app name
+	if args.Name == "" {
+		args.Name = strings.TrimSuffix(filepath.Base(args.Output), ".app")
+	}
+
+	// If the bundle identifier is empty then use the bundle name
+	if args.Identifier == "" {
+		args.Identifier = args.Name
 	}
 
 	// extras for the Info.plist
@@ -123,7 +133,7 @@ func main() {
 	must(copyTree(fwDst, fwSrc))
 
 	// Copy the executable in
-	exeDst := filepath.Join(tmpBundle, "Contents", "MacOS", bundleName)
+	exeDst := filepath.Join(tmpBundle, "Contents", "MacOS", args.Name)
 	must(os.MkdirAll(filepath.Dir(exeDst), 0777))
 	must(copyFile(exeDst, args.Executable))
 
@@ -170,8 +180,8 @@ func main() {
 	must(err)
 
 	tpl.Execute(w, map[string]interface{}{
-		"BundleName":       bundleName,
-		"BundleIdentifier": args.BundleIdentifier,
+		"BundleName":       args.Name,
+		"BundleIdentifier": args.Identifier,
 		"Extras":           extraProps,
 	})
 	must(w.Close())
