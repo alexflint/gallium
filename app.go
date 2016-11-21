@@ -107,14 +107,6 @@ type App struct {
 	ready chan struct{}
 }
 
-// Rect represents a rectangular region on the screen
-type Rect struct {
-	Width  int // Width in pixels
-	Height int // Height in pixels
-	Left   int // Left is offset from left in pixel
-	Top    int // Left is offset from top in pixels
-}
-
 // WindowOptions contains options for creating windows
 type WindowOptions struct {
 	Title            string // String to display in title bar
@@ -135,7 +127,7 @@ var FramedWindow = WindowOptions{
 		Width:  800,
 		Height: 600,
 		Left:   100,
-		Top:    100,
+		Bottom: 100,
 	},
 	TitleBar:         true,
 	Frame:            true,
@@ -169,7 +161,7 @@ var FramelessWindow = WindowOptions{
 		Width:  800,
 		Height: 600,
 		Left:   100,
-		Top:    100,
+		Bottom: 100,
 	},
 	Resizable: true,
 }
@@ -194,7 +186,7 @@ func (app *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 		C.int(opt.Shape.Width),
 		C.int(opt.Shape.Height),
 		C.int(opt.Shape.Left),
-		C.int(opt.Shape.Top),
+		C.int(opt.Shape.Bottom),
 		C.bool(opt.TitleBar),
 		C.bool(opt.Frame),
 		C.bool(opt.Resizable),
@@ -210,17 +202,12 @@ func (app *App) OpenWindow(url string, opt WindowOptions) (*Window, error) {
 
 // Shape gets the current shape of the window.
 func (w *Window) Shape() Rect {
-	return Rect{
-		Width:  int(C.GalliumWindowGetWidth(w.c)),
-		Height: int(C.GalliumWindowGetHeight(w.c)),
-		Left:   int(C.GalliumWindowGetLeft(w.c)),
-		Top:    int(C.GalliumWindowGetTop(w.c)),
-	}
+	return rectFromC(C.GalliumWindowGetShape(w.c))
 }
 
 // Shape gets the current shape of the window.
 func (w *Window) SetShape(r Rect) {
-	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Top))
+	C.GalliumWindowSetShape(w.c, C.int(r.Width), C.int(r.Height), C.int(r.Left), C.int(r.Bottom))
 }
 
 // URL gets the URL that the window is currently at.
