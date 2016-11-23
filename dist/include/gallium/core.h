@@ -22,7 +22,7 @@ typedef enum GALLIUM_EXPORT gallium_modifier {
 	GalliumCtrlModifier = 1 << 1,
 	GalliumCmdOrCtrlModifier = 1 << 2,
 	GalliumAltOrOptionModifier = 1 << 3,
-	GalliumFunctionModifier = 1 << 4,
+	GalliumFnModifier = 1 << 4,
 	GalliumShiftModifier = 1 << 5,
 } gallium_modifier_t;
 

@@ -45,7 +45,7 @@ var Separator MenuEntry
 // A MenuItem has a title and can be clicked on. It is a leaf node in the menu tree.
 type MenuItem struct {
 	Title    string
-	Shortcut string
+	Shortcut KeyCombination
 	OnClick  func()
 }
 
@@ -87,13 +87,11 @@ func (m *menuManager) add(menu MenuEntry, parent *C.gallium_nsmenu_t) {
 		callbackArg := C.malloc(C.sizeof_int)
 		*(*C.int)(callbackArg) = C.int(id)
 
-		key, modifiers, _ := parseShortcut(menu.Shortcut)
-
 		C.helper_NSMenu_AddMenuItem(
 			parent,
 			C.CString(menu.Title),
-			C.CString(key),
-			C.gallium_modifier_t(modifiers),
+			C.CString(menu.Shortcut.Key),
+			C.gallium_modifier_t(menu.Shortcut.Modifiers),
 			callbackArg)
 	case nil:
 		// nil means add a separator
@@ -125,7 +123,7 @@ func parseShortcut(s string) (key string, modifiers int, err error) {
 		case "option":
 			modifiers |= int(C.GalliumAltOrOptionModifier)
 		case "fn":
-			modifiers |= int(C.GalliumFunctionModifier)
+			modifiers |= int(C.GalliumFnModifier)
 		case "shift":
 			modifiers |= int(C.GalliumShiftModifier)
 		default:
