@@ -15,7 +15,7 @@ GALLIUM_EXPORT int GalliumScreenCount();
 // GalliumScreen gets the i-th screen
 GALLIUM_EXPORT gallium_screen_t* GalliumScreen(int index);
 
-// GalliumFocusedScreen gets the screen containing the currently focussed window.
+// GalliumFocusedScreen gets the screen containing the currently focused window.
 GALLIUM_EXPORT gallium_screen_t* GalliumFocusedScreen();
 
 // GalliumScreenShape gets the shape of a screen
