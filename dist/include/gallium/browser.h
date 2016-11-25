@@ -1,10 +1,7 @@
 #ifndef GALLIUM_BROWSER_H_
 #define GALLIUM_BROWSER_H_
 
-#include <stdbool.h>
-
-#include "gallium/export.h"
-#include "gallium/rect.h"
+#include "gallium/core.h"
 
 #ifdef __cplusplus
 extern "C" {

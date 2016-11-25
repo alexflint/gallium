@@ -35,7 +35,7 @@ func onReady(app *gallium.App) {
 			Entries: []gallium.MenuEntry{
 				gallium.MenuItem{
 					Title:    "Quit",
-					Shortcut: "Cmd+q",
+					Shortcut: gallium.MustParseKeys("cmd q"),
 					OnClick:  handleMenuQuit,
 				},
 			},

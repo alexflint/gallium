@@ -1,10 +1,7 @@
 #ifndef GALLIUM_COCOA_H_
 #define GALLIUM_COCOA_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "gallium/export.h"
+#include "gallium/core.h"
 #include "gallium/browser.h"
 
 #ifdef __cplusplus
@@ -17,15 +14,6 @@ typedef struct GALLIUM_EXPORT gallium_nsmenu gallium_nsmenu_t;
 typedef struct GALLIUM_EXPORT gallium_nsmenuitem gallium_nsmenuitem_t;
 typedef struct GALLIUM_EXPORT gallium_nsusernotification gallium_nsusernotification_t;
 typedef struct GALLIUM_EXPORT gallium_nsimage gallium_nsimage_t;
-
-typedef enum gallium_modifier {
-	GalliumCmdModifier = 1 << 0,
-	GalliumCtrlModifier = 1 << 1,
-	GalliumCmdOrCtrlModifier = 1 << 2,
-	GalliumAltOrOptionModifier = 1 << 3,
-	GalliumFunctionModifier = 1 << 4,
-	GalliumShiftModifier = 1 << 5,
-} gallium_modifier_t;
 
 GALLIUM_EXPORT gallium_nsmenu_t* NSMenu_New(const char* title);
 
