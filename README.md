@@ -23,6 +23,8 @@ the Gophers slack team [here](https://gophersinvite.herokuapp.com/).)
 
 ### Installation
 
+(Note that Gallium requires go >= 1.7)
+
 First install git large file storage, then install Gallium:
 ```shell
 $ brew install git-lfs
