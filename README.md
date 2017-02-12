@@ -23,7 +23,7 @@ the Gophers slack team [here](https://gophersinvite.herokuapp.com/).)
 
 ### Installation
 
-(Note that Gallium requires go >= 1.7)
+Requires go >= 1.7
 
 First install git large file storage, then install Gallium:
 ```shell
@@ -210,9 +210,8 @@ gallium-bundle myapp --icon myapp.icns
 ### Writing native code
 
 You can write C or Objective-C code that interfaces directly with native
-windowing APIs using golang's excellent C bridging technology, cgo. The
-following example uses the macOS native API `[NSWindow setAlphaValue]` to
-create a semi-transparent window.
+windowing APIs. The following example uses the macOS native API `[NSWindow
+setAlphaValue]` to create a semi-transparent window.
 
 ```go
 package main
@@ -274,12 +273,11 @@ desktop UI applications in Go.
 
 ### Troubleshooting
 
-**`ld: warning: file was built for unsupported file format`**
+**"file was built for unsupported file format"**
 
-If you see this error:
+If you see the following error:
 ```
 ld: warning: ignoring file go/src/github.com/alexflint/gallium/dist/Gallium.framework/Gallium, file was built for unsupported file format ( 0x76 0x65 0x72 0x73 0x69 0x6F 0x6E 0x20 0x68 0x74 0x74 0x70 0x73 0x3A 0x2F 0x2F ) which is not the architecture being linked (x86_64): go/src/github.com/alexflint/gallium/dist/Gallium.framework/Gallium
-Undefined symbols for architecture x86_64 ...
 ```
 then you probably have an issue with `git lfs`. You can confirm that this is
 the problem by checking the size of the file in the error message: it should
