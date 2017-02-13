@@ -23,7 +23,7 @@ the Gophers slack team [here](https://gophersinvite.herokuapp.com/).)
 
 ### Installation
 
-(Note that Gallium requires go >= 1.7)
+Requires go >= 1.7
 
 First install git large file storage, then install Gallium:
 ```shell
@@ -210,9 +210,8 @@ gallium-bundle myapp --icon myapp.icns
 ### Writing native code
 
 You can write C or Objective-C code that interfaces directly with native
-windowing APIs using golang's excellent C bridging technology, cgo. The
-following example uses the macOS native API `[NSWindow setAlphaValue]` to
-create a semi-transparent window.
+windowing APIs. The following example uses the macOS native API `[NSWindow
+setAlphaValue]` to create a semi-transparent window.
 
 ```go
 package main
@@ -272,21 +271,42 @@ The [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef) is
 The goal of Gallium is to make it possible to write cross-platform
 desktop UI applications in Go.
 
-### Common pitfalls
+### Troubleshooting
 
-- When you run an app bundle with `open Foo.app`, OSX launch services
-  discards standard output and standard error. If you need to see
-  this output for debugging purposes, use a redirect:
-  ```
-  gallium.RedirectStdoutStderr("output.log")
-  ```
-- When you run an app bundle with `open Foo.app`, OSX launch services
-  will only start your app if there is not already another instance
-  of the same application running, so if your app refuses to start then
-  try checking the activity monitor for an already running instance.
-- If you run the binary directly without building an app bundle then
-  your menus will not show up, and the window will initially appear
-  behind other applications.
+**"file was built for unsupported file format"**
+
+If you see the following error:
+```
+ld: warning: ignoring file go/src/github.com/alexflint/gallium/dist/Gallium.framework/Gallium, file was built for unsupported file format ( 0x76 0x65 0x72 0x73 0x69 0x6F 0x6E 0x20 0x68 0x74 0x74 0x70 0x73 0x3A 0x2F 0x2F ) which is not the architecture being linked (x86_64): go/src/github.com/alexflint/gallium/dist/Gallium.framework/Gallium
+```
+then you probably have an issue with `git lfs`. You can confirm that this is
+the problem by checking the size of the file in the error message: it should
+be over 1 MB, but if you see a much smaller file then this is your problem.
+
+To fix this, try re-installing `git lfs` as described in the installation
+section above, then delete and re-install gallium.
+
+**No console output**
+
+When you run an app bundle with `open Foo.app`, OSX launch services discards
+standard output and standard error. If you need to see this output for
+debugging purposes, use a redirect:
+```
+gallium.RedirectStdoutStderr("output.log")
+```
+
+**App does not start**
+
+When you run an app bundle with `open Foo.app`, OSX launch services will only
+start your app if there is not already another instance of the same
+application running, so if your app refuses to start then try checking the
+activity monitor for an already running instance.
+
+**Menus not visible**
+
+If you run the binary directly without building an app
+bundle then your menus will not show up, and the window will initially appear
+behind other applications.
 
 ### UI thread issues and runtime.LockOSThread
 
