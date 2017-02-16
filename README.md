@@ -63,6 +63,7 @@ To run the example as a full-fledged UI application, you need to build
 an app bundle:
 ```shell
 $ go build ./example
+$ go get github.com/alexflint/go-arg
 $ go install github.com/alexflint/gallium/cmd/gallium-bundle
 $ gallium-bundle example
 $ open example.app
