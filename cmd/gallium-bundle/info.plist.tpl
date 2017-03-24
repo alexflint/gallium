@@ -28,6 +28,8 @@
 	<string>7C1002</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
 	{{range $key, $val := .Extras}}
 		<key>{{$key}}</key>
 		<string>{{$val}}</string>
