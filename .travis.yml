@@ -2,7 +2,7 @@ language: go
 os:
   - osx
 
-osx_image: xcode8
+osx_image: xcode10
 
 before_install:
   - brew install git-lfs
@@ -12,7 +12,9 @@ before_install:
 sudo: false
 
 go:
-  - 1.7
+  - 1.9
+  - 1.10
+  - 1.11
   - tip
 
 script:
