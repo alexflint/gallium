@@ -5,6 +5,8 @@ os:
 osx_image: xcode10
 
 before_install:
+  - brew install git-lfs
+  - git lfs install --system
   - git lfs pull
 
 sudo: false
